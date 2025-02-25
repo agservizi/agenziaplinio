@@ -15,6 +15,29 @@ const swiper = new Swiper(".mySwiper", {
     },
 });
 
+// Inizializza lo slider per le testimonianze
+const testimonialSwiper = new Swiper(".mySwiperTestimonials", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 2
+      },
+      1024: {
+        slidesPerView: 3
+      }
+    }
+});
+
 // Inizializza Rellax
 const rellax = new Rellax('.rellax', {
     speed: -2,
@@ -181,8 +204,11 @@ backToTop.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const faqMessages = document.querySelectorAll('.accordion .message');
     faqMessages.forEach(message => {
-        message.querySelector('.message-header').addEventListener('click', () => {
+        const header = message.querySelector('.message-header');
+        header.addEventListener('click', () => {
             message.classList.toggle('is-active');
+            const expanded = header.getAttribute('aria-expanded') === 'true';
+            header.setAttribute('aria-expanded', !expanded);
         });
     });
 });

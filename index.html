@@ -16,33 +16,6 @@
     <link rel="stylesheet" href="style.css">
     <!-- Includi Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "AG SERVIZI VIA PLINIO 72 DI CAVALIERE CARMINE",
-      "url": "https://www.agenziaplinio.it",
-      "logo": "https://www.agenziaplinio.it/logo-aziendale.png",
-      "sameAs": [
-        "https://www.facebook.com/agserviziplinio.it/",
-        "https://wa.me/393773798570"
-      ],
-      "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+39 0810584542",
-          "contactType": "customer service"
-      },
-      "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Via Plinio il Vecchio 72",
-          "addressLocality": "Castellammare di Stabia",
-          "addressRegion": "NA",
-          "postalCode": "80053",
-          "addressCountry": "IT"
-      }
-    }
-    </script>
 </head>
 <body class="dark-theme">
     
@@ -59,31 +32,86 @@
     
     <!-- Navbar -->
     <nav class="navbar is-transparent is-fixed-top">
-  <div class="container">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="index.html">
-        <img src="logo-aziendale.png" alt="Logo" style="max-height:35px;" loading="lazy">
-      </a>
-      <span class="navbar-burger" data-target="navMenu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-    </div>
-    <div id="navMenu" class="navbar-menu">
-      <div class="navbar-end">
-        <a class="navbar-item" href="index.html">Home</a>
-        <a class="navbar-item" href="chi-siamo.html">Chi Siamo</a>
-        <a class="navbar-item" href="servizi.html">Servizi</a>
-        <a class="navbar-item" href="soluzioni.html">Soluzioni</a>
-        <a class="navbar-item" href="testimonianze.html">Testimonianze</a>
-        <a class="navbar-item" href="contatti.html">Contatti</a>
-        <a class="navbar-item" href="faq.html">FAQ</a>
-        <a class="navbar-item button area-personale" href="https://app.agenziaplinio.it/login">Area Personale</a>
-      </div>
-    </div>
-  </div>
-</nav>
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <img src="logo-aziendale.png" alt="Logo" style="max-height:35px;" loading="lazy">
+                </a>
+                <span class="navbar-burger" data-target="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="#home">
+                        <i class="ri-home-4-line" style="margin-right:5px;"></i>
+                        <span>Home</span>
+                    </a>
+                    <a class="navbar-item" href="#chi-siamo">
+                        <i class="ri-information-line" style="margin-right:5px;"></i>
+                        <span>Chi Siamo</span>
+                    </a>
+                    <!-- Dropdown "Servizi" -->
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            <i class="ri-briefcase-line" style="margin-right:5px;"></i>
+                            <span>Servizi</span>
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="pagamenti.html">Pagamenti</a>
+                            <a class="navbar-item" href="telefonia.html">Telefonia</a>
+                            <a class="navbar-item" href="energia.html">Energia</a>
+                            <!-- Dropdown annidato per "PayTV" -->
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link" href="paytv.html">PayTV</a>
+                                <div class="navbar-dropdown">
+                                    <a class="navbar-item" href="preventivatore.html">Preventivatore luce e gas</a>
+                                    <a class="navbar-item" href="fastweb.html">Fastweb</a>
+                                    <a class="navbar-item" href="iliad.html">Iliad</a>
+                                    <a class="navbar-item" href="windre.html">Windre</a>
+                                    <a class="navbar-item" href="sky.html">Sky</a>
+                                </div>
+                            </div>
+                            <!-- Dropdown annidato per "Servizi Digitali" -->
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link" href="servizidigitali.html">Servizi Digitali</a>
+                                <div class="navbar-dropdown">
+                                    <a class="navbar-item" href="spid.html">Spid</a>
+                                    <a class="navbar-item" href="firmadigitale.html">Firma digitale</a>
+                                    <a class="navbar-item" href="pec.html">Pec</a>
+                                </div>
+                            </div>
+                            <a class="navbar-item" href="spedizioni.html">Spedizioni</a>
+                            <a class="navbar-item" href="posta.html">Posta</a>
+                        </div>
+                    </div>
+                    <a class="navbar-item" href="#soluzioni">
+                        <i class="ri-lightbulb-line" style="margin-right:5px;"></i>
+                        <span>Soluzioni</span>
+                    </a>
+                    <a class="navbar-item" href="#testimonianze">
+                        <i class="ri-star-line" style="margin-right:5px;"></i>
+                        <span>Testimonianze</span>
+                    </a>
+                    <a class="navbar-item" href="#contatti">
+                        <i class="ri-phone-line" style="margin-right:5px;"></i>
+                        <span>Contatti</span>
+                    </a>
+                    <a class="navbar-item" href="#faq">
+                        <i class="ri-question-line" style="margin-right:5px;"></i>
+                        <span>FAQ</span>
+                    </a>
+                    <!-- Nuovo pulsante stilizzato -->
+                    <a class="navbar-item button area-personale" href="https://app.agenziaplinio.it/login">
+                        <i class="ri-user-line" style="margin-right:5px;"></i>
+                        <span>Area Personale</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
     
     <!-- Chi Siamo Section -->
     <section class="section full-height" id="chi-siamo">
@@ -92,9 +120,13 @@
             <p class="subtitle is-4" data-aos="fade-up" data-aos-delay="200">
                 Siamo un'agenzia di servizi a 360° nata nel 2016, con solide radici nel settore postale privato. Con il mercato che si è progressivamente orientato verso i servizi digitali, abbiamo saputo evolverci, ampliando le nostre competenze nel campo della telefonia, dell'energia e come Digital Trust Provider. Oggi offriamo una consulenza gratuita e professionale, mettendo a disposizione la nostra esperienza per guidare ogni cliente verso soluzioni su misura e innovative.
             </p>
-            <!-- Canvas per il grafico dei clienti soddisfatti -->
-            <div class="chart-container" style="max-width: 400px; margin: 2rem auto;" data-aos="fade-up" data-aos-delay="400">
-                <canvas id="satisfiedChart"></canvas>
+            <!-- Progress bar modificata -->
+            <div class="progress-container" data-aos="fade-up" data-aos-delay="400">
+                <progress class="progress is-primary" value="40" max="100"></progress>  
+                <strong><i>
+                    più di 1000+ clienti fidelizzati in 9 anni di attività
+                </strong></i>
+                </div>
             </div>
         </div>
     </section>
@@ -265,65 +297,45 @@
     
     <!-- Testimonianze -->
     <section class="section full-height" id="testimonianze">
-  <div class="container has-text-centered">
-    <h2 class="title is-2" data-aos="fade-down">Cosa dicono i nostri clienti</h2>
-    <div class="columns is-multiline" data-aos="fade-up" data-aos-delay="200">
-      <!-- Scheda Testimonianza 1 -->
-      <div class="column is-one-third">
-        <div class="card testimonial-card">
-          <div class="card-content">
-            <p class="testimonial-text">"Il servizio è stato eccellente, hanno risposto in modo rapido e professionale."</p>
-            <p class="testimonial-author">Giovanni Bianchi</p>
-            <div class="testimonial-rating">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-line"></i>
+        <div class="container has-text-centered">
+            <h2 class="title is-2" data-aos="fade-down">Cosa dicono i nostri clienti</h2>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <article class="message is-primary">
+                            <div class="message-body">
+                                "Servizio eccellente, supporto rapido e soluzioni su misura!" - Cliente Soddisfatto
+                            </div>
+                        </article>
+                    </div>
+                    <div class="swiper-slide">
+                        <article class="message is-info">
+                            <div class="message-body">
+                                "Un team di professionisti, affidabili e competenti!" - Mario Rossi
+                            </div>
+                        </article>
+                    </div>
+                    <div class="swiper-slide">
+                        <article class="message is-success">
+                            <div class="message-body">
+                                "Risultati incredibili in poco tempo, consigliatissimo!" - Laura Bianchi
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Navigation buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
-          </div>
         </div>
-      </div>
-      <!-- Scheda Testimonianza 2 -->
-      <div class="column is-one-third" data-aos="fade-up" data-aos-delay="100">
-        <div class="card testimonial-card">
-          <div class="card-content">
-            <p class="testimonial-text">"Esperienza incredibilmente positiva, consiglio vivamente i loro servizi."</p>
-            <p class="testimonial-author">Maria Rossi</p>
-            <div class="testimonial-rating">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Scheda Testimonianza 3 -->
-      <div class="column is-one-third" data-aos="fade-up" data-aos-delay="200">
-        <div class="card testimonial-card">
-          <div class="card-content">
-            <p class="testimonial-text">"Professionalità e attenzione ai dettagli, un team davvero affidabile."</p>
-            <p class="testimonial-author">Luca Verdi</p>
-            <div class="testimonial-rating">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-line"></i>
-              <i class="ri-star-line"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>  
     
     <!-- Contatti -->
     <section class="section" id="contatti">
   <div class="container">
-    <h2 class="title is-2 has-text-centered" data-aos="fade-down">Contattaci</h2>
+    <h2 class="title is-2" data-aos="fade-down">Contattaci</h2>
     <div class="columns is-multiline is-variable is-4" data-aos="fade-up" data-aos-delay="200">
       <!-- Telefono -->
       <div class="column is-half-tablet is-one-quarter-desktop">
@@ -383,54 +395,39 @@
     
     <!-- FAQ Section -->
     <section class="section" id="faq">
-    <div class="container">
-        <h2 class="title is-2 has-text-centered" data-aos="fade-down">Domande Frequenti (FAQ)</h2>
-        <div class="content" data-aos="fade-up" data-aos-delay="200">
-            <div class="accordion">
-                <article class="message">
-                    <div class="message-header" aria-expanded="false">
-                        <p>Quali servizi offrite?</p>
-                    </div>
-                    <div class="message-body">
-                        <p>Offriamo consulenza, marketing, supporto tecnico, telefonia, energia, servizi digitali, pagamenti, ricariche, spedizioni, corrispondenza e PEC & Email.</p>
-                    </div>
-                </article>
-                <article class="message">
-                    <div class="message-header" aria-expanded="false">
-                        <p>Come posso contattarvi?</p>
-                    </div>
-                    <div class="message-body">
-                        <p>Puoi contattarci tramite telefono, email, WhatsApp o visitando il nostro ufficio. Tutti i dettagli di contatto sono disponibili nella sezione "Contatti".</p>
-                    </div>
-                </article>
-                <article class="message">
-                    <div class="message-header" aria-expanded="false">
-                        <p>Offrite consulenza gratuita?</p>
-                    </div>
-                    <div class="message-body">
-                        <p>Sì, offriamo consulenza gratuita e professionale per aiutarti a trovare le soluzioni migliori per il tuo business.</p>
-                    </div>
-                </article>
-                <article class="message">
-                    <div class="message-header" aria-expanded="false">
-                        <p>Come posso richiedere un preventivo?</p>
-                    </div>
-                    <div class="message-body">
-                        <p>Per richiedere un preventivo, compila il modulo di contatto o invia una email a info@agenziaplinio.it con i dettagli della tua richiesta.</p>
-                    </div>
-                </article>
-                <article class="message">
-                    <div class="message-header" aria-expanded="false">
-                        <p>Quali metodi di pagamento accettate?</p>
-                    </div>
-                    <div class="message-body">
-                        <p>Accettiamo pagamenti tramite bonifico, carta di credito, debito e altri metodi concordati in base al servizio.</p>
-                    </div>
-                </article>
+        <div class="container">
+            <h2 class="title is-2 has-text-centered" data-aos="fade-down">Domande Frequenti (FAQ)</h2>
+            <div class="content" data-aos="fade-up" data-aos-delay="200">
+                <div class="accordion">
+                    <article class="message">
+                        <div class="message-header">
+                            <p>Quali servizi offrite?</p>
+                        </div>
+                        <div class="message-body">
+                            Offriamo consulenza, marketing, supporto tecnico, telefonia, energia, servizi digitali, pagamenti, ricariche, spedizioni, corrispondenza e PEC & Email.
+                        </div>
+                    </article>
+                    <article class="message">
+                        <div class="message-header">
+                            <p>Come posso contattarvi?</p>
+                        </div>
+                        <div class="message-body">
+                            Puoi contattarci tramite telefono, email, WhatsApp o visitando il nostro ufficio. Tutti i dettagli di contatto sono disponibili nella sezione "Contatti".
+                        </div>
+                    </article>
+                    <article class="message">
+                        <div class="message-header">
+                            <p>Offrite consulenza gratuita?</p>
+                        </div>
+                        <div class="message-body">
+                            Sì, offriamo consulenza gratuita e professionale per aiutarti a trovare le soluzioni migliori per il tuo business.
+                        </div>
+                    </article>
+                    <!-- Aggiungi altre domande frequenti seguendo lo stesso schema -->
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Footer -->
 <footer class="footer has-background-dark has-text-light">

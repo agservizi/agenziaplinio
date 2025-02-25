@@ -362,7 +362,7 @@ body {
 .light-theme .card,
 .light-theme .box {
     background-color: var(--bg-color-light) !important;
-    color: var(--text-color-light) !important;
+    color: var (--text-color-light) !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -484,6 +484,53 @@ img, video {
     .subtitle {
         font-size: 1.25rem;
     }
+}
+
+/* Enhanced Megamenu Styles */
+.custom-megamenu .navbar-dropdown.mega-dropdown {
+  background: linear-gradient(135deg, #333, #222);
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  animation: fadeInDropdown 0.3s ease-in-out;
+}
+.custom-megamenu .navbar-dropdown.mega-dropdown .navbar-item {
+  padding: 12px 16px;
+  margin: 4px 0;
+  color: #f5f5f5;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+.custom-megamenu .navbar-dropdown.mega-dropdown .navbar-item i {
+  color: #00d1b2;
+  margin-right: 8px;
+  font-size: 1.3rem;
+}
+.custom-megamenu .navbar-dropdown.mega-dropdown .navbar-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+/* Keyframes per il fade-in del dropdown */
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive: adattamento per dispositivi piccoli */
+@media screen and (max-width: 768px) {
+  .custom-megamenu .navbar-dropdown.mega-dropdown {
+    width: 100%;
+    padding: 10px;
+  }
 }
 
 /* ...existing css... */
