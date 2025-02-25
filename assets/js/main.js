@@ -181,8 +181,11 @@ backToTop.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const faqMessages = document.querySelectorAll('.accordion .message');
     faqMessages.forEach(message => {
-        message.querySelector('.message-header').addEventListener('click', () => {
+        const header = message.querySelector('.message-header');
+        header.addEventListener('click', () => {
             message.classList.toggle('is-active');
+            const expanded = header.getAttribute('aria-expanded') === 'true';
+            header.setAttribute('aria-expanded', !expanded);
         });
     });
 });

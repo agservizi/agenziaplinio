@@ -200,3 +200,63 @@
 #theme-toggle {
   margin-left: 1rem;
 }
+
+/* Aggiunta media query per dispositivi piccoli */
+@media screen and (max-width: 768px) {
+    .navbar-item { padding: 8px; }
+    .hero .title { font-size: 2rem; }
+    .hero .subtitle { font-size: 1.25rem; }
+    .section { padding: 3rem 1rem; }
+}
+
+/* Modifica media query per dispositivi laptop: ridotti container, padding e font size */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    .container {
+        max-width: 1200px;
+        padding: 0 1.5rem;
+    }
+    .section {
+        padding: 4rem 1.5rem;
+    }
+    .title {
+        font-size: 1.75rem;
+    }
+    .subtitle {
+        font-size: 1.25rem;
+    }
+}
+
+/* Stili per le schede testimonianze */
+.testimonial-card {
+    border: none;
+    border-radius: 10px;
+    background: #2a2a2a;
+    color: #f5f5f5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+.testimonial-photo img {
+    border: 3px solid #00d1b2;
+}
+.testimonial-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 1rem 0;
+    font-style: italic;
+}
+.testimonial-author {
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+.testimonial-rating {
+    margin-top: 0.5rem;
+}
+.testimonial-rating i {
+    color: #00d1b2;
+    font-size: 1.25rem;
+    margin: 0 0.1rem;
+}

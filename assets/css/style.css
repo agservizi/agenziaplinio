@@ -1,10 +1,10 @@
-/* Aggiungi variabili CSS all'inizio del file */
+/* Variabili, reset e tipografia */
 :root {
     --accent-color: #00d1b2;
     --bg-dark: #1a1a1a;
     --text-light: #f5f5f5;
-    --bg-light: #ffffff;
-    --text-dark: #000000;
+    --bg-color-light: #ffffff;
+    --text-color-light: #000000;
 }
 
 /* Reset base, tipografia e container */
@@ -229,6 +229,31 @@ body {
     .subtitle {
         font-size: 1.25rem;
     }
+    .container { padding: 0 2rem; }
+    .section { padding: 4rem 2rem; }
+}
+
+/* Media query per dispositivi desktop (da 1025px in su) */
+@media screen and (min-width: 1025px) {
+    .container { padding: 0 3rem; }
+    .section { padding: 6rem 3rem; }
+}
+
+/* Media Query per dispositivi laptop (1025px - 1440px) */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    .container {
+        max-width: 1200px;
+        padding: 0 1.5rem;
+    }
+    .section {
+        padding: 4rem 1.5rem;
+    }
+    .title {
+        font-size: 1.75rem;
+    }
+    .subtitle {
+        font-size: 1.25rem;
+    }
 }
 
 /* ...existing css... */
@@ -272,10 +297,10 @@ body {
 .testimonial-card {
     border: none;
     border-radius: 10px;
-    background: linear-gradient(135deg, #00d1b2 0%, #019f8e 100%);
-    color: #fff;
+    background: #2a2a2a;
+    color: #f5f5f5;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    margin-bottom: 2rem;
     transition: transform 0.3s ease;
 }
 
@@ -283,24 +308,31 @@ body {
     transform: translateY(-5px);
 }
 
-.testimonial-card .card-content {
-    padding: 2rem;
-    text-align: center;
+.testimonial-photo img {
+    border: 3px solid #00d1b2;
 }
 
 .testimonial-text {
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
     font-style: italic;
 }
 
 .testimonial-author {
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: bold;
 }
 
-/* ...existing css... */
+.testimonial-rating {
+    margin-top: 0.5rem;
+}
+
+.testimonial-rating i {
+    color: #00d1b2;
+    font-size: 1.25rem;
+    margin: 0 0.1rem;
+}
 
 /* Aggiorna il colore dell'hamburger in verde, usando !important per forzare la sostituzione */
 .navbar-burger span,
@@ -395,3 +427,63 @@ body.light-theme * {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
 }
+
+/* Regole aggiuntive per garantire layout flessibile e responsive */
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Stili per le schede testimonianze */
+.testimonial-card {
+    border: none;
+    border-radius: 10px;
+    background: #2a2a2a;
+    color: #f5f5f5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+.testimonial-photo img {
+    border: 3px solid #00d1b2;
+}
+.testimonial-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 1rem 0;
+    font-style: italic;
+}
+.testimonial-author {
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+.testimonial-rating {
+    margin-top: 0.5rem;
+}
+.testimonial-rating i {
+    color: #00d1b2;
+    font-size: 1.25rem;
+    margin: 0 0.1rem;
+}
+
+/* Ottimizzazione layout per dispositivi laptop (1025px - 1440px) */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    .container {
+        max-width: 1200px;
+        padding: 0 1.5rem;
+    }
+    .section {
+        padding: 4rem 1.5rem;
+    }
+    .title {
+        font-size: 1.75rem;
+    }
+    .subtitle {
+        font-size: 1.25rem;
+    }
+}
+
+/* ...existing css... */

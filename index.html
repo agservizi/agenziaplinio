@@ -18,8 +18,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="dark-theme">
-    <!-- Aggiunta link di skip per l'accessibilità -->
-    <a href="#main-content" class="skip-link">Salta al contenuto</a>
     
     <!-- Hero Section con id "home" -->
     <section class="hero is-fullheight is-dark is-bold background-image" id="home">
@@ -37,6 +35,7 @@
         <div class="container">
             <div class="navbar-brand">
                 <a class="navbar-item" href="#">
+                    <!-- Eliminato srcset per retina -->
                     <img src="logo-aziendale.png" alt="Logo" style="max-height:35px;" loading="lazy">
                 </a>
                 <span class="navbar-burger" data-target="navMenu">
@@ -244,43 +243,72 @@
     <section class="section full-height" id="testimonianze">
         <div class="container has-text-centered">
             <h2 class="title is-2" data-aos="fade-down">Cosa dicono i nostri clienti</h2>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <article class="message is-primary">
-                            <div class="message-body">
-                                "Servizio eccellente, supporto rapido e soluzioni su misura!" - Cliente Soddisfatto
+            <div class="columns is-multiline" data-aos="fade-up" data-aos-delay="200">
+                <!-- Scheda Testimonianza 1 -->
+                <div class="column is-one-third">
+                    <div class="card testimonial-card">
+                        <div class="card-content">
+                            <figure class="image is-128x128 testimonial-photo" style="margin: 0 auto;">
+                                <img class="is-rounded" src="https://source.unsplash.com/128x128/?person" alt="Cliente 1">
+                            </figure>
+                            <p class="testimonial-text">"Il servizio è stato eccellente, hanno risposto in modo rapido e professionale."</p>
+                            <p class="testimonial-author">Giovanni Bianchi</p>
+                            <div class="testimonial-rating">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-line"></i>
                             </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="message is-info">
-                            <div class="message-body">
-                                "Un team di professionisti, affidabili e competenti!" - Mario Rossi
-                            </div>
-                        </article>
-                    </div>
-                    <div class="swiper-slide">
-                        <article class="message is-success">
-                            <div class="message-body">
-                                "Risultati incredibili in poco tempo, consigliatissimo!" - Laura Bianchi
-                            </div>
-                        </article>
+                        </div>
                     </div>
                 </div>
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Navigation buttons -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <!-- Scheda Testimonianza 2 -->
+                <div class="column is-one-third" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card testimonial-card">
+                        <div class="card-content">
+                            <figure class="image is-128x128 testimonial-photo" style="margin: 0 auto;">
+                                <img class="is-rounded" src="https://source.unsplash.com/128x128/?woman" alt="Cliente 2">
+                            </figure>
+                            <p class="testimonial-text">"Esperienza incredibilmente positiva, consiglio vivamente i loro servizi."</p>
+                            <p class="testimonial-author">Maria Rossi</p>
+                            <div class="testimonial-rating">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Scheda Testimonianza 3 -->
+                <div class="column is-one-third" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card testimonial-card">
+                        <div class="card-content">
+                            <figure class="image is-128x128 testimonial-photo" style="margin: 0 auto;">
+                                <img class="is-rounded" src="https://source.unsplash.com/128x128/?face" alt="Cliente 3">
+                            </figure>
+                            <p class="testimonial-text">"Professionalità e attenzione ai dettagli, un team davvero affidabile."</p>
+                            <p class="testimonial-author">Luca Verdi</p>
+                            <div class="testimonial-rating">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-line"></i>
+                                <i class="ri-star-line"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>  
+    </section>
     
     <!-- Contatti -->
     <section class="section" id="contatti">
   <div class="container">
-    <h2 class="title is-2" data-aos="fade-down">Contattaci</h2>
+    <h2 class="title is-2 has-text-centered" data-aos="fade-down">Contattaci</h2>
     <div class="columns is-multiline is-variable is-4" data-aos="fade-up" data-aos-delay="200">
       <!-- Telefono -->
       <div class="column is-half-tablet is-one-quarter-desktop">
@@ -340,39 +368,54 @@
     
     <!-- FAQ Section -->
     <section class="section" id="faq">
-        <div class="container">
-            <h2 class="title is-2 has-text-centered" data-aos="fade-down">Domande Frequenti (FAQ)</h2>
-            <div class="content" data-aos="fade-up" data-aos-delay="200">
-                <div class="accordion">
-                    <article class="message">
-                        <div class="message-header">
-                            <p>Quali servizi offrite?</p>
-                        </div>
-                        <div class="message-body">
-                            Offriamo consulenza, marketing, supporto tecnico, telefonia, energia, servizi digitali, pagamenti, ricariche, spedizioni, corrispondenza e PEC & Email.
-                        </div>
-                    </article>
-                    <article class="message">
-                        <div class="message-header">
-                            <p>Come posso contattarvi?</p>
-                        </div>
-                        <div class="message-body">
-                            Puoi contattarci tramite telefono, email, WhatsApp o visitando il nostro ufficio. Tutti i dettagli di contatto sono disponibili nella sezione "Contatti".
-                        </div>
-                    </article>
-                    <article class="message">
-                        <div class="message-header">
-                            <p>Offrite consulenza gratuita?</p>
-                        </div>
-                        <div class="message-body">
-                            Sì, offriamo consulenza gratuita e professionale per aiutarti a trovare le soluzioni migliori per il tuo business.
-                        </div>
-                    </article>
-                    <!-- Aggiungi altre domande frequenti seguendo lo stesso schema -->
-                </div>
+    <div class="container">
+        <h2 class="title is-2 has-text-centered" data-aos="fade-down">Domande Frequenti (FAQ)</h2>
+        <div class="content" data-aos="fade-up" data-aos-delay="200">
+            <div class="accordion">
+                <article class="message">
+                    <div class="message-header" aria-expanded="false">
+                        <p>Quali servizi offrite?</p>
+                    </div>
+                    <div class="message-body">
+                        <p>Offriamo consulenza, marketing, supporto tecnico, telefonia, energia, servizi digitali, pagamenti, ricariche, spedizioni, corrispondenza e PEC & Email.</p>
+                    </div>
+                </article>
+                <article class="message">
+                    <div class="message-header" aria-expanded="false">
+                        <p>Come posso contattarvi?</p>
+                    </div>
+                    <div class="message-body">
+                        <p>Puoi contattarci tramite telefono, email, WhatsApp o visitando il nostro ufficio. Tutti i dettagli di contatto sono disponibili nella sezione "Contatti".</p>
+                    </div>
+                </article>
+                <article class="message">
+                    <div class="message-header" aria-expanded="false">
+                        <p>Offrite consulenza gratuita?</p>
+                    </div>
+                    <div class="message-body">
+                        <p>Sì, offriamo consulenza gratuita e professionale per aiutarti a trovare le soluzioni migliori per il tuo business.</p>
+                    </div>
+                </article>
+                <article class="message">
+                    <div class="message-header" aria-expanded="false">
+                        <p>Come posso richiedere un preventivo?</p>
+                    </div>
+                    <div class="message-body">
+                        <p>Per richiedere un preventivo, compila il modulo di contatto o invia una email a info@agenziaplinio.it con i dettagli della tua richiesta.</p>
+                    </div>
+                </article>
+                <article class="message">
+                    <div class="message-header" aria-expanded="false">
+                        <p>Quali metodi di pagamento accettate?</p>
+                    </div>
+                    <div class="message-body">
+                        <p>Accettiamo pagamenti tramite bonifico, carta di credito, debito e altri metodi concordati in base al servizio.</p>
+                    </div>
+                </article>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
 <footer class="footer has-background-dark has-text-light">

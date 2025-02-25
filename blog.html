@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Blog e news di Agenzia di Servizi">
-    <meta name="keywords" content="blog, news, agenzia, servizi, consulenza">
+    <meta name="description" content="Agenzia di servizi specializzata in consulenza, marketing e supporto tecnico. Soluzioni su misura per il tuo business.">
+    <meta name="keywords" content="agenzia, servizi, consulenza, marketing, blog">
     <meta name="author" content="Nome dell'Agenzia">
-    <title>Blog - Agenzia di Servizi</title>
+    <meta name="theme-color" content="#1a1a1a">
+    <title>Blog - AG SERVIZI VIA PLINIO 72 DI CAVALIERE CARMINE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
@@ -17,103 +18,208 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="dark-theme">
-    <!-- ...inclusione Navbar (riprendi il markup dell'index)... -->
-    <!-- Modifica Hero per garantire visibilità del testo -->
-    <section class="hero is-medium has-background-dark">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <h1 class="title has-text-white" data-aos="fade-down">Il Nostro Blog</h1>
-                <h2 class="subtitle has-text-white" data-aos="fade-up" data-aos-delay="200">News, approfondimenti e consigli</h2>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sezione Principale Blog -->
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <!-- Barra laterale (opzionale) -->
-                <div class="column is-one-quarter" data-aos="fade-right">
-                    <div class="box">
-                        <div class="field">
-                            <label class="label">Cerca nel Blog</label>
-                            <div class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Digita qualcosa...">
-                                <span class="icon is-small is-left">
-                                    <i class="ri-search-line"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Eventuali categorie -->
-                        <aside class="menu">
-                            <p class="menu-label">Categorie</p>
-                            <ul class="menu-list">
-                                <li><a href="#">Tutte</a></li>
-                                <li><a href="#">Servizi</a></li>
-                                <li><a href="#">Consulenza</a></li>
-                                <li><a href="#">Tecnologia</a></li>
-                            </ul>
-                        </aside>
-                    </div>
-                </div>
-
-                <!-- Lista Post -->
-                <div class="column" data-aos="fade-up">
-                    <div class="columns is-multiline">
-                        <!-- Post Card 1 -->
-                        <div class="column is-half">
-                            <div class="card">
-                                <div class="card-image">
-                                    <figure class="image is-4by3">
-                                        <!-- Sostituisci con URL reale o usa un placeholder -->
-                                        <img src="post1.jpg" alt="Anteprima Articolo 1">
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <p class="subtitle is-6">15 Marzo 2023</p>
-                                    <h3 class="title is-4">Titolo Articolo 1</h3>
-                                    <div class="content">
-                                        Breve anteprima dell'articolo che introduce il tema e invoglia il lettore a continuare...
-                                    </div>
-                                    <a href="#" class="button is-link is-outlined">Leggi di più</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Post Card 2 -->
-                        <div class="column is-half">
-                            <div class="card">
-                                <div class="card-image">
-                                    <figure class="image is-4by3">
-                                        <img src="post2.jpg" alt="Anteprima Articolo 2">
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <p class="subtitle is-6">10 Marzo 2023</p>
-                                    <h3 class="title is-4">Titolo Articolo 2</h3>
-                                    <div class="content">
-                                        Breve descrizione dell'articolo e sintesi dei punti chiave...
-                                    </div>
-                                    <a href="#" class="button is-link is-outlined">Leggi di più</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Aggiungi altre post-card seguendo lo stesso schema -->
-                    </div>
-                    <!-- Paginazione -->
-                    <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-aos="fade-up" data-aos-delay="400">
-                        <a class="pagination-previous">Precedente</a>
-                        <a class="pagination-next">Successivo</a>
-                        <ul class="pagination-list">
-                            <li><a class="pagination-link is-current">1</a></li>
-                            <li><a class="pagination-link">2</a></li>
-                            <li><a class="pagination-link">3</a></li>
-                        </ul>
-                    </nav>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero is-fullheight is-dark is-bold background-image" id="home">
+        <div class="hero-body has-text-centered">
+            <div class="container">
+                <h1 class="title is-1 has-text-white" data-aos="fade-down">Benvenuti nel Blog</h1>
+                <h2 class="subtitle is-3 has-text-light" data-aos="fade-up" data-aos-delay="200">Notizie e aggiornamenti dedicati al mondo dei nostri servizi</h2>
+                <a href="#posts" class="button is-primary is-large" data-aos="fade-up" data-aos-delay="400">Scopri le Notizie</a>
             </div>
         </div>
     </section>
     
-    <!-- ...inclusione Footer (riprendi dal template dell'index)... -->
+    <!-- Navbar (stessa struttura del sito) -->
+    <nav class="navbar is-transparent is-fixed-top">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="index.html">
+                    <img src="logo-aziendale.png" alt="Logo" style="max-height:35px;" loading="lazy">
+                </a>
+                <span class="navbar-burger" data-target="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="index.html">Home</a>
+                    <a class="navbar-item" href="#chi-siamo">Chi Siamo</a>
+                    <a class="navbar-item" href="#servizi">Servizi</a>
+                    <a class="navbar-item" href="#soluzioni">Soluzioni</a>
+                    <a class="navbar-item" href="#testimonianze">Testimonianze</a>
+                    <a class="navbar-item" href="#contatti">Contatti</a>
+                    <a class="navbar-item" href="#faq">FAQ</a>
+                    <a class="navbar-item button area-personale" href="https://app.agenziaplinio.it/login">Area Personale</a>
+                    <a class="navbar-item is-active" href="blog.html">Blog</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Sezione Blog Posts con contenuto demo -->
+    <section class="section" id="posts">
+        <div class="container">
+            <h2 class="title has-text-centered" data-aos="fade-down">Ultime Notizie</h2>
+            <div class="columns is-multiline">
+                <!-- Articolo 1 -->
+                <div class="column is-one-third" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <!-- Immagine reale presa da Unsplash -->
+                                <img src="https://source.unsplash.com/800x600/?marketing" alt="Marketing Innovativo">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="title is-4">Innovazioni nel Marketing Digitale</h3>
+                            <p class="subtitle is-6">Data: 01/01/2025</p>
+                            <div class="content">
+                                <p>Con l'avvento delle nuove tecnologie, strategie innovative nel marketing stanno ridefinendo il mercato. Scopri come le campagne online diventano sempre più mirate ed efficaci.</p>
+                                <p>Le aziende stanno investendo in soluzioni digitali che integrano intelligenza artificiale e big data per ottimizzare la comunicazione con il cliente.</p>
+                            </div>
+                            <a href="#" class="button is-link">Leggi di più</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Articolo 2 -->
+                <div class="column is-one-third" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/800x600/?business" alt="Consulenza Aziendale">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="title is-4">Nuove Strategie per la Consulenza Aziendale</h3>
+                            <p class="subtitle is-6">Data: 15/01/2025</p>
+                            <div class="content">
+                                <p>Le aziende si affidano sempre più a servizi di consulenza personalizzati per affrontare sfide di mercato in continua evoluzione.</p>
+                                <p>In questo articolo, esploriamo le tecniche più efficaci per migliorare la redditività e l'efficienza operativa attraverso approcci consulenziali innovativi.</p>
+                            </div>
+                            <a href="#" class="button is-link">Leggi di più</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Articolo 3 -->
+                <div class="column is-one-third" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/800x600/?technology" alt="Tecnologia e Innovazione">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="title is-4">Tendenze 2025 nel Settore Tecnologico</h3>
+                            <p class="subtitle is-6">Data: 28/01/2025</p>
+                            <div class="content">
+                                <p>L'ecosistema tecnologico continua a espandersi a ritmi vertiginosi. Dalle applicazioni AI agli sviluppi nella robotica, il 2025 sarà l'anno di grandi innovazioni.</p>
+                                <p>Scopri quali sono le tendenze che guideranno il futuro e come prepararti ad affrontare le novità del settore.</p>
+                            </div>
+                            <a href="#" class="button is-link">Leggi di più</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Articolo 4 -->
+                <div class="column is-one-third" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/800x600/?social,media" alt="Social Media">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="title is-4">L'impatto dei Social Media nel 2025</h3>
+                            <p class="subtitle is-6">Data: 05/02/2025</p>
+                            <div class="content">
+                                <p>I social network sono in continua evoluzione e influenzano in modo determinante le strategie comunicative delle imprese.</p>
+                                <p>Leggi come le nuove funzionalità e l'algoritmo stanno trasformando il modo di interagire online, dal marketing ai rapporti interpersonali.</p>
+                            </div>
+                            <a href="#" class="button is-link">Leggi di più</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Articolo 5 -->
+                <div class="column is-one-third" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/800x600/?startup" alt="Startup e Innovazione">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="title is-4">Scopri il Mondo delle Startup</h3>
+                            <p class="subtitle is-6">Data: 12/02/2025</p>
+                            <div class="content">
+                                <p>Le startup stanno rivoluzionando l'economia globale con soluzioni innovative e modelli di business disruptivi.</p>
+                                <p>In questo articolo analizziamo le storie di successo, le sfide quotidiane e come investire in idee rivoluzionarie.</p>
+                            </div>
+                            <a href="#" class="button is-link">Leggi di più</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Paginazione demo -->
+            <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-aos="fade-up" data-aos-delay="500">
+                <a class="pagination-previous" href="#">Precedente</a>
+                <a class="pagination-next" href="#">Successivo</a>
+                <ul class="pagination-list">
+                    <li><a class="pagination-link is-current" aria-label="Page 1">1</a></li>
+                    <li><a class="pagination-link" aria-label="Goto page 2">2</a></li>
+                    <li><a class="pagination-link" aria-label="Goto page 3">3</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer has-background-dark has-text-light">
+        <div class="container">
+            <div class="columns">
+                <!-- Informazioni aziendali -->
+                <div class="column">
+                    <h3 class="title is-4">AG SERVIZI VIA PLINIO 72 DI CAVALIERE CARMINE</h3>
+                    <p>Offriamo consulenza, marketing e supporto tecnico per il tuo business. Soluzioni su misura per ogni esigenza.</p>
+                    <p>&copy; 2025 AG SERVIZI VIA PLINIO 72 DI CAVALIERE CARMINE. Tutti i diritti riservati.</p>
+                </div>
+                <!-- Link utili -->
+                <div class="column">
+                    <h3 class="title is-4">Link Utili</h3>
+                    <ul>
+                        <li><a href="index.html" class="has-text-light">Home</a></li>
+                        <li><a href="blog.html" class="has-text-light">Blog</a></li>
+                        <li><a href="privacy-policy.html" class="has-text-light">Privacy Policy</a></li>
+                        <li><a href="#contatti" class="has-text-light">Contatti</a></li>
+                    </ul>
+                </div>
+                <!-- Newsletter -->
+                <div class="column">
+                    <h3 class="title is-4">Iscriviti alla Newsletter</h3>
+                    <form id="newsletterForm">
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input class="input" type="email" placeholder="ag.servizi16@gmail.com" required>
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-primary">Iscriviti</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p id="newsletterMessage" class="help is-success is-hidden">Grazie per esserti iscritto!</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Script inizializzazione -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // ...existing initializations (Swiper, Rellax, AOS, GSAP, ecc.)...
+    </script>
 </body>
 </html>
