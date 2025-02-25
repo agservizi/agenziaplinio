@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Blog e news di Agenzia di Servizi">
+    <meta name="keywords" content="blog, news, agenzia, servizi, consulenza">
+    <meta name="author" content="Nome dell'Agenzia">
+    <title>Blog - Agenzia di Servizi</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Includi Chart.js se necessario -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme">
+    <!-- ...inclusione Navbar (riprendi il markup dell'index)... -->
+    <!-- Modifica Hero per garantire visibilità del testo -->
+    <section class="hero is-medium has-background-dark">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title has-text-white" data-aos="fade-down">Il Nostro Blog</h1>
+                <h2 class="subtitle has-text-white" data-aos="fade-up" data-aos-delay="200">News, approfondimenti e consigli</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sezione Principale Blog -->
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- Barra laterale (opzionale) -->
+                <div class="column is-one-quarter" data-aos="fade-right">
+                    <div class="box">
+                        <div class="field">
+                            <label class="label">Cerca nel Blog</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Digita qualcosa...">
+                                <span class="icon is-small is-left">
+                                    <i class="ri-search-line"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Eventuali categorie -->
+                        <aside class="menu">
+                            <p class="menu-label">Categorie</p>
+                            <ul class="menu-list">
+                                <li><a href="#">Tutte</a></li>
+                                <li><a href="#">Servizi</a></li>
+                                <li><a href="#">Consulenza</a></li>
+                                <li><a href="#">Tecnologia</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+
+                <!-- Lista Post -->
+                <div class="column" data-aos="fade-up">
+                    <div class="columns is-multiline">
+                        <!-- Post Card 1 -->
+                        <div class="column is-half">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <!-- Sostituisci con URL reale o usa un placeholder -->
+                                        <img src="post1.jpg" alt="Anteprima Articolo 1">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="subtitle is-6">15 Marzo 2023</p>
+                                    <h3 class="title is-4">Titolo Articolo 1</h3>
+                                    <div class="content">
+                                        Breve anteprima dell'articolo che introduce il tema e invoglia il lettore a continuare...
+                                    </div>
+                                    <a href="#" class="button is-link is-outlined">Leggi di più</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Post Card 2 -->
+                        <div class="column is-half">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="post2.jpg" alt="Anteprima Articolo 2">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="subtitle is-6">10 Marzo 2023</p>
+                                    <h3 class="title is-4">Titolo Articolo 2</h3>
+                                    <div class="content">
+                                        Breve descrizione dell'articolo e sintesi dei punti chiave...
+                                    </div>
+                                    <a href="#" class="button is-link is-outlined">Leggi di più</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Aggiungi altre post-card seguendo lo stesso schema -->
+                    </div>
+                    <!-- Paginazione -->
+                    <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-aos="fade-up" data-aos-delay="400">
+                        <a class="pagination-previous">Precedente</a>
+                        <a class="pagination-next">Successivo</a>
+                        <ul class="pagination-list">
+                            <li><a class="pagination-link is-current">1</a></li>
+                            <li><a class="pagination-link">2</a></li>
+                            <li><a class="pagination-link">3</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ...inclusione Footer (riprendi dal template dell'index)... -->
+</body>
+</html>

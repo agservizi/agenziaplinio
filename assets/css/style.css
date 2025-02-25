@@ -1,0 +1,397 @@
+/* Aggiungi variabili CSS all'inizio del file */
+:root {
+    --accent-color: #00d1b2;
+    --bg-dark: #1a1a1a;
+    --text-light: #f5f5f5;
+    --bg-light: #ffffff;
+    --text-dark: #000000;
+}
+
+/* Reset base, tipografia e container */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    padding: 1rem;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Aggiungi variabili di colore per le modalità dark e light */
+:root {
+  --accent-color: #00d1b2;
+  --bg-color-light: #ffffff;
+  --text-color-light: #000000; /* Testo nero per il light mode */
+}
+
+/* Modalità Light */
+.light-theme {
+  background-color: var(--bg-color-light) !important;
+  color: var(--text-color-light) !important;
+}
+
+/* Per gli elementi interni in light mode */
+.light-theme .navbar-item {
+  color: var(--text-color-light) !important;
+}
+
+.light-theme .navbar-item:hover::after,
+.light-theme .navbar-item:focus::after,
+.light-theme .navbar-item.is-active::after {
+  background-color: var(--accent-color);
+}
+
+.light-theme .box {
+  background-color: var(--bg-color-light) !important;
+  color: var(--text-color-light) !important;
+}
+
+/* Ottimizzazione pulsanti e link */
+.button, .navbar-item {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.button:hover, .navbar-item:hover {
+    background-color: #009e8e;
+}
+
+/* Micro-interazioni per bottoni */
+.button {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.button:active {
+    transform: scale(0.98);
+}
+
+/* Navbar */
+.navbar {
+    padding: 1rem 0;
+}
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+.navbar-burger {
+    cursor: pointer;
+    display: inline-block;
+    margin-left: auto;
+}
+.navbar-burger span, .navbar-burger i {
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    margin: 0.3rem auto;
+    background-color: #00d1b2;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.navbar-burger.is-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.navbar-burger.is-active span:nth-child(2) {
+    opacity: 0;
+}
+.navbar-burger.is-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+/* Animazione per l'icona personalizzata se presente */
+.navbar-burger.is-active i {
+    transform: rotate(90deg);
+}
+
+.navbar-burger i {
+    color: #00d1b2 !important; /* forzato verde come i pulsanti */
+}
+
+.navbar-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #00d1b2;
+    transition: width 0.3s ease-in-out;
+}
+
+.navbar-item:hover::after,
+.navbar-item:focus::after,
+.navbar-item.is-active::after {
+    width: 100%;
+}
+
+/* Sezioni e layout */
+.section {
+    padding: 6rem 0;
+}
+.hero .container {
+    text-align: center;
+}
+
+/* Box con leggera ombra per migliore UI */
+.box {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+.box:hover {
+    transform: translateY(-5px);
+}
+
+/* Micro-interazioni per le card */
+.card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive media query */
+@media screen and (max-width: 768px) {
+    .navbar-burger.is-active span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+    }
+    .navbar-burger.is-active span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+    }
+    .section {
+        padding: 3rem 0;
+    }
+    /* Forza le colonne in modalità mobile a prendere l'intera larghezza */
+    .columns.is-multiline > .column {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    /* Riduci l'altezza minima delle card per adattarsi meglio allo schermo mobile */
+    .card {
+        min-height: auto; 
+        margin-bottom: 1.5rem;
+    }
+    .card .card-content {
+        min-height: auto;
+        padding: 1rem;
+    }
+    body {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    .section {
+        padding: 3rem 1rem;
+    }
+    .container {
+        padding: 0 1rem;
+    }
+    /* Riduci la dimensione del testo per titoli e sottotitoli */
+    .title {
+        font-size: 1.75rem;
+    }
+    .subtitle {
+        font-size: 1.125rem;
+    }
+    /* Aumenta lo spazio interno delle card */
+    .card {
+        margin-bottom: 1rem;
+    }
+    .card .card-content {
+        padding: 1.5rem;
+    }
+    /* Regola le icone per garantire una visualizzazione corretta */
+    .icon.is-large i {
+        font-size: 3rem;
+    }
+}
+
+/* Media query per dispositivi tablet e desktop (da 769px a 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    body {
+        font-size: 1rem;
+    }
+    .section {
+        padding: 4rem 2rem;
+    }
+    .card .card-content {
+        padding: 1.75rem;
+    }
+    .title {
+        font-size: 2rem;
+    }
+    .subtitle {
+        font-size: 1.25rem;
+    }
+}
+
+/* ...existing css... */
+.portfolio-item h3 {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+}
+
+/* Uniforma le card per avere dimensioni coerenti */
+.card {
+    min-height: 320px; /* imposta un'altezza minima uniforme */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 280px; /* assicura che il contenuto abbia spazio sufficiente */
+}
+
+/* Stili per formattare le card della sezione "Soluzioni" */
+#soluzioni .card-content h3 {
+    margin-bottom: 1rem;
+}
+
+#soluzioni .card-content p {
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    font-size: 1rem; /* Scala il testo per una migliore leggibilità */
+}
+
+/* Se vuoi aggiungere padding interno alle card per aumentare gli spazi */
+#soluzioni .card-content {
+    padding: 2rem;
+}
+
+/* Stili specifici per Testimonianze */
+.testimonial-card {
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00d1b2 0%, #019f8e 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-card .card-content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.testimonial-text {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.testimonial-author {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* ...existing css... */
+
+/* Aggiorna il colore dell'hamburger in verde, usando !important per forzare la sostituzione */
+.navbar-burger span,
+.navbar-burger i {
+    background-color: #00d1b2 !important;
+}
+
+/* Regole Light Mode */
+.light-theme {
+    background-color: var(--bg-color-light) !important;
+    color: var(--text-color-light) !important;
+}
+
+.light-theme h1,
+.light-theme h2,
+.light-theme h3,
+.light-theme p,
+.light-theme .subtitle,
+.light-theme .title,
+.light-theme .navbar-item,
+.light-theme .button,
+.light-theme .menu-label,
+.light-theme .menu-list a {
+    color: var(--text-color-light) !important;
+}
+
+.light-theme .card,
+.light-theme .box {
+    background-color: var(--bg-color-light) !important;
+    color: var(--text-color-light) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .navbar,
+.light-theme .footer {
+    background-color: var(--bg-color-light) !important;
+    color: var(--text-color-light) !important;
+}
+
+.light-theme .navbar-item,
+.light-theme .button {
+    color: var(--text-color-light) !important;
+}
+
+/* Cambia colore dei pulsanti in light mode */
+.light-theme .button.is-primary {
+    background-color: #00d1b2 !important;
+    border-color: #00d1b2 !important;
+    color: #ffffff !important;
+}
+.light-theme .button.is-primary:hover {
+    background-color: #009e8e;
+}
+
+/* ...existing css... */
+
+/* Override Light Mode: imposta globalmente sfondo bianco e testo nero */
+body.light-theme {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.light-theme * {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+/* Corregge navbar, sezioni, hero e footer */
+.light-theme .navbar,
+.light-theme .section,
+.light-theme .footer,
+.light-theme .hero {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Seleziona eventuali elementi con background oscillanti e forza i colori */
+.light-theme .background-image {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
+/* Assicurati che anche le box e le card abbiano sfondo bianco e testo nero */
+.light-theme .box,
+.light-theme .card {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Per esempio, modifica il colore dei pulsanti */
+.button.is-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
