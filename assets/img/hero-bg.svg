@@ -1,0 +1,36 @@
+<svg width="7680" height="4320" viewBox="0 0 7680 4320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract gradient hero background">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#03071e" />
+      <stop offset="45%" stop-color="#0f1a3c" />
+      <stop offset="100%" stop-color="#ff6b3d" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0.75" cy="0.2" r="0.6">
+      <stop offset="0%" stop-color="#ff8c5a" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#ff8c5a" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#ff8c5a" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="coolGlow" cx="0.2" cy="0.8" r="0.7">
+      <stop offset="0%" stop-color="#1b74ff" stop-opacity="0.6" />
+      <stop offset="60%" stop-color="#1b74ff" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#1b74ff" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="curveWarm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb347" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#ff7a18" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#ff6b3d" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="curveCool" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4cc9f0" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#4361ee" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#4361ee" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect width="7680" height="4320" fill="url(#bg)" />
+  <rect width="7680" height="4320" fill="url(#glow)" />
+  <rect width="7680" height="4320" fill="url(#coolGlow)" />
+  <path d="M0 3240C960 2780 1920 2600 2880 2760C3840 2920 4800 3300 5760 3160C6720 3020 7200 2440 7680 2160V4320H0Z" fill="url(#curveWarm)" opacity="0.8" />
+  <path d="M0 1920C800 2240 1600 2480 2400 2400C3200 2320 4000 1920 4800 1880C5600 1840 6400 2160 7040 2440C7360 2580 7520 2680 7680 2800V4320H0Z" fill="url(#curveCool)" opacity="0.6" />
+  <path d="M0 3280C1200 3000 2400 2920 3600 3080C4800 3240 6000 3740 7200 3600C7440 3570 7560 3520 7680 3460V4320H0Z" fill="#ffffff" opacity="0.08" />
+  <path d="M0 640C960 820 1920 900 2880 840C3840 780 4800 580 5760 760C6720 940 7200 1340 7680 1560V0H0Z" fill="#ffffff" opacity="0.05" />
+</svg>

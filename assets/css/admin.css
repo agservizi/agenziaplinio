@@ -1,0 +1,231 @@
+body {
+    font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f6fb;
+    color: #101828;
+}
+
+.admin-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-header {
+    background: #0f172a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.admin-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #2563eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-right: 0.75rem;
+}
+
+.admin-header__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-header__brand small {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+}
+
+.admin-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-user-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.admin-user-chip__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.admin-layout {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.admin-sidebar {
+    width: 220px;
+    background: #fff;
+    border-right: 1px solid #e4e7ec;
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+}
+
+.admin-sidebar__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-sidebar__menu a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    color: #475467;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.admin-sidebar__menu a:hover {
+    background: #f4f7ff;
+    color: #344054;
+}
+
+.admin-main {
+    flex: 1;
+    padding: 2rem clamp(1.5rem, 3vw, 3rem);
+    overflow: auto;
+}
+
+.admin-main .admin-section.section-padding {
+    padding: 0;
+}
+
+.admin-main .container-xxl,
+.admin-main .container {
+    max-width: none;
+    width: 100%;
+    padding-left: clamp(1rem, 2vw, 2.5rem);
+    padding-right: clamp(1rem, 2vw, 2.5rem);
+}
+
+.admin-main .row {
+    --bs-gutter-x: 1.75rem;
+    --bs-gutter-y: 1.75rem;
+}
+
+@media (max-width: 992px) {
+    .admin-main {
+        padding: 1.5rem;
+    }
+    .admin-main .container-xxl,
+    .admin-main .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .admin-main .row {
+        --bs-gutter-x: 1rem;
+        --bs-gutter-y: 1.25rem;
+    }
+}
+
+.admin-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.75rem;
+    border: 1px solid #e4e7ec;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #e4e7ec;
+}
+
+.admin-toast-stack {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 20;
+}
+
+.admin-toast {
+    background: #101828;
+    color: #fff;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+    min-width: 260px;
+}
+
+.admin-slider-nav {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.admin-slider-nav:disabled,
+.admin-slider-nav.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.admin-news-slider {
+    position: relative;
+}
+
+.admin-news-slider__viewport {
+    overflow: hidden;
+}
+
+.admin-news-slider__track {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.admin-news-slide {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .admin-layout {
+        flex-direction: column;
+    }
+    .admin-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid #e4e7ec;
+        display: flex;
+        justify-content: center;
+    }
+    .admin-main {
+        padding: 1.5rem 1rem;
+    }
+}

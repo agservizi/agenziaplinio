@@ -1,0 +1,26 @@
+{
+  "payments": {
+    "title": "Pagamenti certificati",
+    "body": "Gestiamo bollettini, pagoPA e F24 con riconciliazione automatica, ricevute digitali e reminder programmati."
+  },
+  "topups": {
+    "title": "Ricariche multi-canale",
+    "body": "Ricariche telefoniche, carte prepagate e device tech con conferma istantanea via SMS o WhatsApp Business."
+  },
+  "digital": {
+    "title": "Identità digitale",
+    "body": "SPID, PEC, firma digitale e CNS con verifiche video guidate e rilascio in meno di 20 minuti."
+  },
+  "telco": {
+    "title": "Soluzioni voce e dati",
+    "body": "Attiviamo linee WindTre, Fastweb, Iliad con portabilità assistita, device rateizzati e dashboard consumi."
+  },
+  "shipping": {
+    "title": "Logistica smart",
+    "body": "Spedizioni pacchi e corrispondenza con tracking live, pick-up programmati e coperture assicurative dedicate."
+  },
+  "advisory": {
+    "title": "Consulenza dedicata",
+    "body": "Account manager che disegna bundle personalizzati per professionisti, retail e PMI."
+  }
+}
