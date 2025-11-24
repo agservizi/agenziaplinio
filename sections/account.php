@@ -101,6 +101,14 @@ $currentUrl = '?page=account';
                     }
                 }
             }
+            
+            // Italian provinces and comuni data for custom fields
+            $italianProvinces = [
+                'Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta-Andria-Trani', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Caltanissetta', 'Campobasso', 'Carbonia-Iglesias', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', 'Forlì-Cesena', 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', 'La Spezia', 'L\'Aquila', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa-Carrara', 'Matera', 'Medio Campidano', 'Messina', 'Milano', 'Modena', 'Monza e della Brianza', 'Napoli', 'Novara', 'Nuoro', 'Ogliastra', 'Olbia-Tempio', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro e Urbino', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbano-Cusio-Ossola', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
+            ];
+            $comuniData = json_decode(file_get_contents(__DIR__ . '/../comuni.json'), true);
+            $italianComuni = array_column($comuniData, 'nome');
+            sort($italianComuni);
             ?>
             <?php if (!empty($pendingCustomData)): ?>
                 <div class="alert alert-info">
@@ -128,17 +136,46 @@ $currentUrl = '?page=account';
                                             $options = trim($field['field_options']);
                                             ?>
                                             <?php if ($fieldType === 'select' && $options !== ''): ?>
-                                                <select class="form-select" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" <?php echo ((int) $field['is_required'] === 1) ? 'required' : ''; ?>>
-                                                    <option value="">Seleziona...</option>
-                                                    <?php foreach (explode("\n", $options) as $option): ?>
-                                                        <?php $option = trim($option); ?>
-                                                        <?php if ($option !== ''): ?>
-                                                            <option value="<?php echo htmlspecialchars($option, ENT_QUOTES); ?>" <?php echo ($existingValue === $option) ? 'selected' : ''; ?>><?php echo htmlspecialchars($option, ENT_QUOTES); ?></option>
-                                                        <?php endif; ?>
+                                                <?php
+                                                $allOptions = explode("\n", $options);
+                                                if ($fieldName === 'province') {
+                                                    // Aggiungi città capoluogo per facilitare la ricerca
+                                                    $cities = [
+                                                        'Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Caltanissetta', 'Campobasso', 'Carbonia', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', 'Forlì', 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', 'La Spezia', 'L\'Aquila', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa', 'Matera', 'Villacidro', 'Messina', 'Milano', 'Modena', 'Monza', 'Napoli', 'Novara', 'Nuoro', 'Lanusei', 'Olbia', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbania', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
+                                                    ];
+                                                    $allOptions = array_unique(array_merge($allOptions, $cities));
+                                                    sort($allOptions);
+                                                }
+                                                ?>
+                                                <input class="form-control" type="text" list="datalist_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" value="<?php echo htmlspecialchars($existingValue, ENT_QUOTES); ?>" <?php echo ((int) $field['is_required'] === 1) ? 'required' : ''; ?>>
+                                                <datalist id="datalist_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>">
+                                                    <?php foreach ($allOptions as $option): ?>
+                                                        <option value="<?php echo htmlspecialchars(trim($option), ENT_QUOTES); ?>">
                                                     <?php endforeach; ?>
-                                                </select>
+                                                </datalist>
                                             <?php elseif ($fieldType === 'textarea'): ?>
                                                 <textarea class="form-control" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" rows="3" <?php echo ((int) $field['is_required'] === 1) ? 'required' : ''; ?>><?php echo htmlspecialchars($existingValue, ENT_QUOTES); ?></textarea>
+                                            <?php elseif ($fieldType === 'checkbox'): ?>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" value="1" <?php echo ($existingValue === '1') ? 'checked' : ''; ?>>
+                                                    <label class="form-check-label" for="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>"><?php echo htmlspecialchars($field['field_label'], ENT_QUOTES); ?></label>
+                                                </div>
+                                            <?php elseif ($fieldType === 'provincia'): ?>
+                                                <select class="form-select" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" <?php echo ((int) $field['is_required'] === 1) ? 'required' : ''; ?>>
+                                                    <option value="">Seleziona provincia</option>
+                                                    <?php foreach ($italianProvinces as $prov): ?>
+                                                        <option value="<?php echo htmlspecialchars($prov, ENT_QUOTES); ?>" <?php echo ($existingValue === $prov) ? 'selected' : ''; ?>><?php echo htmlspecialchars($prov, ENT_QUOTES); ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            <?php elseif ($fieldType === 'comune'): ?>
+                                                <input class="form-control" type="text" list="datalist_comune_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" value="<?php echo htmlspecialchars($existingValue, ENT_QUOTES); ?>" placeholder="Inserisci comune" <?php echo ((int) $field['is_required'] === 1) ? 'required' : ''; ?>>
+                                                <datalist id="datalist_comune_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>">
+                                                    <?php foreach ($italianComuni as $comune): ?>
+                                                        <option value="<?php echo htmlspecialchars($comune, ENT_QUOTES); ?>">
+                                                    <?php endforeach; ?>
+                                                </datalist>
+                                            <?php elseif ($fieldType === 'cap' || $fieldType === 'citta'): ?>
+                                                <input class="form-control" type="text" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" value="<?php echo htmlspecialchars($existingValue, ENT_QUOTES); ?>" placeholder="Inserisci <?php echo $fieldType; ?>" <?php echo ((int) $field['is_required'] === 1) ? 'required' : ''; ?>>
                                             <?php else: ?>
                                                 <input class="form-control" type="<?php echo ($fieldType === 'email') ? 'email' : (($fieldType === 'number') ? 'number' : 'text'); ?>" id="field_<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" name="<?php echo htmlspecialchars($fieldName, ENT_QUOTES); ?>" value="<?php echo htmlspecialchars($existingValue, ENT_QUOTES); ?>" <?php echo ((int) $field['is_required'] === 1) ? 'required' : ''; ?>>
                                             <?php endif; ?>

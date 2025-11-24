@@ -18,14 +18,53 @@ function ap_action_save_order_custom_data(): void
         ap_flash('Accedi per salvare i dati.', 'error');
         return;
     }
-    $customFieldsData = $_POST['custom_fields'] ?? [];
-    if (!is_array($customFieldsData)) {
-        ap_flash('Dati non validi.', 'error');
-        return;
+    
+    $orderId = (int) ($_POST['order_id'] ?? 0);
+    $productId = (int) ($_POST['product_id'] ?? 0);
+    
+    if ($orderId > 0 && $productId > 0) {
+        // Save to database for account completion
+        $data = [];
+        $customFieldsData = $_POST;
+        unset($customFieldsData['ap_action'], $customFieldsData['order_id'], $customFieldsData['product_id'], $customFieldsData['redirect_to']);
+        
+        // Validate required fields
+        $product = ap_find_product($productId);
+        if (!$product) {
+            ap_flash('Prodotto non trovato.', 'error');
+            return;
+        }
+        
+        $fields = ap_fetch_product_custom_fields($productId);
+        foreach ($fields as $field) {
+            $fieldName = $field['field_name'];
+            $value = trim($customFieldsData[$fieldName] ?? '');
+            
+            if ((int) $field['is_required'] === 1 && $value === '') {
+                ap_flash('Il campo "' . htmlspecialchars($field['field_label'], ENT_QUOTES) . '" è obbligatorio.', 'error');
+                return;
+            }
+            
+            $data[$fieldName] = $value;
+        }
+        
+        try {
+            ap_save_order_custom_data($orderId, $productId, $data);
+            ap_flash('Dati personalizzati salvati con successo.', 'success');
+        } catch (Exception $e) {
+            ap_flash('Errore nel salvataggio dei dati.', 'error');
+        }
+    } else {
+        // Save to session for checkout
+        $customFieldsData = $_POST['custom_fields'] ?? [];
+        if (!is_array($customFieldsData)) {
+            ap_flash('Dati non validi.', 'error');
+            return;
+        }
+        // Salva in session per uso successivo nel checkout
+        $_SESSION['ap_custom_fields'] = $customFieldsData;
+        ap_flash('Dati personalizzati salvati.', 'success');
     }
-    // Salva in session per uso successivo nel checkout
-    $_SESSION['ap_custom_fields'] = $customFieldsData;
-    ap_flash('Dati personalizzati salvati.', 'success');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

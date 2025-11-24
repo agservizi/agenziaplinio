@@ -539,6 +539,23 @@ function ap_save_order_custom_data(int $orderId, int $productId, array $data): v
     }
 }
 
+function ap_fetch_order_custom_data(int $orderId, int $productId): array
+{
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('SELECT field_name, field_value FROM order_custom_data WHERE order_id = :order_id AND product_id = :product_id');
+    $stmt->execute([
+        ':order_id' => $orderId,
+        ':product_id' => $productId,
+    ]);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $data = [];
+    foreach ($results as $row) {
+        $data[$row['field_name']] = $row['field_value'];
+    }
+    return $data;
+}
+
 function ap_seed_security_logs(PDO $pdo): void
 {
     // Check if security logs already exist
