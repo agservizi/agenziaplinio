@@ -129,14 +129,14 @@
                             Paghi comodamente qualsiasi avviso pagoPA:
                         </p>
                         <ul class="list-unstyled">
-                            <li><i class="fas fa-check-circle text-success me-2"></i><span class="fw-medium">Utenze</span></li>
-                            <li><i class="fas fa-check-circle text-success me-2"></i><span class="fw-medium">Tasse</span></li>
-                            <li><i class="fas fa-check-circle text-success me-2"></i><span class="fw-medium">Multe</span></li>
-                            <li><i class="fas fa-check-circle text-success me-2"></i><span class="fw-medium">Ticket sanitari</span></li>
-                            <li><i class="fas fa-check-circle text-success me-2"></i><span class="fw-medium">Pagamenti PA</span></li>
+                            <li><span class="fw-medium">Utenze</span></li>
+                            <li><span class="fw-medium">Tasse</span></li>
+                            <li><span class="fw-medium">Multe</span></li>
+                            <li><span class="fw-medium">Ticket sanitari</span></li>
+                            <li><span class="fw-medium">Pagamenti PA</span></li>
                         </ul>
                         <p class="card-text small text-muted">
-                            <i class="fas fa-mobile-alt me-1"></i>Ti basta portarci l'avviso o mostrarlo dal telefono.
+                            Ti basta portarci l'avviso o mostrarlo dal telefono.
                         </p>
                     </div>
                 </div>
@@ -243,11 +243,11 @@
                             Presso la nostra agenzia puoi:
                         </p>
                         <ul class="list-unstyled">
-                            <li><i class="fas fa-plus-circle text-primary me-2"></i><span class="fw-medium">Acquistare la DropPayCard by Mastercard</span></li>
-                            <li><i class="fas fa-sync-alt text-primary me-2"></i><span class="fw-medium">Ricaricare il tuo conto DropPay associato</span></li>
+                            <li><span class="fw-medium">Acquistare la DropPayCard by Mastercard</span></li>
+                            <li><span class="fw-medium">Ricaricare il tuo conto DropPay associato</span></li>
                         </ul>
                         <p class="card-text small text-info fw-medium">
-                            <i class="fas fa-star me-1"></i>Perfetta per chi vuole una carta versatile e subito disponibile.
+                            Perfetta per chi vuole una carta versatile e subito disponibile.
                         </p>
                     </div>
                 </div>
