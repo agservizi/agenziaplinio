@@ -555,8 +555,12 @@ function ap_action_admin_save_product(): void
         'image_url' => $image,
         'is_active' => $active,
     ];
-    ap_save_product($data, $id);
-    ap_flash('Catalogo aggiornato.', 'success');
+    $result = ap_save_product($data, $id);
+    if ($result) {
+        ap_flash('Catalogo aggiornato.', 'success');
+    } else {
+        ap_flash('Prodotto non trovato o nessuna modifica rilevata.', 'error');
+    }
 
     // Handle custom fields
     if ($id) {

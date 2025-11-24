@@ -148,10 +148,12 @@ function ap_save_product(array $data, ?int $id = null): bool
             ':active' => $data['is_active'],
             ':id' => $id,
         ]);
-        if ($result) {
+        if ($result && $stmt->rowCount() > 0) {
             ap_cache_forget_prefix('products_');
+            return true;
+        } else {
+            return false; // Product not found or no changes
         }
-        return $result;
     }
     $stmt = $pdo->prepare('INSERT INTO products (name, slug, description, price_cents, sku, category_key, fulfillment_type, stock, image_url, is_active) VALUES (:name, :slug, :description, :price, :sku, :category_key, :fulfillment_type, :stock, :image, :active)');
     $result = $stmt->execute([
