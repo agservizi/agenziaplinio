@@ -68,6 +68,9 @@ function ap_handle_action(string $action): void
         case 'admin_delete_product':
             ap_action_admin_delete_product();
             break;
+        case 'admin_save_product':
+            ap_action_admin_save_product();
+            break;
         case 'admin_save_coupon':
             ap_action_admin_save_coupon();
             break;
