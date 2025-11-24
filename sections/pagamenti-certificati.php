@@ -10,6 +10,7 @@
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     transition: all 0.2s ease;
+    min-height: 350px;
 }
 
 .clean-card:hover {
