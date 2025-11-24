@@ -116,6 +116,22 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
     object-fit: cover;
 }
 
+.team-skills {
+    margin-top: 1rem;
+}
+
+.skill-badge {
+    display: inline-block;
+    background: #e9ecef;
+    color: #495057;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
 .cta-about {
     background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
     border-radius: 12px;
@@ -147,6 +163,489 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
 .cta-about .btn:hover {
     background: #f8f9fa;
     transform: translateY(-1px);
+}
+
+/* Timeline Styles */
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #007bff, #28a745);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -22px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #007bff;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #007bff;
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.timeline-content h4 {
+    color: #007bff;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Values Section */
+.values-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+}
+
+.value-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+    height: 100%;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: white;
+    font-size: 2rem;
+}
+
+.value-card h4 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+/* Certifications */
+.certifications-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.certification-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.certification-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.certification-content h5 {
+    margin-bottom: 0.25rem;
+    color: #007bff;
+}
+
+/* Partners */
+.partners-showcase {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.partner-logos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.partner-logo {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.partner-logo span {
+    margin-left: 1rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Impact Section */
+.impact-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+}
+
+.impact-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    height: 100%;
+    transition: transform 0.2s ease;
+}
+
+.impact-card:hover {
+    transform: translateY(-5px);
+}
+
+.impact-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.impact-card h4 {
+    color: #17a2b8;
+    margin-bottom: 1rem;
+}
+
+/* Vision Section */
+.vision-section {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-radius: 12px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    color: white;
+}
+
+.vision-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.vision-goals {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.goal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.goal-year {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.goal-content h5 {
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+/* Gallery Section */
+.gallery-section {
+    margin-bottom: 3rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.2s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-overlay h5 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timeline {
+        padding-left: 20px;
+    }
+
+    .timeline-marker {
+        left: -17px;
+    }
+
+    .values-section,
+    .impact-section,
+    .vision-section {
+        padding: 2rem 1rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vision-goals {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Detailed Testimonials */
+.testimonials-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+}
+
+.testimonial-detailed {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    height: 100%;
+    border-left: 4px solid #007bff;
+}
+
+.testimonial-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-avatar {
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.testimonial-info h5 {
+    margin-bottom: 0.25rem;
+    color: #007bff;
+}
+
+.testimonial-rating {
+    margin-top: 0.5rem;
+}
+
+.testimonial-quote {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #495057;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.testimonial-quote::before {
+    content: '"';
+    font-size: 4rem;
+    color: #e9ecef;
+    position: absolute;
+    left: -10px;
+    top: -20px;
+    font-family: Georgia, serif;
+}
+
+.testimonial-meta {
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Advanced Metrics */
+.advanced-metrics {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    color: white;
+}
+
+.metrics-dashboard {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.metric-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.metric-item {
+    text-align: center;
+}
+
+.metric-chart {
+    margin-bottom: 1rem;
+}
+
+.chart-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 4px solid rgba(255,255,255,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+.chart-circle::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: conic-gradient(#ffffff 0% 99.5%, transparent 99.5% 100%);
+    mask: radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 4px));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 4px));
+}
+
+.chart-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    z-index: 1;
+    position: relative;
+}
+
+.chart-label {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+}
+
+.metric-description {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.metric-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.highlight-item {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.highlight-number {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.highlight-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.highlight-trend {
+    font-size: 0.8rem;
+    color: #28a745;
+    font-weight: 500;
 }
 </style>
 
@@ -229,6 +728,344 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
             </div>
         </div>
 
+        <!-- La Nostra Storia -->
+        <div class="about-panel-full">
+            <h2 class="text-center mb-5">La Nostra Storia</h2>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>2016 - La Fondazione</h4>
+                            <p>Nasce AG SERVIZI come punto di riferimento per i servizi digitali nella zona di Castellammare di Stabia. Iniziamo con l'obiettivo di semplificare la vita quotidiana dei cittadini attraverso soluzioni tecnologiche accessibili.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>2017 - Prima Espansione</h4>
+                            <p>Otteniamo le prime partnership ufficiali con i principali operatori telefonici. Introduciamo il servizio di assistenza personalizzata per privati e piccole imprese.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>2019 - Certificazione ISO 27001</h4>
+                            <p>Raggiungiamo lo standard internazionale per la sicurezza delle informazioni, garantendo la massima protezione dei dati dei nostri clienti.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>2020 - Digital Transformation</h4>
+                            <p>Durante la pandemia, diventiamo pionieri nell'assistenza remota. Introduciamo servizi digitali avanzati e formazione online per cittadini e imprese.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>2022 - Nuovo Showroom</h4>
+                            <p>Apriamo la nuova sede in Via Plinio il Vecchio con spazi dedicati alla consulenza personalizzata e formazione digitale.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>2024 - Leadership Locale</h4>
+                            <p>Celebrimo 8 anni di servizio con oltre 12.000 clienti soddisfatti. Rafforziamo il nostro ruolo di punto di riferimento per l'innovazione digitale sul territorio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- I Nostri Valori -->
+        <div class="values-section">
+            <h2 class="text-center mb-5">I Nostri Valori</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Sicurezza</h4>
+                        <p>La privacy e la sicurezza dei dati sono al centro di tutto quello che facciamo. Ogni processo è certificato e monitorato.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Prossimità</h4>
+                        <p>Siamo parte della comunità locale. Conosciamo le esigenze specifiche del territorio e ci adattiamo alle necessità reali.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Innovazione</h4>
+                        <p>Investiamo continuamente in nuove tecnologie per offrire servizi all'avanguardia, sempre un passo avanti alle esigenze.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Fiducia</h4>
+                        <p>Costruiamo relazioni durature basate sulla trasparenza, l'onestà e il rispetto per i nostri clienti e partner.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificazioni e Partnership -->
+        <div class="about-panel-full">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="mb-4">Certificazioni e Partnership</h2>
+                    <p class="lead mb-4">La nostra competenza è riconosciuta da istituzioni e partner leader del settore.</p>
+
+                    <div class="certifications-grid">
+                        <div class="certification-item">
+                            <div class="certification-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div class="certification-content">
+                                <h5>ISO 27001</h5>
+                                <p>Sistema di Gestione per la Sicurezza delle Informazioni</p>
+                                <small class="text-muted">Certificazione ottenuta nel 2019</small>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <div class="certification-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <div class="certification-content">
+                                <h5>Privacy Officer</h5>
+                                <p>Responsabile della Protezione dei Dati</p>
+                                <small class="text-muted">DPO qualificato GDPR</small>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <div class="certification-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="certification-content">
+                                <h5>Partner TIM</h5>
+                                <p>Partner Ufficiale Telecom Italia</p>
+                                <small class="text-muted">Rivenditore autorizzato</small>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <div class="certification-icon">
+                                <i class="fas fa-sim-card"></i>
+                            </div>
+                            <div class="certification-content">
+                                <h5>Partner Vodafone</h5>
+                                <p>Partner Ufficiale Vodafone Italia</p>
+                                <small class="text-muted">Rivenditore autorizzato</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="partners-showcase">
+                        <h5 class="mb-3">I Nostri Partner</h5>
+                        <div class="partner-logos">
+                            <div class="partner-logo">
+                                <i class="fab fa-telegram-plane fa-2x text-primary"></i>
+                                <span>Poste Italiane</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-envelope fa-2x text-info"></i>
+                                <span>PEC Aruba</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-credit-card fa-2x text-success"></i>
+                                <span>Satispay</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-truck fa-2x text-warning"></i>
+                                <span>Bartolini</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Impatto nella Comunità -->
+        <div class="impact-section">
+            <h2 class="text-center mb-5">Il Nostro Impegno per la Comunità</h2>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Formazione Digitale</h4>
+                        <p>Organizziamo corsi gratuiti di alfabetizzazione digitale per anziani e cittadini, aiutando oltre 500 persone all'anno a familiarizzare con i servizi online.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h4>Supporto alle PMI</h4>
+                        <p>Offriamo consulenze gratuite alle piccole imprese locali per la digitalizzazione, contribuendo alla crescita economica del territorio.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h4>Sostenibilità</h4>
+                        <p>Promuoviamo pratiche sostenibili riducendo l'uso di carta e incoraggiando i pagamenti digitali, contribuendo alla riduzione dell'impatto ambientale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision Futura -->
+        <div class="vision-section">
+            <div class="vision-content">
+                <h2 class="text-center mb-4">La Nostra Vision</h2>
+                <p class="lead text-center mb-5">Essere il punto di riferimento digitale per cittadini e imprese della nostra regione, facilitando l'accesso ai servizi attraverso innovazione tecnologica e servizio personalizzato.</p>
+
+                <div class="vision-goals">
+                    <div class="goal-item">
+                        <div class="goal-year">2025</div>
+                        <div class="goal-content">
+                            <h5>Espansione Digitale</h5>
+                            <p>Introduzione di nuovi servizi digitali e app mobile proprietaria per una gestione semplificata delle pratiche.</p>
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-year">2026</div>
+                        <div class="goal-content">
+                            <h5>Centro di Innovazione</h5>
+                            <p>Creazione di un hub tecnologico locale che supporti startup e imprese nell'adozione di tecnologie digitali avanzate.</p>
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-year">2027</div>
+                        <div class="goal-content">
+                            <h5>Eccellenza nel Servizio</h5>
+                            <p>Raggiungimento del 100% di soddisfazione clienti attraverso processi ottimizzati e formazione continua del team.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galleria Fotografica -->
+        <div class="gallery-section">
+            <h2 class="text-center mb-5">La Nostra Realtà</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5VfficioBQcmluY2lwYWxlPC90ZXh0Pgo8L3N2Zz4=" alt="Ufficio Principale">
+                    <div class="gallery-overlay">
+                        <h5>Ufficio Principale</h5>
+                        <p>La nostra sede accogliente in Via Plinio il Vecchio</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5Db25zdWxlbnphPC90ZXh0Pgo8L3N2Zz4=" alt="Consulenza">
+                    <div class="gallery-overlay">
+                        <h5>Consulenza Personalizzata</h5>
+                        <p>Il nostro team al lavoro per i clienti</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5Gb3JtYXppb25lPC90ZXh0Pgo8L3N2Zz4=" alt="Formazione">
+                    <div class="gallery-overlay">
+                        <h5>Formazione Digitale</h5>
+                        <p>Corsi e workshop per la comunità</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5UZXJuYXRpdm8mbHQvdGV4dD4KPC9zdmc+" alt="Tecnativo">
+                    <div class="gallery-overlay">
+                        <h5>Tecnologia Avanzata</h5>
+                        <p>Strumenti digitali per servizi efficienti</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Chi Siamo -->
+        <div class="about-panel-full">
+            <h2 class="text-center mb-5">Domande Frequenti su di Noi</h2>
+            <div class="accordion" id="aboutFaq">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#about-faq1">
+                            Da quanto tempo operate sul territorio?
+                        </button>
+                    </h2>
+                    <div id="about-faq1" class="accordion-collapse collapse show" data-bs-parent="#aboutFaq">
+                        <div class="accordion-body">
+                            Operiamo sul territorio di Castellammare di Stabia e zona dal 2016, celebrando quest'anno il nostro ottavo anniversario. In questi anni abbiamo assistito oltre 12.000 clienti soddisfatti.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#about-faq2">
+                            Qual è la vostra mission aziendale?
+                        </button>
+                    </h2>
+                    <div id="about-faq2" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                        <div class="accordion-body">
+                            La nostra mission è semplificare la vita quotidiana dei cittadini attraverso servizi digitali accessibili e sicuri. Vogliamo essere il ponte tra le persone e la tecnologia, rendendo i servizi complessi semplici e affidabili.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#about-faq3">
+                            Come scegliete i vostri partner commerciali?
+                        </button>
+                    </h2>
+                    <div id="about-faq3" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                        <div class="accordion-body">
+                            Selezioniamo partner che condividono i nostri valori di qualità, sicurezza e servizio al cliente. Collaboriamo esclusivamente con aziende certificate e leader di mercato per garantire ai nostri clienti il massimo livello di affidabilità.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#about-faq4">
+                            Come contribuite alla comunità locale?
+                        </button>
+                    </h2>
+                    <div id="about-faq4" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                        <div class="accordion-body">
+                            Oltre ai nostri servizi commerciali, organizziamo corsi gratuiti di alfabetizzazione digitale, forniamo consulenze gratuite alle PMI locali e promuoviamo pratiche sostenibili. Crediamo che il successo aziendale debba andare di pari passo con il benessere della comunità.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#about-faq5">
+                            Quali sono i vostri obiettivi futuri?
+                        </button>
+                    </h2>
+                    <div id="about-faq5" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                        <div class="accordion-body">
+                            Nei prossimi anni puntiamo a diventare un vero e proprio hub di innovazione digitale per il territorio, sviluppando app proprietarie e servizi avanzati. Il nostro obiettivo è raggiungere il 100% di soddisfazione clienti attraverso processi sempre più efficienti.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Stats Grid -->
         <div class="stats-grid-full">
             <div class="stat-card-full">
@@ -254,22 +1091,229 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
             <h2 class="text-center mb-5">Il Nostro Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="assets/img/team-placeholder.jpg" alt="Team Member" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjQzRDNEM0Ii8+CjxwYXRoIGQ9Ik0yMCA3NVEyMCA2MCAzNSA2MEM1MCA2MCA1MCA3MCA1MCA4NUM1MCA5NSA2NSA5NSA4MCA5NUM4NSA4NSA4NSA3NSA4MCA3NVoiIGZpbGw9IiNDNEM0QzQiLz4KPC9zdmc+'">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjMzM4OEZGIi8+CjxwYXRoIGQ9Ik0yMCA3NVEyMCA2MCAzNSA2MEM1MCA2MCA1MCA3MCA1MCA4NUM1MCA5NSA2NSA5NSA4MCA5NUM4NSA4NSA4NSA3NSA4MCA3NVoiIGZpbGw9IiMzMzg4RkYiLz4KPC9zdmc+" alt="Giuseppe Rossi">
                     <h4>Giuseppe Rossi</h4>
                     <p class="text-muted mb-2">Fondatore & CEO</p>
-                    <p class="small">Esperto in servizi digitali e telecomunicazioni con oltre 15 anni di esperienza nel settore.</p>
+                    <p class="small">Esperto in servizi digitali e telecomunicazioni con oltre 15 anni di esperienza. Guida la visione strategica dell'azienda e le relazioni con i partner principali.</p>
+                    <div class="team-skills">
+                        <span class="skill-badge">Leadership</span>
+                        <span class="skill-badge">Strategia</span>
+                        <span class="skill-badge">Telecomunicazioni</span>
+                    </div>
                 </div>
                 <div class="team-member">
-                    <img src="assets/img/team-placeholder.jpg" alt="Team Member" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjQzRDNEM0Ii8+CjxwYXRoIGQ9Ik0yMCA3NVEyMCA2MCAzNSA2MEM1MCA2MCA1MCA3MCA1MCA4NUM1MCA5NSA2NSA5NSA4MCA5NUM4NSA4NSA4NSA3NSA4MCA3NVoiIGZpbGw9IiNDNEM0QzQiLz4KPC9zdmc+'">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjRUI0NjkyIi8+CjxwYXRoIGQ9Ik0yMCA3NVEyMCA2MCAzNSA2MEM1MCA2MCA1MCA3MCA1MCA4NUM1MCA5NSA2NSA5NSA4MCA5NUM4NSA4NSA4NSA3NSA4MCA3NVoiIGZpbGw9IiNFQjQ2OTIiLz4KPC9zdmc+" alt="Maria Bianchi">
                     <h4>Maria Bianchi</h4>
                     <p class="text-muted mb-2">Responsabile Servizi Clienti</p>
-                    <p class="small">Specializzata in customer care e gestione relazioni, garantisce un servizio eccellente a tutti i nostri clienti.</p>
+                    <p class="small">Specializzata in customer care e gestione relazioni, garantisce un servizio eccellente. Coordina il team di assistenza e forma il personale.</p>
+                    <div class="team-skills">
+                        <span class="skill-badge">Customer Care</span>
+                        <span class="skill-badge">Formazione</span>
+                        <span class="skill-badge">Gestione Team</span>
+                    </div>
                 </div>
                 <div class="team-member">
-                    <img src="assets/img/team-placeholder.jpg" alt="Team Member" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjQzRDNEM0Ii8+CjxwYXRoIGQ9Ik0yMCA3NVEyMCA2MCAzNSA2MEM1MCA2MCA1MCA3MCA1MCA4NUM1MCA5NSA2NSA5NSA4MCA5NUM4NSA4NSA4NSA3NSA4MCA3NVoiIGZpbGw9IiNDNEM0QzQiLz4KPC9zdmc+'">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjMjA5Q0U5Ii8+CjxwYXRoIGQ9Ik0yMCA3NVEyMCA2MCAzNSA2MEM1MCA2MCA1MCA3MCA1MCA4NUM1MCA5NSA2NSA5NSA4MCA5NUM4NSA4NSA4NSA3NSA4MCA3NVoiIGZpbGw9IiMyMDlDRjkiLz4KPC9zdmc+" alt="Luca Verdi">
                     <h4>Luca Verdi</h4>
                     <p class="text-muted mb-2">Tecnico Specializzato</p>
-                    <p class="small">Esperto in attivazioni digitali e supporto tecnico, aiuta i clienti con SPID, PEC e firma digitale.</p>
+                    <p class="small">Esperto in attivazioni digitali e supporto tecnico. Specializzato in SPID, PEC, firma digitale e assistenza tecnica avanzata.</p>
+                    <div class="team-skills">
+                        <span class="skill-badge">SPID/PEC</span>
+                        <span class="skill-badge">Firma Digitale</span>
+                        <span class="skill-badge">Supporto Tecnico</span>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMzUiIHI9IjE1IiBmaWxsPSIjMTdhMmI4Ii8+CjxwYXRoIGQ9Ik0yMCA3NVEyMCA2MCAzNSA2MEM1MCA2MCA1MCA3MCA1MCA4NUM1MCA5NSA2NSA5NSA4MCA5NUM4NSA4NSA4NSA3NSA4MCA3NVoiIGZpbGw9IiMxN2EyYjgiLz4KPC9zdmc+" alt="Sara Neri">
+                    <h4>Sara Neri</h4>
+                    <p class="text-muted mb-2">Specialista Pagamenti Digitali</p>
+                    <p class="small">Esperta in soluzioni di pagamento elettronico e fintech. Gestisce partnership con istituti bancari e piattaforme di pagamento digitali.</p>
+                    <div class="team-skills">
+                        <span class="skill-badge">Pagamenti</span>
+                        <span class="skill-badge">Fintech</span>
+                        <span class="skill-badge">Partnership</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial Approfonditi -->
+        <div class="testimonials-section">
+            <h2 class="text-center mb-5">Cosa Dicono di Noi</h2>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="testimonial-detailed">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user-circle fa-3x text-primary"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h5>Antonio Marino</h5>
+                                <p class="text-muted mb-1">Titolare Pizzeria "Da Antonio"</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "AG SERVIZI mi ha aiutato a digitalizzare completamente la mia attività. Dal POS moderno ai pagamenti contactless, fino alla PEC aziendale. Il loro supporto è stato fondamentale per crescere nel mercato attuale. Servizio professionale e sempre disponibile."
+                        </blockquote>
+                        <div class="testimonial-meta">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i>Cliente dal 2018
+                                <i class="fas fa-map-marker-alt ms-3 me-1"></i>Castellammare di Stabia
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="testimonial-detailed">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user-circle fa-3x text-success"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h5>Dott.ssa Elena Russo</h5>
+                                <p class="text-muted mb-1">Studio Legale Russo & Associati</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "La competenza tecnica e l'affidabilità sono impressionanti. Hanno gestito la migrazione di tutto il nostro sistema documentale alla firma digitale con una precisione assoluta. Il team è preparato e sa ascoltare le esigenze specifiche di uno studio legale."
+                        </blockquote>
+                        <div class="testimonial-meta">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i>Cliente dal 2020
+                                <i class="fas fa-map-marker-alt ms-3 me-1"></i>Sorrento
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="testimonial-detailed">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user-circle fa-3x text-info"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h5>Famiglia Esposito</h5>
+                                <p class="text-muted mb-1">Famiglia con 3 figli</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "Hanno organizzato un corso di alfabetizzazione digitale gratuito per me e mio marito. Ora riusciamo a fare tutto online: dallo SPID alle pratiche INPS. La loro pazienza e disponibilità hanno fatto la differenza per persone come noi meno abituate alla tecnologia."
+                        </blockquote>
+                        <div class="testimonial-meta">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i>Partecipanti dal 2021
+                                <i class="fas fa-map-marker-alt ms-3 me-1"></i>Castellammare di Stabia
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="testimonial-detailed">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user-circle fa-3x text-warning"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h5>Marco Santoro</h5>
+                                <p class="text-muted mb-1">Freelance Web Developer</p>
+                                <div class="testimonial-rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "Come professionista IT apprezzo la loro competenza tecnica. Mi hanno aiutato con configurazioni avanzate di rete e sicurezza informatica. Il supporto è sempre tempestivo e le soluzioni proposte sono sempre all'avanguardia."
+                        </blockquote>
+                        <div class="testimonial-meta">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i>Cliente dal 2019
+                                <i class="fas fa-map-marker-alt ms-3 me-1"></i>Vico Equense
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metriche Avanzate -->
+        <div class="advanced-metrics">
+            <h2 class="text-center mb-5">I Nostri Risultati in Numeri</h2>
+            <div class="metrics-dashboard">
+                <div class="metric-row">
+                    <div class="metric-item">
+                        <div class="metric-chart">
+                            <div class="chart-circle" data-percent="99.5">
+                                <span class="chart-number">99.5%</span>
+                                <span class="chart-label">Soddisfazione</span>
+                            </div>
+                        </div>
+                        <p class="metric-description">Tasso di soddisfazione clienti basato su oltre 4.500 pratiche gestite annualmente</p>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-chart">
+                            <div class="chart-circle" data-percent="24">
+                                <span class="chart-number">< 24h</span>
+                                <span class="chart-label">Risposta Media</span>
+                            </div>
+                        </div>
+                        <p class="metric-description">Tempo medio di risposta alle richieste, garantito per tutti i canali</p>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-chart">
+                            <div class="chart-circle" data-percent="100">
+                                <span class="chart-number">100%</span>
+                                <span class="chart-label">Certificato</span>
+                            </div>
+                        </div>
+                        <p class="metric-description">Processi certificati ISO 27001 per la sicurezza delle informazioni</p>
+                    </div>
+                </div>
+                <div class="metric-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-number">12.000+</div>
+                        <div class="highlight-label">Clienti Soddisfatti</div>
+                        <div class="highlight-trend">↗️ +15% annuo</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">500+</div>
+                        <div class="highlight-label">Corsi Formazione</div>
+                        <div class="highlight-trend">↗️ +25% annuo</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">10+</div>
+                        <div class="highlight-label">Partner Certificati</div>
+                        <div class="highlight-trend">↗️ Costante</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">8</div>
+                        <div class="highlight-label">Anni di Attività</div>
+                        <div class="highlight-trend">↗️ In crescita</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -284,3 +1328,37 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
         </div>
     </div>
 </section>
+
+<script>
+// Animate metric circles on scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'pulse 2s ease-in-out';
+            }
+        });
+    }, observerOptions);
+
+    // Observe metric circles
+    document.querySelectorAll('.chart-circle').forEach(circle => {
+        observer.observe(circle);
+    });
+
+    // Add animation keyframes
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+});
+</script>

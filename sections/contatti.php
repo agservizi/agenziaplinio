@@ -410,7 +410,7 @@
                             <ul class="list-unstyled">
                                 <li><strong>Lunedì-Venerdì:</strong> 08:30-19:15 (pausa 13:15-16:00)</li>
                                 <li><strong>Sabato:</strong> 09:15-13:00</li>
-                                <li><strong>Domenica:</strong> Chiuso (servizio emergenza attivo)</li>
+                                <li><strong>Domenica:</strong> Chiuso</li>
                                 <li><strong>Festivi:</strong> Su appuntamento</li>
                             </ul>
                         </div>
