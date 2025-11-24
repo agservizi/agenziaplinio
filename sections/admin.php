@@ -65,6 +65,65 @@ $editingId = isset($_GET['product']) ? (int) $_GET['product'] : (isset($_GET['id
 $editingProduct = $editingId ? ap_find_product($editingId) : null;
 $categoryOptions = ap_product_category_options();
 $customFields = $editingProduct ? ap_fetch_product_custom_fields($editingId) : [];
+
+// Filtri e paginazione per il catalogo prodotti
+$productFilters = [];
+$productStatusFilter = $_GET['product_status'] ?? 'all';
+$productCategoryFilter = $_GET['product_category'] ?? 'all';
+$productFulfillmentFilter = $_GET['product_fulfillment'] ?? 'all';
+$productSearchTerm = trim((string) ($_GET['product_q'] ?? ''));
+$productSortBy = $_GET['sort'] ?? 'created_at';
+$productSortOrder = $_GET['order'] ?? 'desc';
+
+if ($productStatusFilter !== 'all') {
+    $productFilters['is_active'] = $productStatusFilter === 'active';
+}
+if ($productCategoryFilter !== 'all') {
+    $productFilters['category_key'] = $productCategoryFilter;
+}
+if ($productFulfillmentFilter !== 'all') {
+    $productFilters['fulfillment_type'] = $productFulfillmentFilter;
+}
+if ($productSearchTerm !== '') {
+    $productFilters['search'] = $productSearchTerm;
+}
+
+$productsPerPage = 20;
+$productsPage = max(1, (int) ($_GET['products_page'] ?? 1));
+$productsTotal = ap_count_products($productFilters);
+$productsPages = max(1, (int) ceil($productsTotal / $productsPerPage));
+if ($productsPage > $productsPages) {
+    $productsPage = $productsPages;
+}
+$productFiltersPaginated = $productFilters;
+$productFiltersPaginated['limit'] = $productsPerPage;
+$productFiltersPaginated['offset'] = ($productsPage - 1) * $productsPerPage;
+$productFiltersPaginated['sort_by'] = $productSortBy;
+$productFiltersPaginated['sort_order'] = $productSortOrder;
+$products = ap_fetch_products($productFiltersPaginated);
+
+$buildProductsPageUrl = function (int $page) use ($productSearchTerm, $productStatusFilter, $productCategoryFilter, $productFulfillmentFilter, $productSortBy, $productSortOrder, $adminUrl) {
+    $query = ['products_page' => max(1, $page)];
+    if ($productSearchTerm !== '') {
+        $query['product_q'] = $productSearchTerm;
+    }
+    if ($productStatusFilter !== 'all') {
+        $query['product_status'] = $productStatusFilter;
+    }
+    if ($productCategoryFilter !== 'all') {
+        $query['product_category'] = $productCategoryFilter;
+    }
+    if ($productFulfillmentFilter !== 'all') {
+        $query['product_fulfillment'] = $productFulfillmentFilter;
+    }
+    if ($productSortBy !== 'created_at') {
+        $query['sort'] = $productSortBy;
+    }
+    if ($productSortOrder !== 'desc') {
+        $query['order'] = $productSortOrder;
+    }
+    return $adminUrl($query);
+};
 $totalRevenue = (int) ($insights['total_revenue'] ?? 0);
 $recentRevenue = (int) ($insights['recent_revenue'] ?? 0);
 $averageOrder = (int) ($insights['average_order'] ?? 0);
@@ -676,19 +735,95 @@ $auditEventTypes = [
             </div>
             <div class="col-md-6 col-xl-7">
                 <div class="admin-card h-100 d-flex flex-column">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                         <div>
                             <h4 class="mb-0">Catalogo prodotti</h4>
-                            <span class="badge bg-light text-dark"><?php echo count($products); ?> prodotti</span>
+                            <span class="badge bg-light text-dark"><?php echo $productsTotal; ?> prodotti</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-primary btn-sm" href="<?php echo htmlspecialchars($adminUrl(['section' => 'edit_product']), ENT_QUOTES); ?>">Nuovo prodotto</a>
                         </div>
                     </div>
+                    
+                    <!-- Form di ricerca e filtri -->
+                    <form class="row g-2 align-items-end mb-3" method="get" action="<?php echo htmlspecialchars($adminBasePath, ENT_QUOTES); ?>">
+                        <input type="hidden" name="section" value="catalogo">
+                        <input type="hidden" name="products_page" value="1">
+                        <div class="col-lg-3">
+                            <label class="form-label" for="product_q">Cerca prodotti</label>
+                            <input class="form-control" type="search" id="product_q" name="product_q" value="<?php echo htmlspecialchars($productSearchTerm, ENT_QUOTES); ?>" placeholder="Nome, SKU...">
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="form-label" for="product_status">Stato</label>
+                            <select class="form-select" id="product_status" name="product_status">
+                                <option value="all">Tutti</option>
+                                <option value="active" <?php echo $productStatusFilter === 'active' ? 'selected' : ''; ?>>Attivi</option>
+                                <option value="inactive" <?php echo $productStatusFilter === 'inactive' ? 'selected' : ''; ?>>Nascosti</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="form-label" for="product_category">Categoria</label>
+                            <select class="form-select" id="product_category" name="product_category">
+                                <option value="all">Tutte</option>
+                                <?php foreach ($categoryOptions as $key => $label): ?>
+                                    <option value="<?php echo htmlspecialchars($key, ENT_QUOTES); ?>" <?php echo $productCategoryFilter === $key ? 'selected' : ''; ?>><?php echo htmlspecialchars($label, ENT_QUOTES); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="form-label" for="product_fulfillment">Tipo</label>
+                            <select class="form-select" id="product_fulfillment" name="product_fulfillment">
+                                <option value="all">Tutti</option>
+                                <option value="digital" <?php echo $productFulfillmentFilter === 'digital' ? 'selected' : ''; ?>>Digitali</option>
+                                <option value="physical" <?php echo $productFulfillmentFilter === 'physical' ? 'selected' : ''; ?>>Fisici</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="form-label" for="sort">Ordina per</label>
+                            <select class="form-select" id="sort" name="sort">
+                                <option value="created_at" <?php echo $productSortBy === 'created_at' ? 'selected' : ''; ?>>Data creazione</option>
+                                <option value="name" <?php echo $productSortBy === 'name' ? 'selected' : ''; ?>>Nome</option>
+                                <option value="price_cents" <?php echo $productSortBy === 'price_cents' ? 'selected' : ''; ?>>Prezzo</option>
+                                <option value="stock" <?php echo $productSortBy === 'stock' ? 'selected' : ''; ?>>Stock</option>
+                                <option value="is_active" <?php echo $productSortBy === 'is_active' ? 'selected' : ''; ?>>Stato</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-1">
+                            <label class="form-label" for="order">Ordine</label>
+                            <select class="form-select" id="order" name="order">
+                                <option value="desc" <?php echo $productSortOrder === 'desc' ? 'selected' : ''; ?>>↓</option>
+                                <option value="asc" <?php echo $productSortOrder === 'asc' ? 'selected' : ''; ?>>↑</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 d-flex gap-2">
+                            <button class="btn btn-outline-secondary flex-grow-1" type="submit">Filtra</button>
+                            <a class="btn btn-link text-nowrap p-0" href="<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>">Reset</a>
+                        </div>
+                    </form>
+                    
                     <?php if (empty($products)): ?>
                         <p class="text-muted mb-0">Ancora nessun prodotto nel catalogo.</p>
                     <?php else: ?>
+                        <!-- Controlli bulk -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-outline-secondary" type="button" id="selectAllProducts">Seleziona tutti</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" id="deselectAllProducts">Deseleziona</button>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-success" type="button" id="bulkActivateProducts" disabled>Attiva selezionati</button>
+                                <button class="btn btn-sm btn-warning" type="button" id="bulkDeactivateProducts" disabled>Disattiva selezionati</button>
+                                <button class="btn btn-sm btn-danger" type="button" id="bulkDeleteProducts" disabled data-bs-toggle="modal" data-bs-target="#bulkDeleteProductsModal">Elimina selezionati</button>
+                            </div>
+                        </div>
+                        
                         <div class="table-responsive flex-grow-1">
                             <table class="table align-middle">
                                 <thead>
                                     <tr>
+                                        <th width="40">
+                                            <input class="form-check-input" type="checkbox" id="productMasterCheckbox">
+                                        </th>
                                         <th>ID</th>
                                         <th>Nome</th>
                                         <th>Prezzo</th>
@@ -700,6 +835,9 @@ $auditEventTypes = [
                                 <tbody>
                                     <?php foreach ($products as $product): ?>
                                         <tr>
+                                            <td>
+                                                <input class="form-check-input product-checkbox" type="checkbox" value="<?php echo (int) $product['id']; ?>" data-product-name="<?php echo htmlspecialchars($product['name'], ENT_QUOTES); ?>">
+                                            </td>
                                             <td>#<?php echo (int) $product['id']; ?></td>
                                             <td>
                                                 <strong><?php echo htmlspecialchars($product['name'], ENT_QUOTES); ?></strong>
@@ -716,6 +854,12 @@ $auditEventTypes = [
                                             </td>
                                             <td>
                                                 <a class="btn btn-sm btn-outline-primary" href="<?php echo htmlspecialchars($adminUrl(['section' => 'edit_product', 'id' => (int) $product['id']]), ENT_QUOTES); ?>">Modifica</a>
+                                                <form method="post" class="d-inline ms-1">
+                                                    <input type="hidden" name="ap_action" value="admin_duplicate_product">
+                                                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo (int) $product['id']; ?>">
+                                                    <button class="btn btn-sm btn-outline-secondary" type="submit" title="Duplica prodotto">Duplica</button>
+                                                </form>
                                                 <button class="btn btn-sm btn-danger ms-2" type="button" data-bs-toggle="modal" data-bs-target="#deleteProductModal" data-product-id="<?php echo (int) $product['id']; ?>" data-product-name="<?php echo htmlspecialchars($product['name'], ENT_QUOTES); ?>">Elimina</button>
                                             </td>
                                         </tr>
@@ -723,6 +867,27 @@ $auditEventTypes = [
                                 </tbody>
                             </table>
                         </div>
+                        
+                        <!-- Paginazione -->
+                        <?php if ($productsPages > 1): ?>
+                            <nav class="mt-3">
+                                <ul class="pagination pagination-sm mb-0 flex-wrap">
+                                    <?php $prevPage = max(1, $productsPage - 1); ?>
+                                    <li class="page-item <?php echo $productsPage === 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo htmlspecialchars($buildProductsPageUrl($prevPage), ENT_QUOTES); ?>" aria-label="Pagina precedente">&laquo;</a>
+                                    </li>
+                                    <?php for ($pageNumber = 1; $pageNumber <= $productsPages; $pageNumber++): ?>
+                                        <li class="page-item <?php echo $pageNumber === $productsPage ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo htmlspecialchars($buildProductsPageUrl($pageNumber), ENT_QUOTES); ?>"><?php echo $pageNumber; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <?php $nextPage = min($productsPages, $productsPage + 1); ?>
+                                    <li class="page-item <?php echo $productsPage === $productsPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo htmlspecialchars($buildProductsPageUrl($nextPage), ENT_QUOTES); ?>" aria-label="Pagina successiva">&raquo;</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
@@ -1996,6 +2161,188 @@ $auditEventTypes = [
             }
         </script>
         <script>
+            // Bulk actions for products
+            document.addEventListener('DOMContentLoaded', function() {
+                const masterCheckbox = document.getElementById('productMasterCheckbox');
+                const productCheckboxes = document.querySelectorAll('.product-checkbox');
+                const selectAllBtn = document.getElementById('selectAllProducts');
+                const deselectAllBtn = document.getElementById('deselectAllProducts');
+                const bulkActivateBtn = document.getElementById('bulkActivateProducts');
+                const bulkDeactivateBtn = document.getElementById('bulkDeactivateProducts');
+                const bulkDeleteBtn = document.getElementById('bulkDeleteProducts');
+                const bulkDeleteModal = document.getElementById('bulkDeleteProductsModal');
+                const bulkDeleteForm = document.getElementById('bulkDeleteProductsForm');
+                const bulkDeleteProductIds = document.getElementById('bulkDeleteProductIds');
+                const bulkDeleteProductList = document.getElementById('bulkDeleteProductList');
+                
+                function updateBulkButtons() {
+                    const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
+                    const hasSelection = checkedBoxes.length > 0;
+                    
+                    bulkActivateBtn.disabled = !hasSelection;
+                    bulkDeactivateBtn.disabled = !hasSelection;
+                    bulkDeleteBtn.disabled = !hasSelection;
+                    
+                    // Update master checkbox state
+                    if (masterCheckbox) {
+                        const totalCheckboxes = productCheckboxes.length;
+                        const checkedCount = checkedBoxes.length;
+                        
+                        masterCheckbox.checked = checkedCount === totalCheckboxes && totalCheckboxes > 0;
+                        masterCheckbox.indeterminate = checkedCount > 0 && checkedCount < totalCheckboxes;
+                    }
+                }
+                
+                function getSelectedProductIds() {
+                    return Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
+                }
+                
+                function getSelectedProductNames() {
+                    return Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.getAttribute('data-product-name'));
+                }
+                
+                // Master checkbox handler
+                if (masterCheckbox) {
+                    masterCheckbox.addEventListener('change', function() {
+                        productCheckboxes.forEach(cb => {
+                            cb.checked = this.checked;
+                        });
+                        updateBulkButtons();
+                    });
+                }
+                
+                // Individual checkboxes handler
+                productCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', updateBulkButtons);
+                });
+                
+                // Select all button
+                if (selectAllBtn) {
+                    selectAllBtn.addEventListener('click', function() {
+                        productCheckboxes.forEach(cb => {
+                            cb.checked = true;
+                        });
+                        updateBulkButtons();
+                    });
+                }
+                
+                // Deselect all button
+                if (deselectAllBtn) {
+                    deselectAllBtn.addEventListener('click', function() {
+                        productCheckboxes.forEach(cb => {
+                            cb.checked = false;
+                        });
+                        updateBulkButtons();
+                    });
+                }
+                
+                // Bulk activate
+                if (bulkActivateBtn) {
+                    bulkActivateBtn.addEventListener('click', function() {
+                        const selectedIds = getSelectedProductIds();
+                        if (selectedIds.length === 0) return;
+                        
+                        const form = document.createElement('form');
+                        form.method = 'post';
+                        form.style.display = 'none';
+                        
+                        const actionInput = document.createElement('input');
+                        actionInput.type = 'hidden';
+                        actionInput.name = 'ap_action';
+                        actionInput.value = 'admin_bulk_update_products';
+                        form.appendChild(actionInput);
+                        
+                        const redirectInput = document.createElement('input');
+                        redirectInput.type = 'hidden';
+                        redirectInput.name = 'redirect_to';
+                        redirectInput.value = '<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>';
+                        form.appendChild(redirectInput);
+                        
+                        const statusInput = document.createElement('input');
+                        statusInput.type = 'hidden';
+                        statusInput.name = 'status';
+                        statusInput.value = 'active';
+                        form.appendChild(statusInput);
+                        
+                        selectedIds.forEach(id => {
+                            const idInput = document.createElement('input');
+                            idInput.type = 'hidden';
+                            idInput.name = 'product_ids[]';
+                            idInput.value = id;
+                            form.appendChild(idInput);
+                        });
+                        
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                }
+                
+                // Bulk deactivate
+                if (bulkDeactivateBtn) {
+                    bulkDeactivateBtn.addEventListener('click', function() {
+                        const selectedIds = getSelectedProductIds();
+                        if (selectedIds.length === 0) return;
+                        
+                        const form = document.createElement('form');
+                        form.method = 'post';
+                        form.style.display = 'none';
+                        
+                        const actionInput = document.createElement('input');
+                        actionInput.type = 'hidden';
+                        actionInput.name = 'ap_action';
+                        actionInput.value = 'admin_bulk_update_products';
+                        form.appendChild(actionInput);
+                        
+                        const redirectInput = document.createElement('input');
+                        redirectInput.type = 'hidden';
+                        redirectInput.name = 'redirect_to';
+                        redirectInput.value = '<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>';
+                        form.appendChild(redirectInput);
+                        
+                        const statusInput = document.createElement('input');
+                        statusInput.type = 'hidden';
+                        statusInput.name = 'status';
+                        statusInput.value = 'inactive';
+                        form.appendChild(statusInput);
+                        
+                        selectedIds.forEach(id => {
+                            const idInput = document.createElement('input');
+                            idInput.type = 'hidden';
+                            idInput.name = 'product_ids[]';
+                            idInput.value = id;
+                            form.appendChild(idInput);
+                        });
+                        
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                }
+                
+                // Bulk delete modal handler
+                if (bulkDeleteModal) {
+                    bulkDeleteModal.addEventListener('show.bs.modal', function() {
+                        const selectedIds = getSelectedProductIds();
+                        const selectedNames = getSelectedProductNames();
+                        
+                        if (bulkDeleteProductIds) {
+                            bulkDeleteProductIds.value = selectedIds.join(',');
+                        }
+                        
+                        if (bulkDeleteProductList) {
+                            bulkDeleteProductList.innerHTML = '<strong>Prodotti selezionati:</strong><ul class="mb-0 mt-1">';
+                            selectedNames.forEach(name => {
+                                bulkDeleteProductList.innerHTML += '<li>' + name + '</li>';
+                            });
+                            bulkDeleteProductList.innerHTML += '</ul>';
+                        }
+                    });
+                }
+                
+                // Initialize button states
+                updateBulkButtons();
+            });
+        </script>
+        <script>
             // Handle delete user modal
             const deleteUserModal = document.getElementById('deleteUserModal');
             if (deleteUserModal) {
@@ -2180,26 +2527,27 @@ $auditEventTypes = [
     </div>
 </div>
 
-<!-- Delete User Modal -->
-<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+<!-- Bulk Delete Products Modal -->
+<div class="modal fade" id="bulkDeleteProductsModal" tabindex="-1" aria-labelledby="bulkDeleteProductsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteUserModalLabel">Conferma eliminazione utente</h5>
+                <h5 class="modal-title" id="bulkDeleteProductsModalLabel">Conferma eliminazione multipla</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
             </div>
             <div class="modal-body">
-                <p>Sei sicuro di voler eliminare definitivamente l'utente <strong id="userName"></strong> (<span id="userEmail"></span>)?</p>
-                <p class="text-danger small">Questa azione non può essere annullata e rimuoverà definitivamente l'account utente.</p>
+                <p>Sei sicuro di voler eliminare definitivamente i prodotti selezionati?</p>
+                <div id="bulkDeleteProductList" class="small text-muted"></div>
+                <p class="text-danger small mt-2">Questa azione non può essere annullata.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                <form method="post" id="deleteUserForm" class="d-inline">
-                    <input type="hidden" name="ap_action" value="admin_delete_user">
-                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti']), ENT_QUOTES); ?>">
-                    <input type="hidden" name="user_id" id="deleteUserId">
+                <form method="post" id="bulkDeleteProductsForm" class="d-inline">
+                    <input type="hidden" name="ap_action" value="admin_bulk_delete_products">
+                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>">
+                    <input type="hidden" name="product_ids" id="bulkDeleteProductIds">
+                    <button type="submit" class="btn btn-danger">Elimina definitivamente</button>
                 </form>
-                <button type="button" class="btn btn-danger" id="confirmDeleteUserBtn">Elimina definitivamente</button>
             </div>
         </div>
     </div>

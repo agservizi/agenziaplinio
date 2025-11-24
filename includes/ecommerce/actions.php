@@ -1214,3 +1214,179 @@ function ap_action_admin_save_settings(): void
 }
 
 // Force cache reload - added 2025-01-24
+
+function ap_action_admin_bulk_update_products(): void
+{
+    if (!ap_auth_is_admin()) {
+        ap_flash('Non autorizzato.', 'error');
+        return;
+    }
+    $user = ap_auth_current_user();
+    $productIds = $_POST['product_ids'] ?? [];
+    $status = $_POST['status'] ?? '';
+    
+    if (!is_array($productIds) || empty($productIds)) {
+        ap_flash('Nessun prodotto selezionato.', 'error');
+        return;
+    }
+    
+    if (!in_array($status, ['active', 'inactive'], true)) {
+        ap_flash('Stato non valido.', 'error');
+        return;
+    }
+    
+    $pdo = ap_db();
+    $isActive = $status === 'active' ? 1 : 0;
+    
+    // Update products in bulk
+    $placeholders = str_repeat('?,', count($productIds) - 1) . '?';
+    $stmt = $pdo->prepare("UPDATE products SET is_active = ?, updated_at = NOW() WHERE id IN ($placeholders)");
+    $params = array_merge([$isActive], $productIds);
+    
+    try {
+        $stmt->execute($params);
+        $affectedRows = $stmt->rowCount();
+        
+        $action = $status === 'active' ? 'attivati' : 'disattivati';
+        ap_flash("$affectedRows prodotti $action.", 'success');
+        
+        // Log audit event
+        ap_log_audit_event('admin_action', "Prodotti bulk $action: $affectedRows prodotti", $user['id'] ?? null, [
+            'action' => 'bulk_product_status_update',
+            'status' => $status,
+            'product_ids' => $productIds,
+            'affected_count' => $affectedRows
+        ]);
+        
+        // Clear product cache
+        ap_cache_forget_prefix('products_');
+        
+    } catch (Exception $e) {
+        ap_flash('Errore durante l\'aggiornamento dei prodotti.', 'error');
+    }
+}
+
+function ap_action_admin_bulk_delete_products(): void
+{
+    if (!ap_auth_is_admin()) {
+        ap_flash('Non autorizzato.', 'error');
+        return;
+    }
+    $user = ap_auth_current_user();
+    $productIds = $_POST['product_ids'] ?? [];
+    
+    if (!is_array($productIds) || empty($productIds)) {
+        ap_flash('Nessun prodotto selezionato.', 'error');
+        return;
+    }
+    
+    $pdo = ap_db();
+    
+    try {
+        // Get product names for logging before deletion
+        $placeholders = str_repeat('?,', count($productIds) - 1) . '?';
+        $stmt = $pdo->prepare("SELECT id, name FROM products WHERE id IN ($placeholders)");
+        $stmt->execute($productIds);
+        $productsToDelete = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Delete product custom fields first
+        $stmt = $pdo->prepare("DELETE FROM product_custom_fields WHERE product_id IN ($placeholders)");
+        $stmt->execute($productIds);
+        
+        // Delete products
+        $stmt = $pdo->prepare("DELETE FROM products WHERE id IN ($placeholders)");
+        $stmt->execute($productIds);
+        $affectedRows = $stmt->rowCount();
+        
+        ap_flash("$affectedRows prodotti eliminati definitivamente.", 'warning');
+        
+        // Log audit event
+        $productNames = array_column($productsToDelete, 'name');
+        ap_log_audit_event('admin_action', "Prodotti bulk eliminati: " . implode(', ', $productNames), $user['id'] ?? null, [
+            'action' => 'bulk_product_deletion',
+            'product_ids' => $productIds,
+            'product_names' => $productNames,
+            'affected_count' => $affectedRows
+        ]);
+        
+        // Clear product cache
+        ap_cache_forget_prefix('products_');
+        
+    } catch (Exception $e) {
+        ap_flash('Errore durante l\'eliminazione dei prodotti.', 'error');
+    }
+}
+
+function ap_action_admin_duplicate_product(): void
+{
+    if (!ap_auth_is_admin()) {
+        ap_flash('Non autorizzato.', 'error');
+        return;
+    }
+    $user = ap_auth_current_user();
+    $productId = isset($_POST['product_id']) ? (int) $_POST['product_id'] : 0;
+    
+    if ($productId <= 0) {
+        ap_flash('Prodotto non trovato.', 'error');
+        return;
+    }
+    
+    $originalProduct = ap_find_product($productId);
+    if (!$originalProduct) {
+        ap_flash('Prodotto non trovato.', 'error');
+        return;
+    }
+    
+    $pdo = ap_db();
+    
+    try {
+        // Duplicate the product
+        $stmt = $pdo->prepare('
+            INSERT INTO products (
+                name, slug, description, price_cents, sku, stock, image_url, 
+                category_key, fulfillment_type, is_active, created_at, updated_at
+            ) 
+            SELECT 
+                CONCAT(name, " (copia)"), 
+                CONCAT(slug, "-copia-", UNIX_TIMESTAMP()), 
+                description, price_cents, sku, stock, image_url,
+                category_key, fulfillment_type, 0, NOW(), NOW()
+            FROM products 
+            WHERE id = ?
+        ');
+        $stmt->execute([$productId]);
+        $newProductId = $pdo->lastInsertId();
+        
+        // Duplicate custom fields
+        $stmt = $pdo->prepare('
+            INSERT INTO product_custom_fields (
+                product_id, field_name, field_label, field_type, field_options, is_required, sort_order
+            )
+            SELECT ?, field_name, field_label, field_type, field_options, is_required, sort_order
+            FROM product_custom_fields
+            WHERE product_id = ?
+        ');
+        $stmt->execute([$newProductId, $productId]);
+        
+        ap_flash('Prodotto duplicato. Ora puoi modificarlo.', 'success');
+        
+        // Log audit event
+        ap_log_audit_event('admin_action', 'Prodotto duplicato: ' . $originalProduct['name'] . ' → ID ' . $newProductId, $user['id'] ?? null, [
+            'action' => 'product_duplicated',
+            'original_product_id' => $productId,
+            'original_product_name' => $originalProduct['name'],
+            'new_product_id' => $newProductId
+        ]);
+        
+        // Clear product cache
+        ap_cache_forget_prefix('products_');
+        
+        // Redirect to edit the new product
+        $redirectTo = $_POST['redirect_to'] ?? '?page=admin&section=catalogo';
+        header('Location: ' . $redirectTo . '&section=edit_product&id=' . $newProductId);
+        exit;
+        
+    } catch (Exception $e) {
+        ap_flash('Errore durante la duplicazione del prodotto.', 'error');
+    }
+}

@@ -32,20 +32,11 @@ function ap_slugify(string $value): string
     return trim($value, '-') ?: ap_random_token(8);
 }
 
-function ap_fetch_products(array $filters = [], bool $onlyActive = true): array
+function ap_count_products(array $filters = []): int
 {
-    $cacheKey = 'products_' . md5(serialize([$filters, $onlyActive]));
-    $cached = ap_cache_get($cacheKey, 300);
-    if ($cached !== null) {
-        return $cached;
-    }
     $pdo = ap_db();
-    $sql = 'SELECT * FROM products WHERE 1=1';
+    $sql = 'SELECT COUNT(*) FROM products WHERE 1=1';
     $params = [];
-
-    if ($onlyActive) {
-        $sql .= ' AND is_active = 1';
-    }
 
     if (!empty($filters['ids']) && is_array($filters['ids'])) {
         $ids = array_values(array_filter(array_map('intval', $filters['ids']), static fn ($value) => $value > 0));
@@ -79,25 +70,108 @@ function ap_fetch_products(array $filters = [], bool $onlyActive = true): array
         $params[':price_max'] = (int) $filters['price_max'];
     }
 
-    $sort = $filters['sort'] ?? 'newest';
-    $orderBy = match ($sort) {
-        'price_asc' => 'ORDER BY price_cents ASC, name ASC',
-        'price_desc' => 'ORDER BY price_cents DESC, name ASC',
-        'alpha' => 'ORDER BY name ASC',
-        'stock' => 'ORDER BY stock DESC, name ASC',
-        default => 'ORDER BY created_at DESC',
-    };
-
-    if (!empty($filters['limit'])) {
-        $limit = max(1, (int) $filters['limit']);
-        $orderBy .= ' LIMIT ' . $limit;
+    if (!empty($filters['is_active'])) {
+        $sql .= ' AND is_active = :active';
+        $params[':active'] = $filters['is_active'] ? 1 : 0;
     }
 
-    $stmt = $pdo->prepare($sql . ' ' . $orderBy);
+    if (!empty($filters['category_key'])) {
+        $sql .= ' AND category_key = :category';
+        $params[':category'] = $filters['category_key'];
+    }
+
+    if (!empty($filters['fulfillment_type'])) {
+        $sql .= ' AND fulfillment_type = :fulfillment';
+        $params[':fulfillment'] = $filters['fulfillment_type'];
+    }
+
+    $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
-    $results = $stmt->fetchAll();
-    ap_cache_set($cacheKey, $results, 300);
-    return $results;
+    return (int) $stmt->fetchColumn();
+}
+
+function ap_fetch_products(array $filters = []): array
+{
+    $pdo = ap_db();
+    $sql = 'SELECT * FROM products WHERE 1=1';
+    $params = [];
+
+    if (!empty($filters['ids']) && is_array($filters['ids'])) {
+        $ids = array_values(array_filter(array_map('intval', $filters['ids']), static fn ($value) => $value > 0));
+        if ($ids) {
+            $placeholders = [];
+            foreach ($ids as $index => $id) {
+                $key = ':id' . $index;
+                $placeholders[] = $key;
+                $params[$key] = $id;
+            }
+            $sql .= ' AND id IN (' . implode(',', $placeholders) . ')';
+        }
+    }
+
+    if (!empty($filters['search'])) {
+        $sql .= ' AND (name LIKE :search OR description LIKE :search OR sku LIKE :search)';
+        $params[':search'] = '%' . $filters['search'] . '%';
+    }
+
+    if (!empty($filters['in_stock'])) {
+        $sql .= ' AND stock > 0';
+    }
+
+    if (isset($filters['price_min']) && $filters['price_min'] !== null) {
+        $sql .= ' AND price_cents >= :price_min';
+        $params[':price_min'] = (int) $filters['price_min'];
+    }
+
+    if (isset($filters['price_max']) && $filters['price_max'] !== null) {
+        $sql .= ' AND price_cents <= :price_max';
+        $params[':price_max'] = (int) $filters['price_max'];
+    }
+
+    if (!empty($filters['is_active'])) {
+        $sql .= ' AND is_active = :active';
+        $params[':active'] = $filters['is_active'] ? 1 : 0;
+    }
+
+    if (!empty($filters['category_key'])) {
+        $sql .= ' AND category_key = :category';
+        $params[':category'] = $filters['category_key'];
+    }
+
+    if (!empty($filters['fulfillment_type'])) {
+        $sql .= ' AND fulfillment_type = :fulfillment';
+        $params[':fulfillment'] = $filters['fulfillment_type'];
+    }
+
+    $sql .= ' ORDER BY ';
+    if (!empty($filters['sort_by'])) {
+        $allowedSorts = ['name', 'price_cents', 'stock', 'created_at', 'is_active'];
+        if (in_array($filters['sort_by'], $allowedSorts)) {
+            $sql .= $filters['sort_by'];
+        } else {
+            $sql .= 'created_at';
+        }
+    } else {
+        $sql .= 'created_at';
+    }
+    $sql .= ' ';
+    if (!empty($filters['sort_order']) && strtoupper($filters['sort_order']) === 'ASC') {
+        $sql .= 'ASC';
+    } else {
+        $sql .= 'DESC';
+    }
+
+    if (!empty($filters['limit']) && (int) $filters['limit'] > 0) {
+        $limit = max(1, (int) $filters['limit']);
+        $sql .= ' LIMIT ' . $limit;
+        if (isset($filters['offset']) && (int) $filters['offset'] > 0) {
+            $sql .= ' OFFSET ' . max(0, (int) $filters['offset']);
+        }
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
 }
 
 function ap_find_product(int $id): ?array
