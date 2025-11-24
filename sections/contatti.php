@@ -253,7 +253,6 @@
                             <span class="contact-meta-list-full__value">Lun-Ven 09:00 — 18:30 · Sab 09:00 — 13:00</span>
                         </li>
                     </ul>
-                    <p>Su richiesta organizziamo call Google Meet o visite onsite per network e franchising.</p>
                 </div>
                 <div class="col-lg-4">
                     <!-- Mappa -->
