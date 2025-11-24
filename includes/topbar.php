@@ -65,7 +65,7 @@ if (is_file($servicesDataPath)) {
                 </li>
                 <li><a href="?page=shop">Shop</a></li>
                 <li><a href="?page=home#vetrina" data-scroll>Vetrina</a></li>
-                <li><a href="?page=home#chi-siamo" data-scroll>Chi siamo</a></li>
+                <li><a href="?page=chi-siamo">Chi siamo</a></li>
                 <li><a href="?page=home#contatti" data-scroll>Contatti</a></li>
                 <li class="nav-search-trigger">
                     <button

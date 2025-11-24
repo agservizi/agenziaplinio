@@ -89,6 +89,11 @@ return [
             'description' => 'Spedizioni pacchi e corrispondenza con tracking live, pick-up programmati e coperture assicurative dedicate.',
             'sections' => ['logistica-smart']
         ],
+        'chi-siamo' => [
+            'title' => 'Chi Siamo | Agenzia Plinio',
+            'description' => 'Scopri la nostra storia, i valori che ci guidano e il team che lavora ogni giorno per offrire servizi eccellenti alla comunità.',
+            'sections' => ['chi-siamo']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',
