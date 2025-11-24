@@ -8,205 +8,95 @@
  * Sezione Pagamenti Certificati
  */
 ?>
+<?php
+/**
+ * Sezione Pagamenti Certificati
+ */
+?>
 <style>
-.payment-hero-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
+.clean-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.2s ease;
 }
 
-.payment-hero-bg::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    animation: float 6s ease-in-out infinite;
+.clean-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
 }
 
-@keyframes float {
-    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-    50% { transform: translate(-50%, -50%) rotate(180deg); }
-}
-
-.modern-card {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.modern-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
-    background-size: 200% 100%;
-    animation: gradient-shift 3s ease infinite;
-}
-
-@keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-.modern-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-.modern-card .card-body {
-    padding: 2rem;
-}
-
-.service-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
+.service-icon-clean {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-right: 1rem;
     flex-shrink: 0;
 }
 
-.modern-badge {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    border-radius: 25px;
-    padding: 0.5rem 1.5rem;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+.hero-section-clean {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    padding: 2.5rem;
 }
 
-.cta-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 25px;
-    padding: 3rem;
-    position: relative;
-    overflow: hidden;
+.cta-clean {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
 }
 
-.cta-section::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
-    border-radius: 50%;
-}
-
-.cta-section .btn {
+.cta-clean .btn {
     background: white;
-    color: #667eea;
+    color: #007bff;
     border: none;
-    border-radius: 50px;
-    padding: 1rem 2rem;
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
     font-weight: 600;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.2s ease;
 }
 
-.cta-section .btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.cta-section .btn:hover::before {
-    left: 100%;
-}
-
-.cta-section .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.decorative-shape {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-    border-radius: 50%;
-    top: -50px;
-    right: -50px;
-    z-index: 0;
-}
-
-.floating-elements {
-    position: relative;
-}
-
-.floating-elements::after {
-    content: '💳💰📱';
-    position: absolute;
-    top: -20px;
-    right: 20px;
-    font-size: 2rem;
-    opacity: 0.1;
-    animation: bounce 4s ease-in-out infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
+.cta-clean .btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
 }
 </style>
 
-<section class="section-padding" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); position: relative;">
-    <!-- Elementi decorativi di sfondo -->
-    <div class="decorative-shape"></div>
-    <div class="decorative-shape" style="top: 20%; left: -30px; width: 80px; height: 80px;"></div>
-    <div class="decorative-shape" style="bottom: 10%; right: 10%; width: 60px; height: 60px;"></div>
-
+<section class="section-padding bg-light">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <!-- Hero Section Moderna -->
-                <div class="payment-hero-bg text-white rounded-4 p-5 mb-5 text-center position-relative">
-                    <div class="position-relative z-index-1">
-                        <h1 class="display-4 fw-bold mb-3 floating-elements">
-                            <i class="fas fa-credit-card me-3"></i>Servizi di Pagamento
-                        </h1>
-                        <p class="lead mb-4 fs-5">
-                            Presso la nostra agenzia puoi effettuare tutti i principali pagamenti in modo semplice, veloce e con commissioni tra le più basse del mercato. Siamo qui per aiutarti e garantirti un'assistenza completa su ogni operazione.
-                        </p>
-                        <div class="row g-3 justify-content-center">
-                            <div class="col-auto">
-                                <span class="modern-badge">
-                                    <i class="fas fa-bolt me-2"></i>Rapido
-                                </span>
-                            </div>
-                            <div class="col-auto">
-                                <span class="modern-badge">
-                                    <i class="fas fa-coins me-2"></i>Conveniente
-                                </span>
-                            </div>
-                            <div class="col-auto">
-                                <span class="modern-badge">
-                                    <i class="fas fa-shield-alt me-2"></i>Sicuro
-                                </span>
-                            </div>
+                <!-- Hero Section Pulita -->
+                <div class="hero-section-clean text-center mb-5">
+                    <h1 class="display-4 fw-bold text-primary mb-3">
+                        <i class="fas fa-credit-card me-3"></i>Servizi di Pagamento
+                    </h1>
+                    <p class="lead text-muted mb-4 fs-5">
+                        Presso la nostra agenzia puoi effettuare tutti i principali pagamenti in modo semplice, veloce e con commissioni tra le più basse del mercato. Siamo qui per aiutarti e garantirti un'assistenza completa su ogni operazione.
+                    </p>
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-auto">
+                            <span class="badge bg-primary px-3 py-2">
+                                <i class="fas fa-clock me-1"></i>Rapido
+                            </span>
+                        </div>
+                        <div class="col-auto">
+                            <span class="badge bg-success px-3 py-2">
+                                <i class="fas fa-euro-sign me-1"></i>Conveniente
+                            </span>
+                        </div>
+                        <div class="col-auto">
+                            <span class="badge bg-info px-3 py-2">
+                                <i class="fas fa-shield-alt me-1"></i>Sicuro
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -217,10 +107,10 @@
         <div class="row g-4 mb-5">
             <!-- Bollettini Postali -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">Bollettini Postali</h5>
@@ -235,10 +125,10 @@
 
             <!-- Bollettini pagoPA -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-university"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">Bollettini pagoPA</h5>
@@ -262,10 +152,10 @@
 
             <!-- Deleghe F24 -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-file-invoice-dollar"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">Deleghe F24</h5>
@@ -280,10 +170,10 @@
 
             <!-- Bollettini Bancari -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-piggy-bank"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">Bollettini Bancari</h5>
@@ -297,10 +187,10 @@
 
             <!-- Bollettini MAV e RAV -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-receipt"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">Bollettini MAV e RAV</h5>
@@ -315,10 +205,10 @@
 
             <!-- Bollo Auto -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-car"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">Bollo Auto</h5>
@@ -332,10 +222,10 @@
 
             <!-- Versamenti su Conti DropPay -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-money-bill-wave"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">Versamenti DropPay</h5>
@@ -349,10 +239,10 @@
 
             <!-- DropPayCard -->
             <div class="col-md-6 col-lg-4">
-                <div class="modern-card h-100">
+                <div class="clean-card h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon">
+                            <div class="service-icon-clean">
                                 <i class="fas fa-credit-card"></i>
                             </div>
                             <h5 class="card-title mb-0 fw-bold">DropPayCard</h5>
@@ -372,19 +262,17 @@
             </div>
         </div>
 
-        <!-- Call to Action Moderna -->
+        <!-- Call to Action Pulita -->
         <div class="row">
             <div class="col-12">
-                <div class="cta-section text-white text-center position-relative">
-                    <div class="position-relative z-index-1">
-                        <h3 class="mb-3 fw-bold">
-                            <i class="fas fa-handshake me-2"></i>Hai Bisogno di Effettuare un Pagamento?
-                        </h3>
-                        <p class="mb-4 fs-5">Siamo qui per aiutarti con qualsiasi tipo di pagamento. Contattaci per assistenza personalizzata.</p>
-                        <a href="?page=contatti" class="btn btn-lg">
-                            <i class="fas fa-envelope me-2"></i>Richiedi Assistenza
-                        </a>
-                    </div>
+                <div class="cta-clean text-center">
+                    <h3 class="mb-3 fw-bold">
+                        <i class="fas fa-handshake me-2"></i>Hai Bisogno di Effettuare un Pagamento?
+                    </h3>
+                    <p class="mb-4 fs-5">Siamo qui per aiutarti con qualsiasi tipo di pagamento. Contattaci per assistenza personalizzata.</p>
+                    <a href="?page=contatti" class="btn">
+                        <i class="fas fa-envelope me-2"></i>Richiedi Assistenza
+                    </a>
                 </div>
             </div>
         </div>
