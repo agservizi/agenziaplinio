@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+if (function_exists('opcache_reset')) {
+    opcache_reset();
+}
 
 require_once __DIR__ . '/../auth.php';
 require_once __DIR__ . '/../cart.php';
