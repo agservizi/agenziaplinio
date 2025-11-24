@@ -64,6 +64,11 @@ return [
             'description' => 'Accedi allo storico ordini, aggiorna i tuoi dati e gestisci i servizi attivati.',
             'sections' => ['account']
         ],
+        'pagamenti-certificati' => [
+            'title' => 'Pagamenti Certificati | Agenzia Plinio',
+            'description' => 'Servizi di pagamento sicuri e certificati per bollettini, pagoPA, F24 e molto altro.',
+            'sections' => ['pagamenti-certificati']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',

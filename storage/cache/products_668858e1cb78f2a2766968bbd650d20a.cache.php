@@ -1,4 +1,4 @@
-a:2:{s:7:"expires";i:1763916722;s:5:"value";a:4:{i:0;a:13:{s:2:"id";i:4;s:4:"name";s:15:"Visura camerale";s:4:"slug";s:15:"visura-camerale";s:11:"description";s:391:"Richiedi la Visura Camerale aggiornata della tua azienda o di qualsiasi impresa italiana.
+a:2:{s:7:"expires";i:1763991433;s:5:"value";a:4:{i:0;a:13:{s:2:"id";i:4;s:4:"name";s:15:"Visura camerale";s:4:"slug";s:15:"visura-camerale";s:11:"description";s:391:"Richiedi la Visura Camerale aggiornata della tua azienda o di qualsiasi impresa italiana.
 Il documento contiene dati anagrafici, informazioni societarie, cariche attive e stato dell’attività, utile per verifiche commerciali o pratiche amministrative.
 
 L’elaborazione viene effettuata entro 3 ore dalla richiesta.
