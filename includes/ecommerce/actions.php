@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function ap_handle_action(string $action): void
 {
-    error_log('Received action: ' . $action);
+    file_put_contents(__DIR__ . '/../../debug.log', 'Received action: ' . $action . "\n", FILE_APPEND);
     switch ($action) {
         case 'login':
             ap_action_login();
@@ -112,7 +112,7 @@ function ap_handle_action(string $action): void
             ap_action_save_order_custom_data();
             break;
         default:
-            error_log('Unrecognized action: ' . $action);
+            file_put_contents(__DIR__ . '/../../debug.log', 'Unrecognized action: ' . $action . "\n", FILE_APPEND);
             ap_flash('Azione non riconosciuta.', 'error');
     }
 }
