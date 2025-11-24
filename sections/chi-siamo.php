@@ -212,7 +212,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                     <!-- Mappa OpenStreetMap -->
                     <div class="map-container mt-4">
                         <iframe
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=14.488,40.694,14.493,40.699&layer=mapnik&marker=40.6968,14.4908"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=14.4849641,40.6983611,14.4853168,40.7006381&layer=mapnik&marker=40.6994991,14.4851434"
                             width="100%"
                             height="250"
                             style="border-radius: 12px; border: 1px solid #e9ecef;"
