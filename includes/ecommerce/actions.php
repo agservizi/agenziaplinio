@@ -563,6 +563,7 @@ function ap_action_admin_save_product(): void
     }
 
     // Handle custom fields
+    $customFieldsSaved = false;
     if ($id) {
         // Delete existing fields
         $pdo = ap_db();
@@ -582,6 +583,12 @@ function ap_action_admin_save_product(): void
                 'sort' => 0,
             ]);
         }
+        $customFieldsSaved = true;
+    }
+
+    // Update flash message if custom fields were saved
+    if (!$result && $customFieldsSaved) {
+        ap_flash('Catalogo aggiornato.', 'success');
     }
 }
 
