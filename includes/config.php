@@ -84,6 +84,11 @@ return [
             'description' => 'Linee telefoniche, connessioni internet e dispositivi tech con attivazione guidata e assistenza completa.',
             'sections' => ['soluzioni-voce-dati']
         ],
+        'logistica-smart' => [
+            'title' => 'Logistica Smart | Agenzia Plinio',
+            'description' => 'Spedizioni pacchi e corrispondenza con tracking live, pick-up programmati e coperture assicurative dedicate.',
+            'sections' => ['logistica-smart']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',

@@ -41,7 +41,7 @@ if (is_file($servicesDataPath)) {
                             </div>
                             <div class="mega-grid">
                                 <?php foreach ($servicesMenu as $service): ?>
-                                    <a class="mega-card" href="<?php echo ($service['key'] === 'payments' ? '?page=pagamenti-certificati' : ($service['key'] === 'topups' ? '?page=ricariche-multicanale' : ($service['key'] === 'digital' ? '?page=identita-digitale' : ($service['key'] === 'telco' ? '?page=soluzioni-voce-dati' : '?page=home#servizi')))); ?>" data-scroll>
+                                    <a class="mega-card" href="<?php echo ($service['key'] === 'payments' ? '?page=pagamenti-certificati' : ($service['key'] === 'topups' ? '?page=ricariche-multicanale' : ($service['key'] === 'digital' ? '?page=identita-digitale' : ($service['key'] === 'telco' ? '?page=soluzioni-voce-dati' : ($service['key'] === 'shipping' ? '?page=logistica-smart' : '?page=home#servizi'))))); ?>" data-scroll>
                                         <h6><?php echo htmlspecialchars($service['title'], ENT_QUOTES); ?></h6>
                                         <p><?php echo htmlspecialchars($service['body'], ENT_QUOTES); ?></p>
                                         <span class="mega-card__cta">Vai alla sezione</span>
@@ -53,7 +53,7 @@ if (is_file($servicesDataPath)) {
                             <p class="nav-mobile-services__eyebrow">Catalogo servizi</p>
                             <div class="nav-mobile-services__grid">
                                 <?php foreach ($servicesMenu as $service): ?>
-                                    <a class="nav-mobile-services__item" href="<?php echo ($service['key'] === 'payments' ? '?page=pagamenti-certificati' : ($service['key'] === 'topups' ? '?page=ricariche-multicanale' : ($service['key'] === 'digital' ? '?page=identita-digitale' : ($service['key'] === 'telco' ? '?page=soluzioni-voce-dati' : '?page=home#servizi')))); ?>" data-scroll>
+                                    <a class="nav-mobile-services__item" href="<?php echo ($service['key'] === 'payments' ? '?page=pagamenti-certificati' : ($service['key'] === 'topups' ? '?page=ricariche-multicanale' : ($service['key'] === 'digital' ? '?page=identita-digitale' : ($service['key'] === 'telco' ? '?page=soluzioni-voce-dati' : ($service['key'] === 'shipping' ? '?page=logistica-smart' : '?page=home#servizi'))))); ?>" data-scroll>
                                         <strong><?php echo htmlspecialchars($service['title'], ENT_QUOTES); ?></strong>
                                         <span><?php echo htmlspecialchars($service['body'], ENT_QUOTES); ?></span>
                                         <span class="nav-mobile-services__cta">Vai alla sezione</span>
