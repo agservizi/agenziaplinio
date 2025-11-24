@@ -44,7 +44,9 @@ $userName = $currentUser['name'] ?? ($currentUser['email'] ?? 'Admin');
                     <li><a href="?page=admin&section=faq-bot">FAQ Bot</a></li>
                     <li><a href="?page=admin&section=catalogo">Catalogo</a></li>
                     <li><a href="?page=admin&section=ordini">Ordini</a></li>
+                    <li><a href="?page=admin&section=utenti">Utenti</a></li>
                     <li><a href="?page=admin&section=coupons">Coupons</a></li>
+                    <li><a href="?page=admin&section=impostazioni">Impostazioni</a></li>
                 </ul>
             </nav>
         </aside>

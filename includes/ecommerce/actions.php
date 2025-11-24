@@ -89,8 +89,11 @@ function ap_handle_action(string $action): void
         case 'admin_save_faq':
             ap_action_admin_save_faq();
             break;
-        case 'admin_upload_digital_file':
-            ap_action_admin_upload_digital_file();
+        case 'admin_save_user':
+            ap_action_admin_save_user();
+            break;
+        case 'admin_save_settings':
+            ap_action_admin_save_settings();
             break;
         case 'save_address':
             ap_action_save_address();
@@ -595,6 +598,7 @@ function ap_action_admin_save_product(): void
             ];
             ap_save_product_custom_field($id, $data);
         }
+        file_put_contents('/tmp/debug.log', "Saved custom fields for product $id: " . json_encode($customFields) . "\n", FILE_APPEND);
         $customFieldsSaved = true;
     }
 
@@ -1059,6 +1063,74 @@ function ap_action_admin_upload_digital_file(): void
         ':product_id' => $productId,
     ]);
     ap_flash('File allegato con successo.', 'success');
+}
+
+function ap_action_admin_save_user(): void
+{
+    if (!ap_auth_is_admin()) {
+        ap_flash('Non autorizzato.', 'error');
+        return;
+    }
+    $id = isset($_POST['user_id']) ? (int) $_POST['user_id'] : null;
+    $name = trim($_POST['name'] ?? '');
+    $email = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL) ?: '';
+    $role = trim($_POST['role'] ?? 'user');
+    $isActive = isset($_POST['is_active']) ? 1 : 0;
+    $password = trim($_POST['password'] ?? '');
+    if ($name === '' || $email === '') {
+        ap_flash('Nome ed email sono obbligatori.', 'error');
+        return;
+    }
+    if (!in_array($role, ['user', 'admin'], true)) {
+        $role = 'user';
+    }
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('SELECT id FROM users WHERE email = :email AND id <> :id LIMIT 1');
+    $stmt->execute([
+        ':email' => $email,
+        ':id' => $id ?: 0,
+    ]);
+    if ($stmt->fetch()) {
+        ap_flash('Email già utilizzata da un altro account.', 'error');
+        return;
+    }
+    $data = [
+        'name' => $name,
+        'email' => $email,
+        'role' => $role,
+        'is_active' => $isActive,
+    ];
+    if ($password !== '' && strlen($password) >= 8) {
+        $data['password_hash'] = password_hash($password, PASSWORD_BCRYPT);
+    } elseif (!$id) {
+        ap_flash('Per nuovi utenti, inserisci una password di almeno 8 caratteri.', 'error');
+        return;
+    }
+    $result = ap_save_user($data, $id);
+    if ($result) {
+        ap_flash($id ? 'Utente aggiornato.' : 'Utente creato.', 'success');
+    } else {
+        ap_flash('Errore nel salvataggio dell\'utente.', 'error');
+    }
+}
+
+function ap_action_admin_save_settings(): void
+{
+    if (!ap_auth_is_admin()) {
+        ap_flash('Non autorizzato.', 'error');
+        return;
+    }
+    $settings = $_POST['settings'] ?? [];
+    if (!is_array($settings)) {
+        ap_flash('Dati non validi.', 'error');
+        return;
+    }
+    foreach ($settings as $key => $value) {
+        $type = $_POST['setting_types'][$key] ?? 'string';
+        $description = $_POST['setting_descriptions'][$key] ?? null;
+        ap_set_setting($key, $value, $type, $description);
+    }
+    ap_flash('Impostazioni salvate.', 'success');
 }
 
 // Force cache reload - added 2025-01-24

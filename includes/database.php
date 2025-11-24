@@ -39,6 +39,7 @@ function ap_bootstrap_schema(PDO $pdo): void
         email VARCHAR(190) NOT NULL UNIQUE,
         password_hash VARCHAR(255) NOT NULL,
         role ENUM("customer", "admin") NOT NULL DEFAULT "customer",
+        is_active TINYINT(1) NOT NULL DEFAULT 1,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
@@ -207,6 +208,16 @@ function ap_bootstrap_schema(PDO $pdo): void
         FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
+    $pdo->exec('CREATE TABLE IF NOT EXISTS settings (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        setting_key VARCHAR(100) NOT NULL UNIQUE,
+        setting_value TEXT NULL,
+        setting_type ENUM("string","int","bool","json") NOT NULL DEFAULT "string",
+        description VARCHAR(255) NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_method VARCHAR(60) DEFAULT "standard"');
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_status ENUM("preparing", "in_transit", "delivered", "issue") NOT NULL DEFAULT "preparing"');
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_cost_cents INT UNSIGNED NOT NULL DEFAULT 0');
@@ -227,7 +238,7 @@ function ap_bootstrap_schema(PDO $pdo): void
     ap_try_exec($pdo, 'ALTER TABLE order_items ADD COLUMN IF NOT EXISTS digital_file_path VARCHAR(255) NULL');
     ap_try_exec($pdo, 'ALTER TABLE abandoned_carts ADD COLUMN IF NOT EXISTS coupon_code VARCHAR(60) NULL');
     ap_try_exec($pdo, 'ALTER TABLE abandoned_carts ADD COLUMN IF NOT EXISTS discount_cents INT UNSIGNED NOT NULL DEFAULT 0');
-    ap_try_exec($pdo, 'ALTER TABLE abandoned_carts ADD COLUMN IF NOT EXISTS email VARCHAR(190) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE users ADD COLUMN IF NOT EXISTS is_active TINYINT(1) NOT NULL DEFAULT 1');
     ap_try_exec($pdo, 'ALTER TABLE products ADD COLUMN category_key VARCHAR(80) NULL AFTER sku');
     ap_try_exec($pdo, 'ALTER TABLE products ADD COLUMN IF NOT EXISTS fulfillment_type ENUM("digital","physical") NOT NULL DEFAULT "digital" AFTER category_key');
     ap_seed_admin($pdo);

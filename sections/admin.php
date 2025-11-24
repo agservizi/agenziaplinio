@@ -107,6 +107,58 @@ $newsIconOptions = [
 $italianProvinces = [
     'Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta-Andria-Trani', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Caltanissetta', 'Campobasso', 'Carbonia-Iglesias', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', 'Forlì-Cesena', 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', 'La Spezia', 'L\'Aquila', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa-Carrara', 'Matera', 'Medio Campidano', 'Messina', 'Milano', 'Modena', 'Monza e della Brianza', 'Napoli', 'Novara', 'Nuoro', 'Ogliastra', 'Olbia-Tempio', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro e Urbino', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbano-Cusio-Ossola', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
 ];
+$userFilters = [];
+$userStatusFilter = $_GET['user_status'] ?? 'all';
+$userRoleFilter = $_GET['user_role'] ?? 'all';
+$userSearchTerm = trim((string) ($_GET['user_q'] ?? ''));
+if ($userStatusFilter !== 'all') {
+    $userFilters['is_active'] = $userStatusFilter === 'active';
+}
+if ($userRoleFilter !== 'all') {
+    $userFilters['role'] = $userRoleFilter;
+}
+if ($userSearchTerm !== '') {
+    $userFilters['search'] = $userSearchTerm;
+}
+$usersPerPage = 20;
+$usersPage = max(1, (int) ($_GET['users_page'] ?? 1));
+$usersTotal = ap_count_users($userFilters);
+$usersPages = max(1, (int) ceil($usersTotal / $usersPerPage));
+if ($usersPage > $usersPages) {
+    $usersPage = $usersPages;
+}
+$userFiltersPaginated = $userFilters;
+$userFiltersPaginated['limit'] = $usersPerPage;
+$userFiltersPaginated['offset'] = ($usersPage - 1) * $usersPerPage;
+$users = ap_fetch_users($userFiltersPaginated);
+$buildUsersPageUrl = function (int $page) use ($userSearchTerm, $userStatusFilter, $userRoleFilter, $adminUrl) {
+    $query = ['users_page' => max(1, $page)];
+    if ($userSearchTerm !== '') {
+        $query['user_q'] = $userSearchTerm;
+    }
+    if ($userStatusFilter !== 'all') {
+        $query['user_status'] = $userStatusFilter;
+    }
+    if ($userRoleFilter !== 'all') {
+        $query['user_role'] = $userRoleFilter;
+    }
+    return $adminUrl($query);
+};
+$userEditingId = isset($_GET['user']) ? ($_GET['user'] === 'new' ? 'new' : (int) $_GET['user']) : null;
+$editingUser = $userEditingId && $userEditingId !== 'new' ? ap_find_user($userEditingId) : null;
+$newsIconOptions = [
+    '⚡️' => 'Energia / Promo lampo',
+    '🚀' => 'Lancio / Upgrade',
+    '🎁' => 'Regalo / Bonus',
+    '🛰️' => 'Servizi digitali',
+    '📦' => 'Spedizioni / Logistica',
+    '💳' => 'Pagamenti / Finanza',
+    '🛡️' => 'Sicurezza / Compliance',
+    '☎️' => 'Supporto clienti',
+];
+$italianProvinces = [
+    'Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta-Andria-Trani', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Caltanissetta', 'Campobasso', 'Carbonia-Iglesias', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', 'Forlì-Cesena', 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', 'La Spezia', 'L\'Aquila', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa-Carrara', 'Matera', 'Medio Campidano', 'Messina', 'Milano', 'Modena', 'Monza e della Brianza', 'Napoli', 'Novara', 'Nuoro', 'Ogliastra', 'Olbia-Tempio', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro e Urbino', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbano-Cusio-Ossola', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
+];
 ?>
 <section class="admin-section section-padding">
     <div class="container-xxl">
@@ -981,6 +1033,150 @@ $italianProvinces = [
             <?php endif; ?>
         </div>
         <?php endif; ?>
+        <?php if ($section === 'utenti'): ?>
+        <div class="admin-card">
+            <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-3">
+                <div>
+                    <h4 class="mb-0">Utenti</h4>
+                    <span class="badge bg-light text-dark"><?php echo $usersTotal; ?> risultati</span>
+                </div>
+                <div class="d-flex gap-2">
+                    <a class="btn btn-primary btn-sm" href="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti', 'user' => 'new']), ENT_QUOTES); ?>">Nuovo utente</a>
+                </div>
+                <form class="row g-2 align-items-center flex-grow-1" method="get" action="<?php echo htmlspecialchars($adminBasePath, ENT_QUOTES); ?>">
+                    <input type="hidden" name="section" value="utenti">
+                    <input type="hidden" name="users_page" value="1">
+                    <div class="col-lg-4">
+                        <input class="form-control" type="search" name="user_q" value="<?php echo htmlspecialchars($userSearchTerm, ENT_QUOTES); ?>" placeholder="Cerca nome o email">
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="form-select" name="user_status">
+                            <option value="all">Tutti gli stati</option>
+                            <option value="active" <?php echo $userStatusFilter === 'active' ? 'selected' : ''; ?>>Attivi</option>
+                            <option value="inactive" <?php echo $userStatusFilter === 'inactive' ? 'selected' : ''; ?>>Disattivati</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="form-select" name="user_role">
+                            <option value="all">Tutti i ruoli</option>
+                            <option value="customer" <?php echo $userRoleFilter === 'customer' ? 'selected' : ''; ?>>Cliente</option>
+                            <option value="admin" <?php echo $userRoleFilter === 'admin' ? 'selected' : ''; ?>>Admin</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 d-flex gap-2 align-items-center">
+                        <button class="btn btn-outline-secondary flex-grow-1" type="submit">Filtra</button>
+                        <a class="btn btn-link text-nowrap p-0" href="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti']), ENT_QUOTES); ?>">Reset</a>
+                    </div>
+                </form>
+            </div>
+            <?php if (empty($users)): ?>
+                <p class="text-muted mb-0">Nessun utente trovato.</p>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Ruolo</th>
+                                <th>Stato</th>
+                                <th>Registrato</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($users as $user): ?>
+                                <tr>
+                                    <td>#<?php echo (int) $user['id']; ?></td>
+                                    <td><?php echo htmlspecialchars($user['name'], ENT_QUOTES); ?></td>
+                                    <td><?php echo htmlspecialchars($user['email'], ENT_QUOTES); ?></td>
+                                    <td>
+                                        <span class="badge <?php echo $user['role'] === 'admin' ? 'bg-danger-subtle text-danger' : 'bg-secondary-subtle text-secondary'; ?>">
+                                            <?php echo $user['role'] === 'admin' ? 'Admin' : 'Cliente'; ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge <?php echo (int) $user['is_active'] === 1 ? 'bg-success-subtle text-success' : 'bg-secondary-subtle text-secondary'; ?>">
+                                            <?php echo (int) $user['is_active'] === 1 ? 'Attivo' : 'Disattivato'; ?>
+                                        </span>
+                                    </td>
+                                    <td><?php echo date('d/m/Y', strtotime((string) $user['created_at'])); ?></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-primary" href="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti', 'user' => (int) $user['id']]), ENT_QUOTES); ?>">Modifica</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php if ($usersPages > 1): ?>
+                    <nav class="mt-3">
+                        <ul class="pagination pagination-sm mb-0 flex-wrap">
+                            <?php $prevPage = max(1, $usersPage - 1); ?>
+                            <li class="page-item <?php echo $usersPage === 1 ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="<?php echo htmlspecialchars($buildUsersPageUrl($prevPage), ENT_QUOTES); ?>" aria-label="Pagina precedente">&laquo;</a>
+                            </li>
+                            <?php for ($pageNumber = 1; $pageNumber <= $usersPages; $pageNumber++): ?>
+                                <li class="page-item <?php echo $pageNumber === $usersPage ? 'active' : ''; ?>">
+                                    <a class="page-link" href="<?php echo htmlspecialchars($buildUsersPageUrl($pageNumber), ENT_QUOTES); ?>"><?php echo $pageNumber; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <?php $nextPage = min($usersPages, $usersPage + 1); ?>
+                            <li class="page-item <?php echo $usersPage === $usersPages ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="<?php echo htmlspecialchars($buildUsersPageUrl($nextPage), ENT_QUOTES); ?>" aria-label="Pagina successiva">&raquo;</a>
+                            </li>
+                        </ul>
+                    </nav>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+        <?php if ($section === 'edit_user' && ($editingUser || $userEditingId === 'new')): ?>
+        <div class="row g-4 align-items-stretch">
+            <div class="col-12">
+                <div class="admin-card h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0"><?php echo $editingUser ? 'Modifica utente' : 'Nuovo utente'; ?></h4>
+                        <a class="small" href="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti']), ENT_QUOTES); ?>">Annulla modifica</a>
+                    </div>
+                    <form method="post" class="user-form">
+                        <input type="hidden" name="ap_action" value="admin_save_user">
+                        <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti']), ENT_QUOTES); ?>">
+                        <?php if ($editingUser): ?>
+                            <input type="hidden" name="user_id" value="<?php echo (int) $editingUser['id']; ?>">
+                        <?php endif; ?>
+                        <div class="mb-3">
+                            <label class="form-label" for="user_name">Nome</label>
+                            <input class="form-control" type="text" id="user_name" name="name" required value="<?php echo htmlspecialchars($editingUser['name'] ?? '', ENT_QUOTES); ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="user_email">Email</label>
+                            <input class="form-control" type="email" id="user_email" name="email" required value="<?php echo htmlspecialchars($editingUser['email'] ?? '', ENT_QUOTES); ?>">
+                        </div>
+                        <?php if (!$editingUser): ?>
+                        <div class="mb-3">
+                            <label class="form-label" for="user_password">Password</label>
+                            <input class="form-control" type="password" id="user_password" name="password" required>
+                        </div>
+                        <?php endif; ?>
+                        <div class="mb-3">
+                            <label class="form-label" for="user_role">Ruolo</label>
+                            <select class="form-select" id="user_role" name="role">
+                                <option value="customer" <?php echo ($editingUser['role'] ?? 'customer') === 'customer' ? 'selected' : ''; ?>>Cliente</option>
+                                <option value="admin" <?php echo ($editingUser['role'] ?? '') === 'admin' ? 'selected' : ''; ?>>Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="user_active" name="is_active" <?php echo isset($editingUser['is_active']) ? ((int) $editingUser['is_active'] === 1 ? 'checked' : '') : 'checked'; ?>>
+                            <label class="form-check-label" for="user_active">Utente attivo</label>
+                        </div>
+                        <button class="btn btn-primary w-100" type="submit"><?php echo $editingUser ? 'Aggiorna' : 'Crea utente'; ?></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
         <?php if ($section === 'coupons'): ?>
         <div class="admin-card mt-5" id="coupons">
             <div class="row g-4 align-items-start">
@@ -1128,6 +1324,82 @@ $italianProvinces = [
                     <?php endif; ?>
                 </div>
             </div>
+        </div>
+        <?php endif; ?>
+        <?php if ($section === 'impostazioni'): ?>
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h4 class="mb-0">Impostazioni sito</h4>
+                    <small class="text-muted">Configura le impostazioni generali del sito ecommerce</small>
+                </div>
+            </div>
+            <form method="post" class="settings-form">
+                <input type="hidden" name="ap_action" value="admin_save_settings">
+                <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'impostazioni']), ENT_QUOTES); ?>">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h5>Generali</h5>
+                        <div class="mb-3">
+                            <label class="form-label" for="site_name">Nome sito</label>
+                            <input class="form-control" type="text" id="site_name" name="settings[site_name]" value="<?php echo htmlspecialchars(ap_get_setting('site_name', 'Agenzia Plinio'), ENT_QUOTES); ?>">
+                            <input type="hidden" name="setting_types[site_name]" value="string">
+                            <input type="hidden" name="setting_descriptions[site_name]" value="Nome del sito mostrato nell'header">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="site_description">Descrizione sito</label>
+                            <textarea class="form-control" id="site_description" name="settings[site_description]" rows="3"><?php echo htmlspecialchars(ap_get_setting('site_description', 'Servizi digitali per pratiche amministrative'), ENT_QUOTES); ?></textarea>
+                            <input type="hidden" name="setting_types[site_description]" value="string">
+                            <input type="hidden" name="setting_descriptions[site_description]" value="Descrizione del sito per meta tag">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="contact_email">Email contatto</label>
+                            <input class="form-control" type="email" id="contact_email" name="settings[contact_email]" value="<?php echo htmlspecialchars(ap_get_setting('contact_email', 'info@agenziaplinio.it'), ENT_QUOTES); ?>">
+                            <input type="hidden" name="setting_types[contact_email]" value="string">
+                            <input type="hidden" name="setting_descriptions[contact_email]" value="Email principale per contatti">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="contact_phone">Telefono contatto</label>
+                            <input class="form-control" type="tel" id="contact_phone" name="settings[contact_phone]" value="<?php echo htmlspecialchars(ap_get_setting('contact_phone', '+39 123 456 7890'), ENT_QUOTES); ?>">
+                            <input type="hidden" name="setting_types[contact_phone]" value="string">
+                            <input type="hidden" name="setting_descriptions[contact_phone]" value="Numero di telefono per contatti">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Ecommerce</h5>
+                        <div class="mb-3">
+                            <label class="form-label" for="currency">Valuta</label>
+                            <select class="form-select" id="currency" name="settings[currency]">
+                                <option value="EUR" <?php echo ap_get_setting('currency', 'EUR') === 'EUR' ? 'selected' : ''; ?>>Euro (€)</option>
+                                <option value="USD" <?php echo ap_get_setting('currency', 'EUR') === 'USD' ? 'selected' : ''; ?>>Dollaro ($)</option>
+                            </select>
+                            <input type="hidden" name="setting_types[currency]" value="string">
+                            <input type="hidden" name="setting_descriptions[currency]" value="Valuta utilizzata nel sito">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="tax_rate">IVA (%)</label>
+                            <input class="form-control" type="number" step="0.01" min="0" max="100" id="tax_rate" name="settings[tax_rate]" value="<?php echo htmlspecialchars((string) ap_get_setting('tax_rate', 22), ENT_QUOTES); ?>">
+                            <input type="hidden" name="setting_types[tax_rate]" value="int">
+                            <input type="hidden" name="setting_descriptions[tax_rate]" value="Aliquota IVA applicata">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="free_shipping_threshold">Soglia spedizione gratuita (€)</label>
+                            <input class="form-control" type="number" step="0.01" min="0" id="free_shipping_threshold" name="settings[free_shipping_threshold]" value="<?php echo htmlspecialchars((string) ap_get_setting('free_shipping_threshold', 0), ENT_QUOTES); ?>">
+                            <input type="hidden" name="setting_types[free_shipping_threshold]" value="int">
+                            <input type="hidden" name="setting_descriptions[free_shipping_threshold]" value="Importo minimo per spedizione gratuita (0 = disabilitata)">
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="maintenance_mode" name="settings[maintenance_mode]" value="1" <?php echo ap_get_setting('maintenance_mode', false) ? 'checked' : ''; ?>>
+                            <label class="form-check-label" for="maintenance_mode">Modalità manutenzione</label>
+                            <input type="hidden" name="setting_types[maintenance_mode]" value="bool">
+                            <input type="hidden" name="setting_descriptions[maintenance_mode]" value="Abilita modalità manutenzione per il sito pubblico">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-primary" type="submit">Salva impostazioni</button>
+                </div>
+            </form>
         </div>
         <?php endif; ?>
         <script>

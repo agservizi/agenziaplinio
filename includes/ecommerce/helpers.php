@@ -1504,3 +1504,171 @@ function ap_format_announcement_message(string $message): string
     }, $safe);
     return $safe;
 }
+
+function ap_fetch_users(array $filters = []): array
+{
+    $pdo = ap_db();
+    $sql = 'SELECT id, name, email, role, is_active, created_at FROM users';
+    $params = [];
+    $where = [];
+    if (!empty($filters['role'])) {
+        $where[] = 'role = :role';
+        $params[':role'] = $filters['role'];
+    }
+    if (isset($filters['is_active'])) {
+        $where[] = 'is_active = :active';
+        $params[':active'] = $filters['is_active'] ? 1 : 0;
+    }
+    if (!empty($filters['search'])) {
+        $where[] = '(name LIKE :search OR email LIKE :search)';
+        $params[':search'] = '%' . $filters['search'] . '%';
+    }
+    if ($where) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+    $sql .= ' ORDER BY created_at DESC';
+    if (!empty($filters['limit'])) {
+        $sql .= ' LIMIT ' . (int) $filters['limit'];
+    }
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function ap_count_users(array $filters = []): int
+{
+    $pdo = ap_db();
+    $sql = 'SELECT COUNT(*) FROM users';
+    $params = [];
+    $where = [];
+    if (!empty($filters['role'])) {
+        $where[] = 'role = :role';
+        $params[':role'] = $filters['role'];
+    }
+    if (isset($filters['is_active'])) {
+        $where[] = 'is_active = :active';
+        $params[':active'] = $filters['is_active'] ? 1 : 0;
+    }
+    if (!empty($filters['search'])) {
+        $where[] = '(name LIKE :search OR email LIKE :search)';
+        $params[':search'] = '%' . $filters['search'] . '%';
+    }
+    if ($where) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return (int) $stmt->fetchColumn();
+}
+
+function ap_find_user(int $id): ?array
+{
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('SELECT id, name, email, role, is_active, created_at FROM users WHERE id = :id LIMIT 1');
+    $stmt->execute([':id' => $id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+}
+
+function ap_save_user(array $data, ?int $id = null): int
+{
+    $pdo = ap_db();
+    $payload = [
+        ':name' => $data['name'],
+        ':email' => $data['email'],
+        ':role' => $data['role'] ?? 'customer',
+        ':active' => !empty($data['is_active']) ? 1 : 0,
+    ];
+    if ($id) {
+        $sql = 'UPDATE users SET name = :name, email = :email, role = :role, is_active = :active';
+        if (!empty($data['password_hash'])) {
+            $sql .= ', password_hash = :password';
+            $payload[':password'] = $data['password_hash'];
+        }
+        $sql .= ' WHERE id = :id';
+        $stmt = $pdo->prepare($sql);
+        $payload[':id'] = $id;
+        $stmt->execute($payload);
+        return $id;
+    }
+    $stmt = $pdo->prepare('INSERT INTO users (name, email, password_hash, role, is_active) VALUES (:name, :email, :password, :role, :active)');
+    $payload[':password'] = $data['password_hash'] ?? password_hash('TempPass123!', PASSWORD_BCRYPT);
+    $stmt->execute($payload);
+    return (int) $pdo->lastInsertId();
+}
+
+function ap_delete_user(int $id): bool
+{
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('DELETE FROM users WHERE id = :id');
+    return $stmt->execute([':id' => $id]);
+}
+
+function ap_get_setting(string $key, $default = null)
+{
+    static $cache = [];
+    if (isset($cache[$key])) {
+        return $cache[$key];
+    }
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('SELECT setting_value, setting_type FROM settings WHERE setting_key = :key LIMIT 1');
+    $stmt->execute([':key' => $key]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+        $cache[$key] = $default;
+        return $default;
+    }
+    $value = $row['setting_value'];
+    $type = $row['setting_type'];
+    switch ($type) {
+        case 'int':
+            $parsed = (int) $value;
+            break;
+        case 'bool':
+            $parsed = $value === '1' || strtolower($value) === 'true';
+            break;
+        case 'json':
+            $parsed = json_decode($value, true);
+            break;
+        default:
+            $parsed = $value;
+    }
+    $cache[$key] = $parsed;
+    return $parsed;
+}
+
+function ap_set_setting(string $key, $value, string $type = 'string', ?string $description = null): void
+{
+    $pdo = ap_db();
+    $stringValue = null;
+    switch ($type) {
+        case 'int':
+            $stringValue = (string) (int) $value;
+            break;
+        case 'bool':
+            $stringValue = $value ? '1' : '0';
+            break;
+        case 'json':
+            $stringValue = json_encode($value, JSON_UNESCAPED_UNICODE);
+            break;
+        default:
+            $stringValue = (string) $value;
+    }
+    $stmt = $pdo->prepare('INSERT INTO settings (setting_key, setting_value, setting_type, description) VALUES (:key, :value, :type, :desc) ON DUPLICATE KEY UPDATE setting_value = :value, setting_type = :type, description = :desc');
+    $stmt->execute([
+        ':key' => $key,
+        ':value' => $stringValue,
+        ':type' => $type,
+        ':desc' => $description,
+    ]);
+    // Clear cache
+    static $cache = [];
+    unset($cache[$key]);
+}
+
+function ap_fetch_settings(): array
+{
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('SELECT * FROM settings ORDER BY setting_key ASC');
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
