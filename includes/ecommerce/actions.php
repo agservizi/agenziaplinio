@@ -72,8 +72,8 @@ function ap_handle_action(string $action): void
             ap_action_admin_delete_product();
             break;
         case 'admin_save_product':
-            echo "DEBUG: Case reached";
-            exit; // Stop here for test
+            ap_action_admin_save_product();
+            break;
         case 'admin_save_coupon':
             ap_action_admin_save_coupon();
             break;
@@ -114,7 +114,7 @@ function ap_handle_action(string $action): void
             ap_action_save_order_custom_data();
             break;
         default:
-            ap_flash('Azione non riconosciuta.', 'error');
+            ap_flash('Azione non riconosciuta: ' . $action, 'error');
     }
 }
 
