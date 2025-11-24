@@ -915,11 +915,15 @@ function ap_action_admin_delete_product(): void
     }
     $id = isset($_POST['product_id']) ? (int) $_POST['product_id'] : 0;
     if ($id <= 0) {
-        ap_flash('Prodotto non trovato.', 'error');
+        ap_flash('Prodotto non trovato. ID ricevuto: ' . $id, 'error');
         return;
     }
-    ap_delete_product($id);
-    ap_flash('Prodotto rimosso dal catalogo.', 'info');
+    $result = ap_delete_product($id);
+    if ($result) {
+        ap_flash('Prodotto rimosso dal catalogo.', 'info');
+    } else {
+        ap_flash('Errore durante l\'eliminazione del prodotto.', 'error');
+    }
 }
 
 function ap_simulate_payment(int $orderId, string $method, int $amount): void

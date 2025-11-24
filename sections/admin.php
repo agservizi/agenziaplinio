@@ -1227,7 +1227,7 @@ $newsIconOptions = [
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
                 <form method="post" id="deleteProductForm" class="d-inline">
                     <input type="hidden" name="ap_action" value="admin_delete_product">
-                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl([], 'catalogo'), ENT_QUOTES); ?>">
+                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>">
                     <input type="hidden" name="product_id" id="deleteProductId">
                     <button type="submit" class="btn btn-danger">Elimina definitivamente</button>
                 </form>
