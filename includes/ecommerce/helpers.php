@@ -208,58 +208,106 @@ function ap_product_category_map(): array
 {
     return [
         'anagrafe' => [
-            'label' => 'Anagrafe',
+            'label' => 'Certificati Anagrafe',
             'parent' => 'certificazioni-documenti',
-            'keywords' => ['anagrafe', 'residenza', 'cambio'],
+            'keywords' => ['anagrafe', 'residenza', 'stato famiglia', 'storico familiare'],
             'highlights' => ['Certificati anagrafici ufficiali', 'Richiesta online veloce', 'Consegna digitale immediata'],
         ],
         'stato-civile' => [
             'label' => 'Stato Civile',
             'parent' => 'certificazioni-documenti',
-            'keywords' => ['stato civile', 'nascita', 'matrimonio', 'morte'],
-            'highlights' => ['Certificati di stato civile', 'Documenti ufficiali certificati', 'Supporto per pratiche legali'],
+            'keywords' => ['stato civile', 'nascita', 'matrimonio', 'morte', 'divorzio'],
+            'highlights' => ['Certificati di nascita, matrimonio, divorzio o morte', 'Richiesta in pochi minuti', 'Documenti ufficiali certificati'],
         ],
         'giudiziarie' => [
             'label' => 'Giudiziarie',
             'parent' => 'certificazioni-documenti',
             'keywords' => ['giudiziario', 'casellario', 'carichi pendenti'],
-            'highlights' => ['Certificati giudiziari completi', 'Verifiche penali e civili', 'Documentazione legale affidabile'],
+            'highlights' => ['Casellario Giudiziale e Carichi Pendenti', 'Richiesta sicura e riservata', 'Documentazione legale affidabile'],
         ],
         'camerali' => [
-            'label' => 'Camerali',
+            'label' => 'Certificati Camerali',
             'parent' => 'certificazioni-documenti',
-            'keywords' => ['camera commercio', 'visura', 'iscrizione'],
-            'highlights' => ['Visure camerali aggiornate', 'Dati societari ufficiali', 'Certificati di iscrizione'],
+            'keywords' => ['camera commercio', 'visura', 'iscrizione', 'certificato camerale'],
+            'highlights' => ['Certificati ordinari o storici per aziende', 'Ditte individuali e società', 'Ideali per pratiche commerciali e amministrative'],
         ],
         'catastali' => [
-            'label' => 'Catastali',
+            'label' => 'Visure Catastali',
             'parent' => 'certificazioni-documenti',
-            'keywords' => ['catasto', 'visura catastale', 'proprietà'],
-            'highlights' => ['Visure catastali dettagliate', 'Informazioni immobiliari', 'Documenti per compravendite'],
+            'keywords' => ['catasto', 'visura catastale', 'proprietà', 'planimetria'],
+            'highlights' => ['Dati catastali di immobili e terreni', 'Proprietà, rendite e planimetrie', 'Documenti per compravendite'],
+        ],
+        'ipotecarie' => [
+            'label' => 'Visure Ipotecarie',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['ipoteca', 'visura ipotecaria', 'pignoramento', 'trascrizione'],
+            'highlights' => ['Verifica ipoteche, pignoramenti e trascrizioni', 'Su immobili o terreni', 'Documentazione completa e aggiornata'],
         ],
         'pra' => [
-            'label' => 'PRA',
+            'label' => 'Visure PRA (veicoli)',
             'parent' => 'certificazioni-documenti',
-            'keywords' => ['pra', 'veicoli', 'automobili', 'immatricolazione'],
-            'highlights' => ['Certificati PRA ufficiali', 'Storico veicoli completo', 'Supporto per passaggi di proprietà'],
+            'keywords' => ['pra', 'veicoli', 'auto', 'moto', 'immatricolazione', 'pubblico registro automobilistico'],
+            'highlights' => ['Visure auto, moto e veicoli complete', 'Dati proprietario e situazione giuridica', 'Storico veicoli dettagliato'],
+        ],
+        'aziendali' => [
+            'label' => 'Certificati Aziendali',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['azienda', 'certificato aziendale', 'impresa', 'società', 'partita iva'],
+            'highlights' => ['Documenti ufficiali per imprese e società', 'Ideali per gare, contratti e pratiche fiscali', 'Certificati di iscrizione e attività'],
+        ],
+        'privati' => [
+            'label' => 'Certificati per Privati',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['privato', 'certificato personale', 'scolastico', 'comunale', 'anagrafico'],
+            'highlights' => ['Documenti su misura per esigenze personali', 'Certificati scolastici, comunali, anagrafici', 'Supporto completo per pratiche private'],
+        ],
+        'cambio-residenza' => [
+            'label' => 'Cambio Residenza',
+            'parent' => 'pratiche-online',
+            'keywords' => ['cambio residenza', 'domicilio', 'trasferimento', 'anagrafe'],
+            'highlights' => ['Procedura completa di cambio residenza', 'Senza code e moduli complicati', 'Assistenza passo-passo'],
+        ],
+        'pratiche-anagrafiche' => [
+            'label' => 'Pratiche Anagrafiche',
+            'parent' => 'pratiche-online',
+            'keywords' => ['pratica anagrafica', 'anagrafe', 'aggiornamento', 'dichiarazione'],
+            'highlights' => ['Richieste, aggiornamenti e dichiarazioni', 'Presso l\'anagrafe comunale', 'Gestione digitale completa'],
         ],
         'veicoli' => [
-            'label' => 'Veicoli',
+            'label' => 'Pratiche Veicoli (PRA)',
             'parent' => 'pratiche-online',
-            'keywords' => ['veicoli', 'auto', 'motorino', 'immatricolazione'],
-            'highlights' => ['Pratiche veicoli semplificate', 'Immatricolazioni e passaggi', 'Assistenza completa'],
+            'keywords' => ['veicoli', 'auto', 'moto', 'pra', 'immatricolazione', 'passaggio proprietà'],
+            'highlights' => ['Passaggi di proprietà, visure e richieste', 'Presso il Pubblico Registro Automobilistico', 'Immatricolazioni e aggiornamenti'],
         ],
         'uffici-pubblici' => [
-            'label' => 'Uffici Pubblici',
+            'label' => 'Richieste agli Uffici Comunali',
             'parent' => 'pratiche-online',
-            'keywords' => ['uffici pubblici', 'comunali', 'enti'],
-            'highlights' => ['Richieste verso enti pubblici', 'Pratiche comunali online', 'Deleghe e prenotazioni'],
+            'keywords' => ['ufficio comunale', 'comune', 'richiesta', 'segnalazione', 'certificazione'],
+            'highlights' => ['Invio e gestione di domande, segnalazioni', 'Presso il tuo Comune', 'Certificazioni e pratiche comunali'],
+        ],
+        'enti-pubblici' => [
+            'label' => 'Domande verso Enti Pubblici',
+            'parent' => 'pratiche-online',
+            'keywords' => ['ente pubblico', 'inps', 'agenzia entrate', 'richiesta', 'pratica'],
+            'highlights' => ['Assistenza nella presentazione di richieste', 'A INPS, Agenzia delle Entrate e altri enti', 'Gestione completa delle pratiche'],
         ],
         'documenti-rapidi' => [
-            'label' => 'Documenti Rapidi',
+            'label' => 'Recupero Documenti',
             'parent' => 'pratiche-online',
-            'keywords' => ['documenti rapidi', 'recupero', 'duplicati'],
-            'highlights' => ['Recupero documenti urgente', 'Duplicati certificati', 'Servizio express'],
+            'keywords' => ['recupero documento', 'duplicato', 'smarrito', 'urgente'],
+            'highlights' => ['Recupero di copie, certificati o documenti', 'Smarrirti o non più disponibili', 'Servizio express e urgente'],
+        ],
+        'ricerca-certificati' => [
+            'label' => 'Ricerca Certificati',
+            'parent' => 'pratiche-online',
+            'keywords' => ['ricerca certificato', 'certificato archiviato', 'non reperibile'],
+            'highlights' => ['Troviamo e otteniamo certificati', 'Anche non facilmente reperibili o archiviati', 'Ricerca specializzata'],
+        ],
+        'deleghe-prenotazioni' => [
+            'label' => 'Deleghe e Prenotazioni Digitali',
+            'parent' => 'pratiche-online',
+            'keywords' => ['delega', 'prenotazione', 'appuntamento', 'digitale'],
+            'highlights' => ['Compiliamo e gestiamo deleghe', 'Appuntamenti e prenotazioni presso enti', 'Servizio completamente digitale'],
         ],
         'servizi-premium' => [
             'label' => 'Servizi Premium',
@@ -275,14 +323,17 @@ function ap_product_category_parent_map(): array
     return [
         'certificazioni-documenti' => [
             'label' => 'Certificazioni & Documenti',
+            'description' => 'Richiedi certificati e documenti ufficiali in modo semplice e veloce, senza file e senza burocrazia. Li reperiamo noi per te e te li consegniamo direttamente online.',
             'parent' => 'servizi-digitali',
         ],
         'pratiche-online' => [
             'label' => 'Pratiche Online',
+            'description' => 'Gestiamo per te pratiche e richieste verso comuni, enti pubblici e uffici, risparmiandoti tempo e spostamenti.',
             'parent' => 'servizi-digitali',
         ],
         'servizi-digitali' => [
             'label' => 'Servizi Digitali',
+            'description' => 'Servizi digitali completi per pratiche amministrative, certificati e documenti ufficiali.',
             'parent' => null,
         ],
     ];
@@ -294,16 +345,10 @@ function ap_product_category_parent(string $key): ?string
     return $map[$key]['parent'] ?? null;
 }
 
-function ap_product_category_children(string $parentKey): array
+function ap_product_category_parent_description(string $parentKey): ?string
 {
-    $map = ap_product_category_map();
-    $children = [];
-    foreach ($map as $key => $meta) {
-        if (($meta['parent'] ?? null) === $parentKey) {
-            $children[$key] = $meta;
-        }
-    }
-    return $children;
+    $parentMap = ap_product_category_parent_map();
+    return $parentMap[$parentKey]['description'] ?? null;
 }
 
 function ap_product_category_options(): array
