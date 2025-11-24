@@ -179,6 +179,12 @@ body {
     min-width: 260px;
 }
 
+.admin-toast.is-hidden {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.3s ease;
+}
+
 .admin-slider-nav {
     width: 36px;
     height: 36px;
