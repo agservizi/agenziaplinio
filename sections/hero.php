@@ -25,7 +25,33 @@ require_once __DIR__ . '/../components/cta.php';
                 ?>
             </div>
             <div class="col-lg-5 mt-5 mt-lg-0" data-reveal="fade-left" data-animate="hero-panel">
-                <!-- Card rimossa -->
+                <div class="hero-card bg-white rounded-3 shadow-lg p-4">
+                    <div class="hero-card__icon mb-3">
+                        <i class="fas fa-star fa-2x text-primary"></i>
+                    </div>
+                    <h3 class="h4 fw-bold mb-3">Perché Scegliere Agenzia Plinio?</h3>
+                    <ul class="list-unstyled mb-4">
+                        <li class="d-flex align-items-center mb-2">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Servizi certificati e affidabili</span>
+                        </li>
+                        <li class="d-flex align-items-center mb-2">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Assistenza personalizzata</span>
+                        </li>
+                        <li class="d-flex align-items-center mb-2">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Commissioni competitive</span>
+                        </li>
+                        <li class="d-flex align-items-center mb-2">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Supporto 24/7</span>
+                        </li>
+                    </ul>
+                    <a href="#servizi" class="btn btn-primary w-100" data-scroll>
+                        <i class="fas fa-arrow-right me-2"></i>Scopri i nostri servizi
+                    </a>
+                </div>
             </div>
         </div>
     </div>
