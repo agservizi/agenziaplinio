@@ -104,6 +104,9 @@ $newsIconOptions = [
     '🛡️' => 'Sicurezza / Compliance',
     '☎️' => 'Supporto clienti',
 ];
+$italianProvinces = [
+    'Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta-Andria-Trani', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Caltanissetta', 'Campobasso', 'Carbonia-Iglesias', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', 'Forlì-Cesena', 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', 'La Spezia', 'L\'Aquila', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa-Carrara', 'Matera', 'Medio Campidano', 'Messina', 'Milano', 'Modena', 'Monza e della Brianza', 'Napoli', 'Novara', 'Nuoro', 'Ogliastra', 'Olbia-Tempio', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro e Urbino', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbano-Cusio-Ossola', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
+];
 ?>
 <section class="admin-section section-padding">
     <div class="container-xxl">
@@ -541,6 +544,10 @@ $newsIconOptions = [
                                                     <option value="textarea" <?php echo $field['field_type'] === 'textarea' ? 'selected' : ''; ?>>Area testo</option>
                                                     <option value="select" <?php echo $field['field_type'] === 'select' ? 'selected' : ''; ?>>Selezione</option>
                                                     <option value="checkbox" <?php echo $field['field_type'] === 'checkbox' ? 'selected' : ''; ?>>Checkbox</option>
+                                                    <option value="provincia" <?php echo $field['field_type'] === 'provincia' ? 'selected' : ''; ?>>Provincia</option>
+                                                    <option value="comune" <?php echo $field['field_type'] === 'comune' ? 'selected' : ''; ?>>Comune</option>
+                                                    <option value="cap" <?php echo $field['field_type'] === 'cap' ? 'selected' : ''; ?>>CAP</option>
+                                                    <option value="citta" <?php echo $field['field_type'] === 'citta' ? 'selected' : ''; ?>>Città</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
@@ -719,6 +726,10 @@ $newsIconOptions = [
                                                     <option value="textarea" <?php echo $field['field_type'] === 'textarea' ? 'selected' : ''; ?>>Area testo</option>
                                                     <option value="select" <?php echo $field['field_type'] === 'select' ? 'selected' : ''; ?>>Selezione</option>
                                                     <option value="checkbox" <?php echo $field['field_type'] === 'checkbox' ? 'selected' : ''; ?>>Checkbox</option>
+                                                    <option value="provincia" <?php echo $field['field_type'] === 'provincia' ? 'selected' : ''; ?>>Provincia</option>
+                                                    <option value="comune" <?php echo $field['field_type'] === 'comune' ? 'selected' : ''; ?>>Comune</option>
+                                                    <option value="cap" <?php echo $field['field_type'] === 'cap' ? 'selected' : ''; ?>>CAP</option>
+                                                    <option value="citta" <?php echo $field['field_type'] === 'citta' ? 'selected' : ''; ?>>Città</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
@@ -1162,14 +1173,18 @@ $newsIconOptions = [
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label">Tipo</label>
-                                <select class="form-select" name="custom_fields[${id}][type]">
+                                <select class="form-select field-type-select" name="custom_fields[${id}][type]">
                                     <option value="text">Testo</option>
                                     <option value="textarea">Area testo</option>
                                     <option value="select">Selezione</option>
                                     <option value="checkbox">Checkbox</option>
+                                    <option value="provincia">Provincia</option>
+                                    <option value="comune">Comune</option>
+                                    <option value="cap">CAP</option>
+                                    <option value="citta">Città</option>
                                 </select>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 field-options-container">
                                 <label class="form-label">Opzioni (per select)</label>
                                 <input class="form-control" type="text" name="custom_fields[${id}][options]" placeholder="Opzione1,Opzione2">
                             </div>
@@ -1186,8 +1201,34 @@ $newsIconOptions = [
                     </div>
                 `;
 
+                const updateFieldOptions = (container) => {
+                    const typeSelect = container.querySelector('.field-type-select');
+                    const optionsContainer = container.querySelector('.field-options-container');
+                    const update = () => {
+                        const type = typeSelect.value;
+                        let label = 'Valore predefinito';
+                        let input = '';
+                        if (type === 'select') {
+                            label = 'Opzioni (per select)';
+                            input = `<input class="form-control" type="text" name="custom_fields[${container.dataset.fieldId}][options]" placeholder="Opzione1,Opzione2" value="${optionsContainer.querySelector('input') ? optionsContainer.querySelector('input').value : ''}">`;
+                        } else if (type === 'provincia') {
+                            label = 'Provincia selezionata';
+                            input = `<select class="form-select" name="custom_fields[${container.dataset.fieldId}][options]"><option value="">Seleziona provincia</option><?php foreach ($italianProvinces as $prov): ?><option value="<?php echo htmlspecialchars($prov, ENT_QUOTES); ?>"><?php echo htmlspecialchars($prov, ENT_QUOTES); ?></option><?php endforeach; ?></select>`;
+                        } else {
+                            input = `<input class="form-control" type="text" name="custom_fields[${container.dataset.fieldId}][options]" placeholder="Valore" value="${optionsContainer.querySelector('input') ? optionsContainer.querySelector('input').value : ''}">`;
+                        }
+                        optionsContainer.innerHTML = `<label class="form-label">${label}</label>${input}`;
+                    };
+                    typeSelect.addEventListener('change', update);
+                    update(); // initial
+                };
+
+                // Update existing fields
+                document.querySelectorAll('.custom-field-item').forEach(updateFieldOptions);
+
                 addBtn.addEventListener('click', () => {
                     container.insertAdjacentHTML('beforeend', createFieldHTML(`new_${fieldCounter++}`));
+                    updateFieldOptions(container.lastElementChild);
                 });
 
                 container.addEventListener('click', (e) => {
