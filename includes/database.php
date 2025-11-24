@@ -262,11 +262,9 @@ function ap_seed_admin(PDO $pdo): void
 
 function ap_seed_products(PDO $pdo): void
 {
-    $stmt = $pdo->query('SELECT COUNT(*) AS total FROM products');
-    $count = (int) ($stmt->fetch()['total'] ?? 0);
-    if ($count > 0) {
-        return;
-    }
+    // Clear existing products for fresh seeding during development
+    $pdo->exec('DELETE FROM product_custom_fields WHERE product_id IN (SELECT id FROM products)');
+    $pdo->exec('DELETE FROM products');
 
     $products = [
         [
@@ -374,21 +372,23 @@ function ap_seed_products(PDO $pdo): void
     }
 
     // Add custom fields for Visura Camerale
-    $visuraProductId = $pdo->lastInsertId() - 7; // Visura Camerale is the first product inserted (8 total products)
+    $stmt = $pdo->prepare('SELECT id FROM products WHERE slug = :slug');
+    $stmt->execute([':slug' => 'visura-camerale']);
+    $visuraProductId = $stmt->fetchColumn();
     $customFields = [
         [
-            'product_id' => $visuraProductId,
             'field_name' => 'company_name',
             'field_label' => 'Ragione Sociale o Denominazione',
             'field_type' => 'text',
+            'field_options' => null,
             'is_required' => 1,
             'sort_order' => 1,
         ],
         [
-            'product_id' => $visuraProductId,
             'field_name' => 'fiscal_code',
             'field_label' => 'Codice Fiscale o Partita IVA',
             'field_type' => 'text',
+            'field_options' => null,
             'is_required' => 1,
             'sort_order' => 2,
         ],
@@ -411,10 +411,10 @@ function ap_seed_products(PDO $pdo): void
             'sort_order' => 4,
         ],
         [
-            'product_id' => $visuraProductId,
             'field_name' => 'notes',
             'field_label' => 'Note aggiuntive (opzionale)',
             'field_type' => 'textarea',
+            'field_options' => null,
             'is_required' => 0,
             'sort_order' => 5,
         ],
@@ -423,6 +423,7 @@ function ap_seed_products(PDO $pdo): void
     $fieldInsert = $pdo->prepare('INSERT INTO product_custom_fields (product_id, field_name, field_label, field_type, field_options, is_required, sort_order) VALUES (:product_id, :field_name, :field_label, :field_type, :field_options, :is_required, :sort_order)');
 
     foreach ($customFields as $field) {
+        $field['product_id'] = $visuraProductId;
         $fieldInsert->execute($field);
     }
 }
