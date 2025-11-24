@@ -234,7 +234,7 @@
                             <span class="contact-sla-full__label">presa in carico media</span>
                         </li>
                         <li>
-                            <span class="contact-sla-full__value">12</span>
+                            <span class="contact-sla-full__value">2</span>
                             <span class="contact-sla-full__label">specialist dedicati</span>
                         </li>
                         <li>
