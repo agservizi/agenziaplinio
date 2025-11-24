@@ -1254,14 +1254,14 @@ body.cart-sidebar-open {
 }
 
 .ap-btn--ghost {
-    background: #ffffff;
-    border: 2px solid var(--color-primary-500);
-    color: var(--color-primary-500);
+    background: #ffffff !important;
+    border: 2px solid var(--color-primary-500) !important;
+    color: var(--color-primary-500) !important;
 }
 
 .ap-btn--ghost:hover {
-    background: var(--color-primary-500);
-    color: #ffffff;
+    background: var(--color-primary-500) !important;
+    color: #ffffff !important;
 }
 
 .ap-btn:hover {
