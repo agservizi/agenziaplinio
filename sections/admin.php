@@ -1402,6 +1402,257 @@ $italianProvinces = [
             </form>
         </div>
         <?php endif; ?>
+        <?php if ($section === 'statistiche'): ?>
+        <?php $stats = ap_get_advanced_stats(); ?>
+        <div class="admin-card mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="mb-0">Statistiche avanzate</h4>
+                    <small class="text-muted">Analisi dettagliata delle performance ecommerce</small>
+                </div>
+                <div class="text-end">
+                    <small class="text-muted d-block">Ultimo aggiornamento: <?php echo date('d/m/Y H:i'); ?></small>
+                    <small class="text-muted">Periodo: ultimi 12 mesi</small>
+                </div>
+            </div>
+            
+            <!-- Metriche principali -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Clienti totali</p>
+                        <h3><?php echo number_format($stats['total_customers']); ?></h3>
+                        <small class="text-muted">Attivi negli ultimi 30gg: <?php echo number_format($stats['active_customers']); ?></small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Tasso conversione</p>
+                        <h3><?php echo number_format($stats['conversion_rate'], 1); ?>%</h3>
+                        <small class="text-muted">Sessioni → Ordini (30gg)</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Sessioni abbandonate</p>
+                        <h3><?php echo number_format($stats['total_sessions_30d']); ?></h3>
+                        <small class="text-muted">Ordini: <?php echo number_format($stats['total_orders_30d']); ?></small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Stati ordini</p>
+                        <div class="d-flex gap-2 mt-2">
+                            <?php foreach ($stats['order_statuses'] as $status => $count): ?>
+                                <span class="badge bg-light text-dark"><?php echo ucfirst($status); ?>: <?php echo $count; ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grafico ricavi mensili -->
+            <div class="row g-4 mb-5">
+                <div class="col-12">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Ricavi mensili (ultimi 12 mesi)</h5>
+                        <canvas id="revenueChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prodotti più venduti -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Prodotti più venduti</h5>
+                        <?php if (empty($stats['top_products'])): ?>
+                            <p class="text-muted">Nessun dato disponibile</p>
+                        <?php else: ?>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Prodotto</th>
+                                            <th>Venduti</th>
+                                            <th>Ricavo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($stats['top_products'] as $product): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($product['name'], ENT_QUOTES); ?></td>
+                                                <td><?php echo number_format($product['total_sold']); ?></td>
+                                                <td><?php echo ap_price_format($product['total_revenue']); ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Ticket medio mensile</h5>
+                        <canvas id="avgOrderChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <?php if ($section === 'sicurezza'): ?>
+        <?php 
+            $securityLogs = ap_get_security_logs(100, 0);
+            $eventTypes = [
+                'login_success' => ['label' => 'Accesso riuscito', 'color' => 'success'],
+                'login_failed' => ['label' => 'Accesso fallito', 'color' => 'danger'],
+                'logout' => ['label' => 'Disconnessione', 'color' => 'secondary'],
+                'password_change' => ['label' => 'Cambio password', 'color' => 'info'],
+                'user_created' => ['label' => 'Utente creato', 'color' => 'primary'],
+                'user_updated' => ['label' => 'Utente modificato', 'color' => 'warning'],
+                'admin_action' => ['label' => 'Azione admin', 'color' => 'dark'],
+                'security_alert' => ['label' => 'Allerta sicurezza', 'color' => 'danger'],
+            ];
+        ?>
+        <div class="admin-card mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="mb-0">Log di Sicurezza</h4>
+                    <small class="text-muted">Monitoraggio attività e accessi al sistema</small>
+                </div>
+                <div class="text-end">
+                    <small class="text-muted d-block"><?php echo $securityLogs['total']; ?> eventi totali</small>
+                    <small class="text-muted">Ultimo aggiornamento: <?php echo date('d/m/Y H:i'); ?></small>
+                </div>
+            </div>
+            
+            <!-- Filtri e ricerca -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <select class="form-select" id="eventFilter">
+                        <option value="">Tutti gli eventi</option>
+                        <?php foreach ($eventTypes as $key => $config): ?>
+                            <option value="<?php echo $key; ?>"><?php echo $config['label']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="userFilter" placeholder="Filtra per utente/email">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="ipFilter" placeholder="Filtra per IP">
+                </div>
+            </div>
+            
+            <!-- Tabella log -->
+            <div class="table-responsive">
+                <table class="table table-sm align-middle" id="securityLogsTable">
+                    <thead>
+                        <tr>
+                            <th>Data/Ora</th>
+                            <th>Evento</th>
+                            <th>Utente</th>
+                            <th>IP</th>
+                            <th>Dettagli</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($securityLogs['logs'])): ?>
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    Nessun evento di sicurezza registrato
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($securityLogs['logs'] as $log): ?>
+                                <tr data-event-type="<?php echo htmlspecialchars($log['event_type'], ENT_QUOTES); ?>">
+                                    <td>
+                                        <div class="small"><?php echo date('d/m/Y', strtotime($log['created_at'])); ?></div>
+                                        <div class="small text-muted"><?php echo date('H:i:s', strtotime($log['created_at'])); ?></div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-<?php echo $eventTypes[$log['event_type']]['color'] ?? 'secondary'; ?>">
+                                            <?php echo $eventTypes[$log['event_type']]['label'] ?? ucfirst(str_replace('_', ' ', $log['event_type'])); ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($log['user_name'])): ?>
+                                            <strong><?php echo htmlspecialchars($log['user_name'], ENT_QUOTES); ?></strong>
+                                            <div class="small text-muted"><?php echo htmlspecialchars($log['user_email'], ENT_QUOTES); ?></div>
+                                        <?php elseif (!empty($log['user_id'])): ?>
+                                            <span class="text-muted">User #<?php echo $log['user_id']; ?></span>
+                                        <?php else: ?>
+                                            <span class="text-muted">-</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <code class="small"><?php echo htmlspecialchars($log['ip_address'], ENT_QUOTES); ?></code>
+                                    </td>
+                                    <td>
+                                        <div><?php echo htmlspecialchars($log['description'], ENT_QUOTES); ?></div>
+                                        <?php if (!empty($log['metadata'])): ?>
+                                            <details class="mt-1">
+                                                <summary class="small text-muted" style="cursor: pointer;">Dettagli tecnici</summary>
+                                                <pre class="small mt-1"><code><?php echo htmlspecialchars(json_encode(json_decode($log['metadata'], true), JSON_PRETTY_PRINT), ENT_QUOTES); ?></code></pre>
+                                            </details>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Paginazione se necessario -->
+            <?php if ($securityLogs['total'] > 100): ?>
+                <nav class="mt-3">
+                    <ul class="pagination pagination-sm mb-0 justify-content-center">
+                        <li class="page-item disabled">
+                            <span class="page-link">Prima pagina (ultimi 100 eventi)</span>
+                        </li>
+                    </ul>
+                </nav>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+        <?php if ($section === 'sicurezza'): ?>
+        <script>
+            // Filtri per i log di sicurezza
+            document.addEventListener('DOMContentLoaded', function() {
+                const eventFilter = document.getElementById('eventFilter');
+                const userFilter = document.getElementById('userFilter');
+                const ipFilter = document.getElementById('ipFilter');
+                const table = document.getElementById('securityLogsTable');
+                const rows = table.querySelectorAll('tbody tr');
+                
+                function filterLogs() {
+                    const eventValue = eventFilter.value.toLowerCase();
+                    const userValue = userFilter.value.toLowerCase();
+                    const ipValue = ipFilter.value.toLowerCase();
+                    
+                    rows.forEach(row => {
+                        if (row.cells.length < 5) return; // Skip header or empty rows
+                        
+                        const eventType = row.dataset.eventType || '';
+                        const userText = row.cells[2].textContent.toLowerCase();
+                        const ipText = row.cells[3].textContent.toLowerCase();
+                        
+                        const matchesEvent = !eventValue || eventType === eventValue;
+                        const matchesUser = !userValue || userText.includes(userValue);
+                        const matchesIp = !ipValue || ipText.includes(ipValue);
+                        
+                        row.style.display = (matchesEvent && matchesUser && matchesIp) ? '' : 'none';
+                    });
+                }
+                
+                eventFilter.addEventListener('change', filterLogs);
+                userFilter.addEventListener('input', filterLogs);
+                ipFilter.addEventListener('input', filterLogs);
+            });
+        </script>
+        <?php endif; ?>
         <script>
             (function () {
                 const typeField = document.getElementById('coupon_type_admin');
@@ -1531,6 +1782,126 @@ $italianProvinces = [
                 });
             }
         </script>
+        <?php if ($section === 'statistiche'): ?>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart');
+            if (revenueCtx) {
+                const revenueData = <?php echo json_encode(array_values($stats['revenue_by_month'])); ?>;
+                const revenueLabels = <?php echo json_encode(array_keys($stats['revenue_by_month'])); ?>;
+                
+                new Chart(revenueCtx, {
+                    type: 'line',
+                    data: {
+                        labels: revenueLabels.map(label => {
+                            const date = new Date(label + '-01');
+                            return date.toLocaleDateString('it-IT', { year: 'numeric', month: 'short' });
+                        }),
+                        datasets: [{
+                            label: 'Ricavi (€)',
+                            data: revenueData.map(item => item.revenue / 100),
+                            borderColor: '#007bff',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }, {
+                            label: 'Ordini',
+                            data: revenueData.map(item => item.orders),
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            yAxisID: 'y1',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Ricavi (€)'
+                                }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'Ordini'
+                                },
+                                grid: {
+                                    drawOnChartArea: false,
+                                },
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        if (context.datasetIndex === 0) {
+                                            return 'Ricavi: €' + context.parsed.y.toFixed(2);
+                                        } else {
+                                            return 'Ordini: ' + context.parsed.y;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Average Order Value Chart
+            const avgOrderCtx = document.getElementById('avgOrderChart');
+            if (avgOrderCtx) {
+                const avgOrderData = <?php echo json_encode(array_values($stats['avg_order_value'])); ?>;
+                const avgOrderLabels = <?php echo json_encode(array_keys($stats['avg_order_value'])); ?>;
+                
+                new Chart(avgOrderCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: avgOrderLabels.map(label => {
+                            const date = new Date(label + '-01');
+                            return date.toLocaleDateString('it-IT', { year: 'numeric', month: 'short' });
+                        }),
+                        datasets: [{
+                            label: 'Ticket medio (€)',
+                            data: avgOrderData.map(value => value / 100),
+                            backgroundColor: '#ffc107',
+                            borderColor: '#e0a800',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Euro (€)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return 'Ticket medio: €' + context.parsed.y.toFixed(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        </script>
+        <?php endif; ?>
     </div>
 </section>
 

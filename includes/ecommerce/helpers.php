@@ -1672,3 +1672,134 @@ function ap_fetch_settings(): array
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function ap_get_advanced_stats(): array
+{
+    $pdo = ap_db();
+    
+    // Revenue by month (last 12 months)
+    $revenueByMonth = [];
+    $stmt = $pdo->prepare("
+        SELECT 
+            DATE_FORMAT(created_at, '%Y-%m') as month,
+            SUM(total_cents) as revenue,
+            COUNT(*) as orders
+        FROM orders 
+        WHERE created_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+        GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+        ORDER BY month ASC
+    ");
+    $stmt->execute();
+    $monthlyData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($monthlyData as $row) {
+        $revenueByMonth[$row['month']] = [
+            'revenue' => (int) $row['revenue'],
+            'orders' => (int) $row['orders']
+        ];
+    }
+    
+    // Top products
+    $topProducts = [];
+    $stmt = $pdo->prepare("
+        SELECT 
+            p.name,
+            SUM(oi.quantity) as total_sold,
+            SUM(oi.price_cents * oi.quantity) as total_revenue
+        FROM order_items oi
+        JOIN products p ON p.id = oi.product_id
+        JOIN orders o ON o.id = oi.order_id
+        WHERE o.status IN ('processing', 'completed')
+        GROUP BY p.id, p.name
+        ORDER BY total_sold DESC
+        LIMIT 10
+    ");
+    $stmt->execute();
+    $topProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Customer stats
+    $totalCustomers = (int) ($pdo->query("SELECT COUNT(*) FROM users WHERE role = 'customer'")->fetchColumn() ?? 0);
+    $activeCustomers = (int) ($pdo->query("SELECT COUNT(DISTINCT user_id) FROM orders WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)")->fetchColumn() ?? 0);
+    
+    // Order status distribution
+    $orderStatuses = [];
+    $stmt = $pdo->prepare("SELECT status, COUNT(*) as count FROM orders GROUP BY status");
+    $stmt->execute();
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $orderStatuses[$row['status']] = (int) $row['count'];
+    }
+    
+    // Average order value by month
+    $avgOrderValue = [];
+    foreach ($monthlyData as $row) {
+        $avgOrderValue[$row['month']] = $row['orders'] > 0 ? (int) ($row['revenue'] / $row['orders']) : 0;
+    }
+    
+    // Conversion rate (orders / sessions - approximate)
+    $totalSessions = (int) ($pdo->query("SELECT COUNT(*) FROM abandoned_carts WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)")->fetchColumn() ?? 0);
+    $totalOrders30d = (int) ($pdo->query("SELECT COUNT(*) FROM orders WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)")->fetchColumn() ?? 0);
+    $conversionRate = $totalSessions > 0 ? round(($totalOrders30d / $totalSessions) * 100, 2) : 0;
+    
+    return [
+        'revenue_by_month' => $revenueByMonth,
+        'top_products' => $topProducts,
+        'total_customers' => $totalCustomers,
+        'active_customers' => $activeCustomers,
+        'order_statuses' => $orderStatuses,
+        'avg_order_value' => $avgOrderValue,
+        'conversion_rate' => $conversionRate,
+        'total_sessions_30d' => $totalSessions,
+        'total_orders_30d' => $totalOrders30d,
+    ];
+}
+
+function ap_get_security_logs(int $limit = 50, int $offset = 0): array
+{
+    $pdo = ap_db();
+    
+    // Get security logs with user info
+    $stmt = $pdo->prepare("
+        SELECT 
+            sl.*,
+            u.name as user_name,
+            u.email as user_email
+        FROM security_logs sl
+        LEFT JOIN users u ON u.id = sl.user_id
+        ORDER BY sl.created_at DESC
+        LIMIT ? OFFSET ?
+    ");
+    $stmt->execute([$limit, $offset]);
+    $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Get total count
+    $totalStmt = $pdo->query("SELECT COUNT(*) FROM security_logs");
+    $total = (int) $totalStmt->fetchColumn();
+    
+    return [
+        'logs' => $logs,
+        'total' => $total,
+        'limit' => $limit,
+        'offset' => $offset
+    ];
+}
+
+function ap_log_security_event(string $event_type, string $description, ?int $user_id = null, array $metadata = []): void
+{
+    $pdo = ap_db();
+    
+    $stmt = $pdo->prepare("
+        INSERT INTO security_logs (event_type, description, user_id, metadata, ip_address, user_agent, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, NOW())
+    ");
+    
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
+    
+    $stmt->execute([
+        $event_type,
+        $description,
+        $user_id,
+        json_encode($metadata),
+        $ip,
+        $userAgent
+    ]);
+}

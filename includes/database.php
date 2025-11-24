@@ -218,6 +218,21 @@ function ap_bootstrap_schema(PDO $pdo): void
         updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
+    $pdo->exec('CREATE TABLE IF NOT EXISTS security_logs (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        event_type VARCHAR(50) NOT NULL,
+        description TEXT NOT NULL,
+        user_id INT UNSIGNED NULL,
+        metadata JSON NULL,
+        ip_address VARCHAR(45) NOT NULL,
+        user_agent TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+        INDEX idx_event_type (event_type),
+        INDEX idx_created_at (created_at),
+        INDEX idx_user_id (user_id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_method VARCHAR(60) DEFAULT "standard"');
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_status ENUM("preparing", "in_transit", "delivered", "issue") NOT NULL DEFAULT "preparing"');
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_cost_cents INT UNSIGNED NOT NULL DEFAULT 0');
@@ -243,6 +258,7 @@ function ap_bootstrap_schema(PDO $pdo): void
     ap_try_exec($pdo, 'ALTER TABLE products ADD COLUMN IF NOT EXISTS fulfillment_type ENUM("digital","physical") NOT NULL DEFAULT "digital" AFTER category_key');
     ap_seed_admin($pdo);
     ap_seed_products($pdo);
+    ap_seed_security_logs($pdo);
 }
 
 function ap_try_exec(PDO $pdo, string $sql): void
@@ -516,10 +532,98 @@ function ap_save_order_custom_data(int $orderId, int $productId, array $data): v
     }
 }
 
-function ap_fetch_order_item(int $orderId, int $productId): ?array
+function ap_seed_security_logs(PDO $pdo): void
 {
-    $pdo = ap_db();
-    $stmt = $pdo->prepare('SELECT * FROM order_items WHERE order_id = :order_id AND product_id = :product_id LIMIT 1');
-    $stmt->execute([':order_id' => $orderId, ':product_id' => $productId]);
-    return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    // Check if security logs already exist
+    $stmt = $pdo->query('SELECT COUNT(*) AS total FROM security_logs');
+    $count = (int) ($stmt->fetch()['total'] ?? 0);
+    if ($count > 0) {
+        return; // Already seeded
+    }
+    
+    // Get admin user ID
+    $adminStmt = $pdo->prepare('SELECT id FROM users WHERE role = :role LIMIT 1');
+    $adminStmt->execute([':role' => 'admin']);
+    $adminId = $adminStmt->fetchColumn();
+    
+    $logs = [
+        [
+            'event_type' => 'user_created',
+            'description' => 'Creato account amministratore iniziale',
+            'user_id' => $adminId,
+            'metadata' => json_encode(['role' => 'admin', 'method' => 'bootstrap']),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'System Bootstrap',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-7 days')),
+        ],
+        [
+            'event_type' => 'login_success',
+            'description' => 'Accesso amministratore riuscito',
+            'user_id' => $adminId,
+            'metadata' => json_encode(['login_method' => 'password']),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-6 days')),
+        ],
+        [
+            'event_type' => 'admin_action',
+            'description' => 'Configurazione iniziale prodotti completata',
+            'user_id' => $adminId,
+            'metadata' => json_encode(['action' => 'seed_products', 'count' => 8]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-6 days')),
+        ],
+        [
+            'event_type' => 'login_failed',
+            'description' => 'Tentativo di accesso fallito - password errata',
+            'user_id' => null,
+            'metadata' => json_encode(['email' => 'admin@agenziaplinio.it', 'reason' => 'invalid_password']),
+            'ip_address' => '192.168.1.100',
+            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-3 days')),
+        ],
+        [
+            'event_type' => 'security_alert',
+            'description' => 'Rilevati 3 tentativi di accesso falliti consecutivi',
+            'user_id' => null,
+            'metadata' => json_encode(['alert_type' => 'brute_force_attempt', 'ip' => '192.168.1.100', 'attempts' => 3]),
+            'ip_address' => '192.168.1.100',
+            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-3 days')),
+        ],
+        [
+            'event_type' => 'password_change',
+            'description' => 'Password amministratore cambiata',
+            'user_id' => $adminId,
+            'metadata' => json_encode(['method' => 'admin_panel']),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-2 days')),
+        ],
+        [
+            'event_type' => 'admin_action',
+            'description' => 'Impostazioni sito configurate',
+            'user_id' => $adminId,
+            'metadata' => json_encode(['action' => 'settings_update', 'settings' => ['site_name', 'contact_email', 'currency']]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-1 day')),
+        ],
+        [
+            'event_type' => 'logout',
+            'description' => 'Disconnessione amministratore',
+            'user_id' => $adminId,
+            'metadata' => json_encode(['session_duration' => '2h 15m']),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-30 minutes')),
+        ],
+    ];
+    
+    $insert = $pdo->prepare('INSERT INTO security_logs (event_type, description, user_id, metadata, ip_address, user_agent, created_at) VALUES (:event_type, :description, :user_id, :metadata, :ip_address, :user_agent, :created_at)');
+    
+    foreach ($logs as $log) {
+        $insert->execute($log);
+    }
 }
