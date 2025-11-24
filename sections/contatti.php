@@ -195,7 +195,7 @@
         <!-- Hero Section -->
         <div class="contact-hero">
             <h1><i class="fas fa-envelope me-3"></i>Contatti</h1>
-            <p>Team operations attivo 7/7 per supporto, consulenze e attivazioni. Rispondiamo in media entro 43 minuti.</p>
+            <p>Team operations attivo 7/7 per supporto, consulenze e attivazioni. Rispondiamo entro 1 ora.</p>
         </div>
 
         <!-- Contact Details -->
@@ -203,7 +203,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <h2>Parliamo in modo operativo</h2>
-                    <p class="mb-4">Team operations attivo 7/7 per onboarding multiservizio, attivazioni digitali e supporto post vendita. Rispondiamo in media entro 43 minuti.</p>
+                    <p class="mb-4">Team operations attivo 7/7 per onboarding multiservizio, attivazioni digitali e supporto post vendita. Rispondiamo entro 1 ora.</p>
 
                     <div class="contact-channel-grid-full">
                         <article class="contact-channel-full">
