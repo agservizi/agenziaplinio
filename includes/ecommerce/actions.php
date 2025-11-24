@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+file_put_contents(__DIR__ . '/../../debug.log', 'Actions file loaded' . "\n", FILE_APPEND);
 
 require_once __DIR__ . '/../auth.php';
 require_once __DIR__ . '/../cart.php';
@@ -27,6 +28,7 @@ function ap_action_save_order_custom_data(): void
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['ap_action'] ?? null;
+    file_put_contents(__DIR__ . '/../../debug.log', 'POST received, action: ' . ($action ?? 'null') . "\n", FILE_APPEND);
     if ($action) {
         try {
             ap_handle_action($action);
