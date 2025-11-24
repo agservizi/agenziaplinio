@@ -2020,6 +2020,17 @@ $auditEventTypes = [
                     }
                 });
             }
+            
+            // Handle confirm delete user button
+            const confirmDeleteUserBtn = document.getElementById('confirmDeleteUserBtn');
+            if (confirmDeleteUserBtn) {
+                confirmDeleteUserBtn.addEventListener('click', function() {
+                    const userIdInput = document.getElementById('deleteUserId');
+                    if (userIdInput && userIdInput.value) {
+                        document.getElementById('deleteUserForm').submit();
+                    }
+                });
+            }
         </script>
         <?php if ($section === 'statistiche'): ?>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -2187,8 +2198,8 @@ $auditEventTypes = [
                     <input type="hidden" name="ap_action" value="admin_delete_user">
                     <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti']), ENT_QUOTES); ?>">
                     <input type="hidden" name="user_id" id="deleteUserId">
-                    <button type="submit" class="btn btn-danger">Elimina definitivamente</button>
                 </form>
+                <button type="button" class="btn btn-danger" id="confirmDeleteUserBtn">Elimina definitivamente</button>
             </div>
         </div>
     </div>
