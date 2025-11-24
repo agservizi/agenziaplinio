@@ -2397,7 +2397,7 @@ body.nav-open {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.6), rgba(232, 240, 255, 0.3));
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(232, 240, 255, 0.2) 100%);
 }
 
 .hero-section .container {
