@@ -175,12 +175,33 @@ function ap_save_product(array $data, ?int $id = null): bool
 function ap_delete_product(int $id): bool
 {
     $pdo = ap_db();
-    $stmt = $pdo->prepare('DELETE FROM products WHERE id = :id');
-    $result = $stmt->execute([':id' => $id]);
-    if ($result) {
-        ap_cache_forget_prefix('products_');
+    $pdo->beginTransaction();
+    try {
+        // Elimina prima i custom fields
+        $stmt = $pdo->prepare('DELETE FROM product_custom_fields WHERE product_id = :id');
+        $stmt->execute([':id' => $id]);
+
+        // Elimina gli order_items (eliminazione forzata)
+        $stmt = $pdo->prepare('DELETE FROM order_items WHERE product_id = :id');
+        $stmt->execute([':id' => $id]);
+
+        // Infine elimina il prodotto
+        $stmt = $pdo->prepare('DELETE FROM products WHERE id = :id');
+        $result = $stmt->execute([':id' => $id]);
+
+        if ($result) {
+            ap_cache_forget_prefix('products_');
+            $pdo->commit();
+            return true;
+        } else {
+            $pdo->rollBack();
+            return false;
+        }
+    } catch (Throwable $exception) {
+        $pdo->rollBack();
+        error_log('Errore eliminazione prodotto forzata: ' . $exception->getMessage());
+        return false;
     }
-    return $result;
 }
 
 function ap_product_category_map(): array

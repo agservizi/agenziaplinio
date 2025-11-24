@@ -920,9 +920,9 @@ function ap_action_admin_delete_product(): void
     }
     $result = ap_delete_product($id);
     if ($result) {
-        ap_flash('Prodotto rimosso dal catalogo.', 'info');
+        ap_flash('Prodotto eliminato forzatamente dal catalogo. Gli ordini esistenti potrebbero essere influenzati.', 'warning');
     } else {
-        ap_flash('Errore durante l\'eliminazione del prodotto.', 'error');
+        ap_flash('Errore durante l\'eliminazione forzata del prodotto.', 'error');
     }
 }
 
