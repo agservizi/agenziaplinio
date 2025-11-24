@@ -611,7 +611,7 @@ $newsIconOptions = [
                                                 </span>
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-outline-primary" href="<?php echo htmlspecialchars($adminUrl(['id' => (int) $product['id']], 'edit_product'), ENT_QUOTES); ?>">Modifica</a>
+                                                <a class="btn btn-sm btn-outline-primary" href="<?php echo htmlspecialchars($adminUrl(['section' => 'edit_product', 'id' => (int) $product['id']]), ENT_QUOTES); ?>">Modifica</a>
                                                 <button class="btn btn-sm btn-danger ms-2" type="button" data-bs-toggle="modal" data-bs-target="#deleteProductModal" data-product-id="<?php echo (int) $product['id']; ?>" data-product-name="<?php echo htmlspecialchars($product['name'], ENT_QUOTES); ?>">Elimina</button>
                                             </td>
                                         </tr>
