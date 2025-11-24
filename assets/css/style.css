@@ -2391,7 +2391,7 @@ body.nav-open {
 }
 
 .hero-section[data-parallax] {
-    background-attachment: fixed;
+    background-attachment: scroll;
 }
 
 .hero-overlay {
