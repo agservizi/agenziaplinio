@@ -66,6 +66,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="?page=home">Home</a></li>
+                        <li class="breadcrumb-item"><a href="?page=home#servizi">Servizi</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Logistica Smart</li>
+                    </ol>
+                </nav>
+
                 <!-- Hero Section Pulita -->
                 <div class="hero-section-clean text-center mb-5">
                     <h1 class="display-4 fw-bold text-primary mb-3">
