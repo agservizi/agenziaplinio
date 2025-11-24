@@ -64,7 +64,6 @@ if (is_file($servicesDataPath)) {
                     <?php endif; ?>
                 </li>
                 <li><a href="?page=shop">Shop</a></li>
-                <li><a href="?page=home#vetrina" data-scroll>Vetrina</a></li>
                 <li><a href="?page=chi-siamo">Chi siamo</a></li>
                 <li><a href="?page=contatti">Contatti</a></li>
                 <li class="nav-search-trigger">
