@@ -565,13 +565,22 @@ function ap_action_admin_save_product(): void
     // Handle custom fields
     $customFieldsSaved = false;
     if ($id) {
-        // Delete existing fields
-        $pdo = ap_db();
-        $stmt = $pdo->prepare('DELETE FROM product_custom_fields WHERE product_id = :product_id');
-        $stmt->execute([':product_id' => $id]);
-
-        // Save new fields
+        // Save new or update existing fields
         $customFields = $_POST['custom_fields'] ?? [];
+        // Delete existing fields not in the current POST
+        $postedFieldIds = array_keys($customFields);
+        if (!empty($postedFieldIds)) {
+            $placeholders = str_repeat('?,', count($postedFieldIds) - 1) . '?';
+            $pdo = ap_db();
+            $stmt = $pdo->prepare("DELETE FROM product_custom_fields WHERE product_id = ? AND id NOT IN ($placeholders)");
+            $stmt->execute(array_merge([$id], $postedFieldIds));
+        } else {
+            // If no fields posted, delete all
+            $pdo = ap_db();
+            $stmt = $pdo->prepare('DELETE FROM product_custom_fields WHERE product_id = ?');
+            $stmt->execute([$id]);
+        }
+
         foreach ($customFields as $fieldId => $fieldData) {
             if (empty($fieldData['name']) || empty($fieldData['label'])) continue;
             $data = [
