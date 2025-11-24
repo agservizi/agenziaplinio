@@ -605,14 +605,9 @@ $newsIconOptions = [
                                                     <?php echo (int) $product['is_active'] === 1 ? 'Attivo' : 'Nascosto'; ?>
                                                 </span>
                                             </td>
-                                    <td>
+                                            <td>
                                                 <a class="btn btn-sm btn-outline-primary" href="<?php echo htmlspecialchars($adminUrl(['id' => (int) $product['id']], 'edit_product'), ENT_QUOTES); ?>">Modifica</a>
-                                                <form method="post" onsubmit="return confirm('Eliminare definitivamente questo prodotto?');" class="d-inline ms-2">
-                                                    <input type="hidden" name="ap_action" value="admin_delete_product">
-                                                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl([], 'catalogo'), ENT_QUOTES); ?>">
-                                                    <input type="hidden" name="product_id" value="<?php echo (int) $product['id']; ?>">
-                                                    <button class="btn btn-sm btn-danger" type="submit">Elimina</button>
-                                                </form>
+                                                <button class="btn btn-sm btn-danger ms-2" type="button" data-bs-toggle="modal" data-bs-target="#deleteProductModal" data-product-id="<?php echo (int) $product['id']; ?>" data-product-name="<?php echo htmlspecialchars($product['name'], ENT_QUOTES); ?>">Elimina</button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -1192,5 +1187,51 @@ $newsIconOptions = [
                 });
             })();
         </script>
+        <script>
+            // Handle delete product modal
+            const deleteProductModal = document.getElementById('deleteProductModal');
+            if (deleteProductModal) {
+                deleteProductModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    const productId = button.getAttribute('data-product-id');
+                    const productName = button.getAttribute('data-product-name');
+                    
+                    const productNameElement = document.getElementById('productName');
+                    const productIdInput = document.getElementById('deleteProductId');
+                    
+                    if (productNameElement) {
+                        productNameElement.textContent = productName;
+                    }
+                    if (productIdInput) {
+                        productIdInput.value = productId;
+                    }
+                });
+            }
+        </script>
     </div>
 </section>
+
+<!-- Delete Product Modal -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteProductModalLabel">Conferma eliminazione</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+            </div>
+            <div class="modal-body">
+                <p>Sei sicuro di voler eliminare definitivamente il prodotto <strong id="productName"></strong>?</p>
+                <p class="text-muted small">Questa azione non può essere annullata.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <form method="post" id="deleteProductForm" class="d-inline">
+                    <input type="hidden" name="ap_action" value="admin_delete_product">
+                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl([], 'catalogo'), ENT_QUOTES); ?>">
+                    <input type="hidden" name="product_id" id="deleteProductId">
+                    <button type="submit" class="btn btn-danger">Elimina definitivamente</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
