@@ -172,6 +172,17 @@ function ap_save_product(array $data, ?int $id = null): bool
     return $result;
 }
 
+function ap_delete_product(int $id): bool
+{
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('DELETE FROM products WHERE id = :id');
+    $result = $stmt->execute([':id' => $id]);
+    if ($result) {
+        ap_cache_forget_prefix('products_');
+    }
+    return $result;
+}
+
 function ap_product_category_map(): array
 {
     return [

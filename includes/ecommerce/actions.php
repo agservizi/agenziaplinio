@@ -65,8 +65,8 @@ function ap_handle_action(string $action): void
         case 'checkout':
             ap_action_checkout();
             break;
-        case 'admin_save_product':
-            ap_action_admin_save_product();
+        case 'admin_delete_product':
+            ap_action_admin_delete_product();
             break;
         case 'admin_save_coupon':
             ap_action_admin_save_coupon();
@@ -905,6 +905,21 @@ function ap_action_change_password(): void
     ]);
     $_SESSION['ap_auth_user']['password_hash'] = $hash;
     ap_flash('Password aggiornata correttamente.', 'success');
+}
+
+function ap_action_admin_delete_product(): void
+{
+    if (!ap_auth_is_admin()) {
+        ap_flash('Non autorizzato.', 'error');
+        return;
+    }
+    $id = isset($_POST['product_id']) ? (int) $_POST['product_id'] : 0;
+    if ($id <= 0) {
+        ap_flash('Prodotto non trovato.', 'error');
+        return;
+    }
+    ap_delete_product($id);
+    ap_flash('Prodotto rimosso dal catalogo.', 'info');
 }
 
 function ap_simulate_payment(int $orderId, string $method, int $amount): void

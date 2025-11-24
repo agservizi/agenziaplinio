@@ -607,6 +607,12 @@ $newsIconOptions = [
                                             </td>
                                     <td>
                                                 <a class="btn btn-sm btn-outline-primary" href="<?php echo htmlspecialchars($adminUrl(['id' => (int) $product['id']], 'edit_product'), ENT_QUOTES); ?>">Modifica</a>
+                                                <form method="post" onsubmit="return confirm('Eliminare definitivamente questo prodotto?');" class="d-inline ms-2">
+                                                    <input type="hidden" name="ap_action" value="admin_delete_product">
+                                                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl([], 'catalogo'), ENT_QUOTES); ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo (int) $product['id']; ?>">
+                                                    <button class="btn btn-sm btn-danger" type="submit">Elimina</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
