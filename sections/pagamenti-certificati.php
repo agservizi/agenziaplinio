@@ -11,6 +11,7 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     transition: all 0.2s ease;
     min-height: 350px;
+    padding: 1.5rem;
 }
 
 .clean-card:hover {
@@ -113,7 +114,7 @@
             <!-- Bollettini Postali -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-envelope"></i>
@@ -137,7 +138,7 @@
             <!-- Bollettini pagoPA -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-university"></i>
@@ -170,7 +171,7 @@
             <!-- Deleghe F24 -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-file-invoice-dollar"></i>
@@ -194,7 +195,7 @@
             <!-- Bollettini Bancari -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-piggy-bank"></i>
@@ -217,7 +218,7 @@
             <!-- Bollettini MAV e RAV -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-receipt"></i>
@@ -241,7 +242,7 @@
             <!-- Bollo Auto -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-car"></i>
@@ -264,7 +265,7 @@
             <!-- Versamenti su Conti DropPay -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-money-bill-wave"></i>
@@ -287,7 +288,7 @@
             <!-- DropPayCard -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
-                    <div class="card-body">
+                    <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="service-badge">
                                 <i class="fas fa-credit-card"></i>
