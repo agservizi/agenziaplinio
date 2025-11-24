@@ -1254,23 +1254,23 @@ body.cart-sidebar-open {
 }
 
 .ap-btn--ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.35rem 0.85rem;
-    border-radius: 999px;
-    border: 1px solid rgba(45, 107, 255, 0.25);
-    color: var(--color-primary-600);
-    font-size: 0.85rem;
-    background: rgba(45, 107, 255, 0.08);
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    padding: 0.35rem 0.85rem !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(45, 107, 255, 0.25) !important;
+    color: var(--color-primary-600) !important;
+    font-size: 0.85rem !important;
+    background: rgba(45, 107, 255, 0.08) !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
 }
 
 .ap-btn--ghost:hover {
-    background: rgba(45, 107, 255, 0.15);
-    border-color: rgba(45, 107, 255, 0.45);
+    background: rgba(45, 107, 255, 0.15) !important;
+    border-color: rgba(45, 107, 255, 0.45) !important;
 }
 
 .ap-btn:hover {
