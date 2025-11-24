@@ -111,8 +111,6 @@
                             Attiviamo linee mobili e fisse con i principali operatori italiani:
                         </p>
                         <ul class="list-unstyled">
-                            <li><span class="fw-medium">TIM</span></li>
-                            <li><span class="fw-medium">Vodafone</span></li>
                             <li><span class="fw-medium">WindTre</span></li>
                             <li><span class="fw-medium">Iliad</span></li>
                             <li><span class="fw-medium">Fastweb</span></li>
@@ -151,33 +149,6 @@
                 </div>
             </div>
 
-            <!-- Device e Accessori -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="clean-card h-100">
-                    <div>
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon-clean">
-                                <i class="fas fa-tablet-alt"></i>
-                            </div>
-                            <h5 class="card-title mb-0 fw-bold">Device e Accessori</h5>
-                        </div>
-                        <p class="card-text text-muted">
-                            Smartphone, tablet e accessori tech con rateizzazione:
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><span class="fw-medium">Smartphone di ultima generazione</span></li>
-                            <li><span class="fw-medium">Tablet e e-reader</span></li>
-                            <li><span class="fw-medium">Cuffie e auricolari wireless</span></li>
-                            <li><span class="fw-medium">Power bank e caricatori</span></li>
-                            <li><span class="fw-medium">Cover e protezioni</span></li>
-                        </ul>
-                        <p class="card-text small text-info fw-medium">
-                            Rateizzazione senza interessi e consegna a domicilio.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Servizi Aziendali -->
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
@@ -199,32 +170,6 @@
                         </ul>
                         <p class="card-text small text-info fw-medium">
                             Dashboard di monitoraggio e supporto dedicato.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Assistenza e Manutenzione -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="clean-card h-100">
-                    <div>
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="service-icon-clean">
-                                <i class="fas fa-tools"></i>
-                            </div>
-                            <h5 class="card-title mb-0 fw-bold">Assistenza e Manutenzione</h5>
-                        </div>
-                        <p class="card-text text-muted">
-                            Supporto tecnico completo per tutti i tuoi dispositivi:
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><span class="fw-medium">Riparazione smartphone e tablet</span></li>
-                            <li><span class="fw-medium">Configurazione dispositivi</span></li>
-                            <li><span class="fw-medium">Ottimizzazione connessioni</span></li>
-                            <li><span class="fw-medium">Consulenza tecnica</span></li>
-                        </ul>
-                        <p class="card-text small text-info fw-medium">
-                            Intervento rapido e garanzia sui lavori.
                         </p>
                     </div>
                 </div>
