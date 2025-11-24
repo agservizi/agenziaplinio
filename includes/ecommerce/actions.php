@@ -1034,3 +1034,5 @@ function ap_action_admin_upload_digital_file(): void
     ]);
     ap_flash('File allegato con successo.', 'success');
 }
+
+// Force cache reload - added 2025-01-24
