@@ -33,20 +33,6 @@
     flex-shrink: 0;
 }
 
-.service-badge {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
 .hero-section-clean {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-radius: 15px;
@@ -115,12 +101,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-envelope"></i>
-                                <span>Postale</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-envelope"></i>
@@ -139,12 +119,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-university"></i>
-                                <span>pagoPA</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-university"></i>
@@ -172,12 +146,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-file-invoice-dollar"></i>
-                                <span>F24</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-file-invoice-dollar"></i>
@@ -196,12 +164,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-piggy-bank"></i>
-                                <span>Bancario</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-piggy-bank"></i>
@@ -219,12 +181,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-receipt"></i>
-                                <span>MAV/RAV</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-receipt"></i>
@@ -243,12 +199,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-car"></i>
-                                <span>Auto</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-car"></i>
@@ -266,12 +216,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-money-bill-wave"></i>
-                                <span>DropPay</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-money-bill-wave"></i>
@@ -289,12 +233,6 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="clean-card h-100">
                     <div>
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="service-badge">
-                                <i class="fas fa-credit-card"></i>
-                                <span>Carta</span>
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center mb-3">
                             <div class="service-icon-clean">
                                 <i class="fas fa-credit-card"></i>
