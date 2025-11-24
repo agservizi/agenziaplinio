@@ -1755,25 +1755,27 @@ function ap_get_advanced_stats(): array
 function ap_get_security_logs(int $limit = 50, int $offset = 0): array
 {
     $pdo = ap_db();
-    
+
     // Get security logs with user info
     $stmt = $pdo->prepare("
-        SELECT 
+        SELECT
             sl.*,
             u.name as user_name,
             u.email as user_email
         FROM security_logs sl
         LEFT JOIN users u ON u.id = sl.user_id
         ORDER BY sl.created_at DESC
-        LIMIT ? OFFSET ?
+        LIMIT :limit OFFSET :offset
     ");
-    $stmt->execute([$limit, $offset]);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
     $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
     // Get total count
     $totalStmt = $pdo->query("SELECT COUNT(*) FROM security_logs");
     $total = (int) $totalStmt->fetchColumn();
-    
+
     return [
         'logs' => $logs,
         'total' => $total,
