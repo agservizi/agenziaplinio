@@ -29,11 +29,34 @@ function handleContactForm(): ?array
     $service = trim($_POST['service'] ?? '');
     $company = trim($_POST['company'] ?? '');
     $priority = trim($_POST['priority'] ?? 'standard');
+    $appointmentRequest = trim($_POST['appointment_request'] ?? 'contact');
+    $preferredDate = trim($_POST['preferred_date'] ?? '');
+    $preferredTime = trim($_POST['preferred_time'] ?? '');
     $message = trim($_POST['message'] ?? '');
 
     if (!$name || !$email || strlen($message) < 5) {
         $response['message'] = 'Compila tutti i campi obbligatori.';
         return finalize_response($response);
+    }
+
+    // Validate appointment fields if appointment is requested
+    if ($appointmentRequest === 'appointment') {
+        if (empty($preferredDate) || empty($preferredTime)) {
+            $response['message'] = 'Per gli appuntamenti, seleziona data e orario preferiti.';
+            return finalize_response($response);
+        }
+        
+        $appointmentDateTime = strtotime($preferredDate . ' ' . $preferredTime);
+        if ($appointmentDateTime < time() + 24 * 60 * 60) { // At least 24 hours in advance
+            $response['message'] = 'Gli appuntamenti devono essere prenotati almeno 24 ore in anticipo.';
+            return finalize_response($response);
+        }
+        
+        $dayOfWeek = date('N', $appointmentDateTime); // 1 = Monday, 7 = Sunday
+        if ($dayOfWeek > 5) { // Weekend
+            $response['message'] = 'Gli appuntamenti sono disponibili solo dal lunedì al venerdì.';
+            return finalize_response($response);
+        }
     }
 
     $ticketCode = ap_contact_generate_ticket_code();
@@ -55,6 +78,9 @@ function handleContactForm(): ?array
         'company' => $company,
         'service' => $service,
         'priority' => $priority,
+        'appointment_request' => $appointmentRequest,
+        'preferred_date' => $preferredDate,
+        'preferred_time' => $preferredTime,
         'message' => $message,
     ]);
 
@@ -116,6 +142,7 @@ function ap_dispatch_contact_email(array $context): array
 function ap_contact_email_markup(array $data): string
 {
     $priorityLabel = ap_contact_priority_label($data['priority'] ?? 'standard');
+    $appointmentLabel = ap_contact_appointment_label($data['appointment_request'] ?? 'contact');
     $submittedAt = (new DateTime('now', new DateTimeZone('Europe/Rome')))->format('d/m/Y H:i');
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'n/d';
     $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'n/d';
@@ -127,8 +154,19 @@ function ap_contact_email_markup(array $data): string
         'Email' => $data['email'] ?? '',
         'Telefono' => $data['phone'] ?? '',
         'Servizio richiesto' => $data['service'] ?? '',
+        'Tipo richiesta' => $appointmentLabel,
         'Priorità' => $priorityLabel,
     ];
+
+    // Add appointment details if appointment was requested
+    if (($data['appointment_request'] ?? 'contact') === 'appointment') {
+        $preferredDate = $data['preferred_date'] ?? '';
+        $preferredTime = $data['preferred_time'] ?? '';
+        if ($preferredDate && $preferredTime) {
+            $appointmentDateTime = date('d/m/Y H:i', strtotime($preferredDate . ' ' . $preferredTime));
+            $rows['Appuntamento richiesto'] = $appointmentDateTime;
+        }
+    }
 
     $tableRows = '';
     foreach ($rows as $label => $value) {
@@ -136,7 +174,7 @@ function ap_contact_email_markup(array $data): string
             continue;
         }
         $tableRows .= sprintf(
-            '<tr><th style="text-align:left;padding:8px 12px;border:1px solid #e1e6f0;background:#f7f9ff;width:40%%;">%s</th><td style="padding:8px 12px;border:1px solid #e1e6f0;">%s</td></tr>',
+            '<tr><th style="text-align:left;padding:8px 12px;border:1px solid #e1e6ff;background:#f7f9ff;width:40%%;">%s</th><td style="padding:8px 12px;border:1px solid #e1e6ff;">%s</td></tr>',
             htmlspecialchars($label, ENT_QUOTES),
             nl2br(htmlspecialchars((string) $value, ENT_QUOTES))
         );
@@ -181,6 +219,16 @@ function ap_contact_priority_label(string $priority): string
         'emergenza' => 'Emergenza operativa',
     ];
     $key = strtolower(trim($priority));
+    return $map[$key] ?? ucfirst(str_replace('-', ' ', $key));
+}
+
+function ap_contact_appointment_label(string $appointmentRequest): string
+{
+    $map = [
+        'contact' => 'Richiesta informazioni',
+        'appointment' => 'Richiesta appuntamento',
+    ];
+    $key = strtolower(trim($appointmentRequest));
     return $map[$key] ?? ucfirst(str_replace('-', ' ', $key));
 }
 

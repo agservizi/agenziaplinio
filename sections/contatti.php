@@ -188,6 +188,87 @@
     background: #0056b3;
     transform: translateY(-1px);
 }
+
+.directions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.directions-item {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.directions-item h5 {
+    color: #495057;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.directions-item ul {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.directions-item li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.testimonial-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+    height: 100%;
+}
+
+.testimonial-stars {
+    font-size: 1.2rem;
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: #6c757d;
+    line-height: 1.5;
+}
+
+.testimonial-author {
+    margin-top: 1rem;
+}
+
+.testimonial-author strong {
+    color: #495057;
+}
+
+.feature-icon {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.quick-actions .btn {
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.quick-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 </style>
 
 <section class="section-padding bg-light">
@@ -204,6 +285,24 @@
                 <div class="col-lg-8">
                     <h2>Parliamo in modo operativo</h2>
                     <p class="mb-4">Team operations attivo 7/7 per onboarding multiservizio, attivazioni digitali e supporto post vendita. Rispondiamo entro 1 ora.</p>
+
+                    <!-- Quick Action Buttons -->
+                    <div class="quick-actions mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <a href="tel:+390810584542" class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Chiama Ora</span>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="https://wa.me/393773798570" target="_blank" rel="noopener" class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="contact-channel-grid-full">
                         <article class="contact-channel-full">
@@ -270,6 +369,233 @@
                             <i class="fas fa-map-marker-alt me-1"></i>
                             Via Plinio il Vecchio, 72 - Castellammare di Stabia (NA)
                         </p>
+                        <div class="d-grid gap-2 mt-3">
+                            <a href="https://maps.google.com/?q=Via+Plinio+Il+Vecchio+72,+80053+Castellammare+di+Stabia+NA" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">
+                                <i class="fab fa-google me-1"></i>Apri in Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Come Raggiungerci -->
+        <div class="contact-details-full">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2>Come raggiungerci</h2>
+                    <p class="mb-4">Siamo facilmente raggiungibili da Napoli e dalla penisola sorrentina. Ecco tutte le indicazioni per arrivare in sede.</p>
+
+                    <div class="directions-grid">
+                        <div class="directions-item">
+                            <h5><i class="fas fa-car me-2 text-primary"></i>In auto</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Dall'autostrada A3:</strong> Uscita Castellammare di Stabia, direzione centro città</li>
+                                <li><strong>Da Napoli:</strong> SS145 Sorrentina, uscita Castellammare centro</li>
+                                <li><strong>Parcheggio:</strong> Gratuito in zona, segnaletica stradale</li>
+                            </ul>
+                        </div>
+
+                        <div class="directions-item">
+                            <h5><i class="fas fa-bus me-2 text-primary"></i>Mezzi pubblici</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Bus urbano:</strong> Linee EAV da Napoli (Porta Nolana)</li>
+                                <li><strong>Treno:</strong> Stazione Castellammare di Stabia (linea Circumvesuviana)</li>
+                                <li><strong>Ferries:</strong> Da Sorrento e Massa Lubrense</li>
+                            </ul>
+                        </div>
+
+                        <div class="directions-item">
+                            <h5><i class="fas fa-clock me-2 text-primary"></i>Orari estesi</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Lunedì-Venerdì:</strong> 08:30-19:15 (pausa 13:15-16:00)</li>
+                                <li><strong>Sabato:</strong> 09:15-13:00</li>
+                                <li><strong>Domenica:</strong> Chiuso (servizio emergenza attivo)</li>
+                                <li><strong>Festivi:</strong> Su appuntamento</li>
+                            </ul>
+                        </div>
+
+                        <div class="directions-item">
+                            <h5><i class="fas fa-info-circle me-2 text-primary"></i>Info utili</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Accessibilità:</strong> Ingresso a piano terra</li>
+                                <li><strong>Sicurezza:</strong> Videosorveglianza 24/7</li>
+                                <li><strong>Caffè:</strong> Bar nelle vicinanze</li>
+                                <li><strong>WiFi:</strong> Gratuito per i clienti</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="bg-light p-4 rounded">
+                        <h5 class="mb-3">Distanze</h5>
+                        <ul class="list-unstyled">
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span>Napoli Centro</span>
+                                <strong>25 km</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span>Sorrento</span>
+                                <strong>15 km</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span>Pompei</span>
+                                <strong>12 km</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span>Salerno</span>
+                                <strong>45 km</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-2">
+                                <span>Capri</span>
+                                <strong>35 km</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Perché Scegliere Noi -->
+        <div class="contact-details-full">
+            <h2 class="text-center mb-4">Perché scegliere Agenzia Plinio</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-shield-alt fa-3x text-primary"></i>
+                        </div>
+                        <h5>Sicurezza Garantita</h5>
+                        <p class="text-muted">Certificazioni ISO 27001, dati protetti con crittografia end-to-end</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-clock fa-3x text-primary"></i>
+                        </div>
+                        <h5>Risposta Rapida</h5>
+                        <p class="text-muted">Media 24 ore per presa in carico, supporto prioritario per emergenze</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-users fa-3x text-primary"></i>
+                        </div>
+                        <h5>Team Specializzato</h5>
+                        <p class="text-muted">2 specialisti dedicati, formazione continua e certificazioni aggiornate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Contatti -->
+        <div class="contact-details-full">
+            <h2 class="text-center mb-4">Domande frequenti</h2>
+            <div class="accordion" id="contactFaq">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            Quali documenti servono per l'attivazione di un servizio?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#contactFaq">
+                        <div class="accordion-body">
+                            Per i privati: documento d'identità valido e codice fiscale. Per le aziende: partita IVA, statuto societario e documento del legale rappresentante.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            Quanto tempo ci vuole per attivare un nuovo servizio?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#contactFaq">
+                        <div class="accordion-body">
+                            I servizi digitali vengono attivati entro 24 ore. Per i servizi fisici (spedizioni, telefonia) i tempi variano da 2 a 5 giorni lavorativi.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            Avete un servizio di assistenza telefonica?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFaq">
+                        <div class="accordion-body">
+                            Sì, il nostro numero diretto +39 081 058 45 42 è attivo dal lunedì al venerdì dalle 08:30 alle 19:15, con pausa pranzo dalle 13:15 alle 16:00.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                            Come posso seguire lo stato della mia richiesta?
+                        </button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#contactFaq">
+                        <div class="accordion-body">
+                            Ogni richiesta riceve un ticket univoco via email. Puoi monitorare lo stato contattandoci con il numero del ticket.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonianze -->
+        <div class="contact-details-full">
+            <h2 class="text-center mb-4">Cosa dicono i nostri clienti</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="testimonial-text mb-3">"Servizio eccellente, attivazione rapida e supporto sempre disponibile. Consigliato!"</p>
+                        <div class="testimonial-author">
+                            <strong>Mario Rossi</strong><br>
+                            <small class="text-muted">Imprenditore, Napoli</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="testimonial-text mb-3">"Professionalità e velocità. Hanno risolto la mia emergenza pagamenti in poche ore."</p>
+                        <div class="testimonial-author">
+                            <strong>Giuseppe Verdi</strong><br>
+                            <small class="text-muted">Commerciante, Sorrento</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="testimonial-text mb-3">"Team preparato e cortese. Il servizio WhatsApp è comodissimo per le comunicazioni rapide."</p>
+                        <div class="testimonial-author">
+                            <strong>Anna Bianchi</strong><br>
+                            <small class="text-muted">Studio Legale, Castellammare</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -322,6 +648,37 @@
                             <option value="emergenza">Emergenza operativa</option>
                         </select>
                     </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="appointment_request">Tipo richiesta</label>
+                        <select class="form-select" id="appointment_request" name="appointment_request">
+                            <option value="contact">Contatto informativo</option>
+                            <option value="consultation">Consulenza guidata</option>
+                            <option value="appointment">Appuntamento in sede</option>
+                            <option value="emergency">Emergenza operativa</option>
+                        </select>
+                    </div>
+                    <div class="col-12 appointment-dates" style="display: none;">
+                        <label class="form-label">Date disponibili per appuntamento</label>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input class="form-control" type="date" id="preferred_date" name="preferred_date" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">
+                                <small class="text-muted">Data preferita</small>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-select" id="preferred_time" name="preferred_time">
+                                    <option value="">Seleziona orario</option>
+                                    <option value="09:00">09:00 - 10:00</option>
+                                    <option value="10:00">10:00 - 11:00</option>
+                                    <option value="11:00">11:00 - 12:00</option>
+                                    <option value="14:00">14:00 - 15:00</option>
+                                    <option value="15:00">15:00 - 16:00</option>
+                                    <option value="16:00">16:00 - 17:00</option>
+                                    <option value="17:00">17:00 - 18:00</option>
+                                </select>
+                                <small class="text-muted">Orario preferita (solo lunedì-venerdì)</small>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-12">
                         <label class="form-label" for="message">Messaggio</label>
                         <textarea class="form-control" id="message" name="message" rows="4" placeholder="Raccontaci cosa ti serve" required></textarea>
@@ -336,3 +693,32 @@
         </div>
     </div>
 </section>
+
+<script>
+// Appointment form toggle
+document.getElementById('appointment_request').addEventListener('change', function() {
+    const appointmentDates = document.querySelector('.appointment-dates');
+    if (this.value === 'appointment') {
+        appointmentDates.style.display = 'block';
+        document.getElementById('preferred_date').required = true;
+        document.getElementById('preferred_time').required = true;
+    } else {
+        appointmentDates.style.display = 'none';
+        document.getElementById('preferred_date').required = false;
+        document.getElementById('preferred_time').required = false;
+    }
+});
+
+// Set minimum date to tomorrow
+document.getElementById('preferred_date').min = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+// Disable weekends in date picker
+document.getElementById('preferred_date').addEventListener('input', function() {
+    const selectedDate = new Date(this.value);
+    const dayOfWeek = selectedDate.getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) { // Sunday = 0, Saturday = 6
+        alert('Gli appuntamenti sono disponibili solo dal lunedì al venerdì.');
+        this.value = '';
+    }
+});
+</script>

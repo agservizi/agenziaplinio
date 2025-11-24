@@ -27,9 +27,9 @@
         <div class="footer-bottom mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
             <p class="mb-2 mb-md-0">&copy; <?php echo date('Y'); ?> AG SERVIZI VIA PLINIO 72. Tutti i diritti riservati.</p>
             <div class="social-links d-flex gap-3">
-                <a href="#" aria-label="LinkedIn" class="social-pill">in</a>
-                <a href="#" aria-label="Facebook" class="social-pill">f</a>
-                <a href="#" aria-label="Instagram" class="social-pill">ig</a>
+                <a href="https://www.linkedin.com/company/agenzia-plinio" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-pill">in</a>
+                <a href="https://www.facebook.com/agserviziplinio.it" target="_blank" rel="noopener" aria-label="Facebook" class="social-pill">f</a>
+                <a href="https://www.instagram.com/agenziaplinio" target="_blank" rel="noopener" aria-label="Instagram" class="social-pill">ig</a>
             </div>
         </div>
     </div>
