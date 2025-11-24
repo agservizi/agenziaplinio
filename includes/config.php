@@ -74,6 +74,11 @@ return [
             'description' => 'Ricariche telefoniche, carte prepagate e device tech con conferma istantanea e massima comodità.',
             'sections' => ['ricariche-multicanale']
         ],
+        'identita-digitale' => [
+            'title' => 'Identità Digitale, PEC e Firma Digitale | Agenzia Plinio',
+            'description' => 'Servizi digitali per SPID, firma digitale e PEC con attivazione semplice e sicura.',
+            'sections' => ['identita-digitale']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',
