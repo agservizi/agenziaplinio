@@ -153,13 +153,24 @@ foreach ($items as $item) {
                                                             <?php elseif ($field['field_type'] === 'textarea'): ?>
                                                                 <textarea class="form-control" id="custom_<?php echo (int) $productId; ?>_<?php echo (int) $field['id']; ?>" name="custom_fields[<?php echo (int) $productId; ?>][<?php echo (int) $field['id']; ?>]" rows="3" <?php echo (int) $field['is_required'] === 1 ? 'required' : ''; ?>></textarea>
                                                             <?php elseif ($field['field_type'] === 'select'): ?>
-                                                                <select class="form-select" id="custom_<?php echo (int) $productId; ?>_<?php echo (int) $field['id']; ?>" name="custom_fields[<?php echo (int) $productId; ?>][<?php echo (int) $field['id']; ?>]" <?php echo (int) $field['is_required'] === 1 ? 'required' : ''; ?>>
-                                                                    <option value="">Seleziona...</option>
-                                                                    <?php $options = explode(',', $field['field_options']); ?>
-                                                                    <?php foreach ($options as $option): ?>
-                                                                        <option value="<?php echo htmlspecialchars(trim($option), ENT_QUOTES); ?>"><?php echo htmlspecialchars(trim($option), ENT_QUOTES); ?></option>
+                                                                <?php
+                                                                $options = explode("\n", $field['field_options']);
+                                                                $allOptions = $options;
+                                                                if ($field['field_name'] === 'province') {
+                                                                    // Aggiungi città capoluogo per facilitare la ricerca
+                                                                    $cities = [
+                                                                        'Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Caltanissetta', 'Campobasso', 'Carbonia', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', 'Forlì', 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', 'La Spezia', 'L\'Aquila', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa', 'Matera', 'Villacidro', 'Messina', 'Milano', 'Modena', 'Monza', 'Napoli', 'Novara', 'Nuoro', 'Lanusei', 'Olbia', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbania', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
+                                                                    ];
+                                                                    $allOptions = array_unique(array_merge($options, $cities));
+                                                                    sort($allOptions);
+                                                                }
+                                                                ?>
+                                                                <input class="form-control" type="text" list="datalist_<?php echo (int) $productId; ?>_<?php echo (int) $field['id']; ?>" id="custom_<?php echo (int) $productId; ?>_<?php echo (int) $field['id']; ?>" name="custom_fields[<?php echo (int) $productId; ?>][<?php echo (int) $field['id']; ?>]" <?php echo (int) $field['is_required'] === 1 ? 'required' : ''; ?>>
+                                                                <datalist id="datalist_<?php echo (int) $productId; ?>_<?php echo (int) $field['id']; ?>">
+                                                                    <?php foreach ($allOptions as $option): ?>
+                                                                        <option value="<?php echo htmlspecialchars(trim($option), ENT_QUOTES); ?>">
                                                                     <?php endforeach; ?>
-                                                                </select>
+                                                                </datalist>
                                                             <?php elseif ($field['field_type'] === 'checkbox'): ?>
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" id="custom_<?php echo (int) $productId; ?>_<?php echo (int) $field['id']; ?>" name="custom_fields[<?php echo (int) $productId; ?>][<?php echo (int) $field['id']; ?>]" value="1">
