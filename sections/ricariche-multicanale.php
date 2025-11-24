@@ -3,28 +3,90 @@
  * Sezione Ricariche Multi-Canale
  */
 ?>
-<section class="section-padding bg-white">
+<style>
+.clean-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.2s ease;
+    min-height: 350px;
+    padding: 1.5rem;
+}
+
+.clean-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.service-icon-clean {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.hero-section-clean {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    padding: 2.5rem;
+}
+
+.cta-clean {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
+}
+
+.cta-clean .btn {
+    background: white;
+    color: #007bff;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.cta-clean .btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+}
+</style>
+
+<section class="section-padding bg-light">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="text-center mb-5">
-                    <h1 class="display-4 fw-bold text-primary mb-3">Ricariche Multi-Canale</h1>
-                    <p class="lead text-muted mb-4">
-                        Ricarica il tuo telefono, carte prepagate e dispositivi tech in modo semplice, veloce e sicuro.
+                <!-- Hero Section Pulita -->
+                <div class="hero-section-clean text-center mb-5">
+                    <h1 class="display-4 fw-bold text-primary mb-3">
+                        <i class="fas fa-mobile-alt me-3"></i>Ricariche Telefoniche
+                    </h1>
+                    <p class="lead text-muted mb-4 fs-5">
+                        Presso la nostra agenzia puoi ricaricare il credito o attivare servizi per i principali operatori nazionali e internazionali.
                     </p>
                     <div class="row g-3 justify-content-center">
                         <div class="col-auto">
-                            <span class="badge bg-success fs-6 px-3 py-2">
-                                <i class="fas fa-mobile-alt me-1"></i>Istantaneo
+                            <span class="badge bg-primary px-3 py-2">
+                                <i class="fas fa-clock me-1"></i>Rapido
                             </span>
                         </div>
                         <div class="col-auto">
-                            <span class="badge bg-info fs-6 px-3 py-2">
-                                <i class="fas fa-wifi me-1"></i>24/7
+                            <span class="badge bg-success px-3 py-2">
+                                <i class="fas fa-euro-sign me-1"></i>Conveniente
                             </span>
                         </div>
                         <div class="col-auto">
-                            <span class="badge bg-warning fs-6 px-3 py-2">
+                            <span class="badge bg-info px-3 py-2">
                                 <i class="fas fa-shield-alt me-1"></i>Sicuro
                             </span>
                         </div>
@@ -33,219 +95,177 @@
             </div>
         </div>
 
-        <!-- Hero Image -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="position-relative">
-                    <img src="assets/img/hero-visual.svg" alt="Ricariche Multi-Canale" class="img-fluid rounded-3 shadow-lg" style="width: 100%; max-height: 400px; object-fit: contain; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem;">
-                    <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
-                        <h2 class="display-5 fw-bold mb-3">Ricarica Ovunque, Sempre</h2>
-                        <p class="fs-5">Conferma immediata via SMS o WhatsApp per la tua tranquillità</p>
+        <!-- Servizi di Ricarica -->
+        <div class="row g-4 mb-5">
+            <!-- Ricariche Telefoniche -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="clean-card h-100">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="service-icon-clean">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h5 class="card-title mb-0 fw-bold">Ricariche Telefoniche</h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            Operatori nazionali e internazionali supportati:
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><span class="fw-medium">Bestcard</span></li>
+                            <li><span class="fw-medium">CoopVoce</span></li>
+                            <li><span class="fw-medium">Digi Mobil</span></li>
+                            <li><span class="fw-medium">Fastweb</span></li>
+                            <li><span class="fw-medium">Freecom</span></li>
+                            <li><span class="fw-medium">Ho.Mobile</span></li>
+                            <li><span class="fw-medium">Iliad</span></li>
+                            <li><span class="fw-medium">Kena Mobile</span></li>
+                            <li><span class="fw-medium">Lebara</span></li>
+                            <li><span class="fw-medium">Linkem</span></li>
+                            <li><span class="fw-medium">Lycamobile</span></li>
+                            <li><span class="fw-medium">Nowtel</span></li>
+                            <li><span class="fw-medium">Phoneall</span></li>
+                            <li><span class="fw-medium">Più Ricarica</span></li>
+                            <li><span class="fw-medium">PosteMobile</span></li>
+                            <li><span class="fw-medium">Rabona Mobile</span></li>
+                            <li><span class="fw-medium">TIM</span></li>
+                            <li><span class="fw-medium">Tiscali</span></li>
+                            <li><span class="fw-medium">Very Mobile</span></li>
+                            <li><span class="fw-medium">Vodafone</span></li>
+                            <li><span class="fw-medium">WindTre</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pay TV e Intrattenimento -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="clean-card h-100">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="service-icon-clean">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <h5 class="card-title mb-0 fw-bold">Pay TV e Intrattenimento</h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            Ricarichi rapide e immediate per le piattaforme di streaming più utilizzate:
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><span class="fw-medium">DAZN</span></li>
+                            <li><span class="fw-medium">Disney+</span></li>
+                            <li><span class="fw-medium">Eurosport</span></li>
+                            <li><span class="fw-medium">Netflix</span></li>
+                            <li><span class="fw-medium">Sky</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte Ricaricabili & Contenuti Digitali -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="clean-card h-100">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="service-icon-clean">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <h5 class="card-title mb-0 fw-bold">Carte Ricaricabili & Contenuti Digitali</h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            Per acquisti online, regali digitali e piattaforme internazionali:
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><span class="fw-medium">Airbnb</span></li>
+                            <li><span class="fw-medium">Amazon</span></li>
+                            <li><span class="fw-medium">Deliveroo</span></li>
+                            <li><span class="fw-medium">FlixBus</span></li>
+                            <li><span class="fw-medium">Fortnite</span></li>
+                            <li><span class="fw-medium">H&M</span></li>
+                            <li><span class="fw-medium">MuchBetter</span></li>
+                            <li><span class="fw-medium">Neosurf</span></li>
+                            <li><span class="fw-medium">Okto Cash</span></li>
+                            <li><span class="fw-medium">Paysafecard</span></li>
+                            <li><span class="fw-medium">Q8</span></li>
+                            <li><span class="fw-medium">SixthContinent</span></li>
+                            <li><span class="fw-medium">Uber</span></li>
+                            <li><span class="fw-medium">Volagratis</span></li>
+                            <li><span class="fw-medium">WGF Club</span></li>
+                            <li><span class="fw-medium">Zalando</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ricariche Conti Gioco -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="clean-card h-100">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="service-icon-clean">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <h5 class="card-title mb-0 fw-bold">Ricariche Conti Gioco</h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            Per il tuo intrattenimento, puoi ricaricare i principali conti gioco:
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><span class="fw-medium">Betflag</span></li>
+                            <li><span class="fw-medium">Betsson</span></li>
+                            <li><span class="fw-medium">Betwin360</span></li>
+                            <li><span class="fw-medium">Bwin</span></li>
+                            <li><span class="fw-medium">Gioco Digitale</span></li>
+                            <li><span class="fw-medium">GoldBet</span></li>
+                            <li><span class="fw-medium">Lottomatica</span></li>
+                            <li><span class="fw-medium">PartyPoker</span></li>
+                            <li><span class="fw-medium">PokerStars</span></li>
+                            <li><span class="fw-medium">Stanleybet</span></li>
+                            <li><span class="fw-medium">William Hill</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenuti Digitali, Console e App -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="clean-card h-100">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="service-icon-clean">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <h5 class="card-title mb-0 fw-bold">Contenuti Digitali, Console e App</h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            Ricariche per store digitali, musica, console e applicazioni:
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><span class="fw-medium">Apple</span></li>
+                            <li><span class="fw-medium">Electronic Arts</span></li>
+                            <li><span class="fw-medium">Google Play</span></li>
+                            <li><span class="fw-medium">Microsoft</span></li>
+                            <li><span class="fw-medium">Nintendo eShop</span></li>
+                            <li><span class="fw-medium">Roblox</span></li>
+                            <li><span class="fw-medium">Sony</span></li>
+                            <li><span class="fw-medium">Spotify Premium</span></li>
+                            <li><span class="fw-medium">Steam</span></li>
+                            <li><span class="fw-medium">Travel Mate</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Perché scegliere -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <h2 class="text-center mb-4">Perché Scegliere le Nostre Ricariche?</h2>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <div class="mb-3">
-                                    <i class="fas fa-bolt fa-3x text-warning"></i>
-                                </div>
-                                <h5 class="card-title">Istantanee</h5>
-                                <p class="card-text">Le ricariche vengono applicate immediatamente al tuo numero o dispositivo.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <div class="mb-3">
-                                    <i class="fas fa-check-double fa-3x text-success"></i>
-                                </div>
-                                <h5 class="card-title">Conferma Garantita</h5>
-                                <p class="card-text">Ricevi sempre una conferma via SMS o WhatsApp Business dopo ogni ricarica.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <div class="mb-3">
-                                    <i class="fas fa-globe fa-3x text-primary"></i>
-                                </div>
-                                <h5 class="card-title">Multi-Canale</h5>
-                                <p class="card-text">Ricariche per telefono, internet, carte prepagate e dispositivi tech.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Come funziona -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <h2 class="text-center mb-4">Come Funziona</h2>
-                <div class="row g-4">
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">1</span>
-                            </div>
-                            <h5>Scegli l'Importo</h5>
-                            <p class="text-muted">Seleziona il taglio di ricarica che preferisci.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">2</span>
-                            </div>
-                            <h5>Inserisci il Numero</h5>
-                            <p class="text-muted">Digita il numero di telefono o il codice della carta.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">3</span>
-                            </div>
-                            <h5>Paga Online</h5>
-                            <p class="text-muted">Completa il pagamento in modo sicuro.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">4</span>
-                            </div>
-                            <h5>Ricevi Conferma</h5>
-                            <p class="text-muted">La ricarica è attiva e ricevi la notifica.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tipi di ricarica -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <h2 class="text-center mb-4">I Nostri Servizi di Ricarica</h2>
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-mobile fa-2x text-primary me-3"></i>
-                                    <h5 class="card-title mb-0">Ricariche Telefoniche</h5>
-                                </div>
-                                <p class="card-text">Ricariche per tutti gli operatori italiani: TIM, Vodafone, WindTre, Iliad e molto altro.</p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>Tutti gli operatori</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Tagli da 5€ a 100€</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Conferma immediata</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-credit-card fa-2x text-primary me-3"></i>
-                                    <h5 class="card-title mb-0">Carte Prepagate</h5>
-                                </div>
-                                <p class="card-text">Ricariche per carte regalo, buoni acquisto e carte prepagate di negozi e servizi.</p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>Amazon, Google Play, iTunes</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Consegna digitale istantanea</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Supporto 24/7</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-wifi fa-2x text-primary me-3"></i>
-                                    <h5 class="card-title mb-0">Internet e Dati</h5>
-                                </div>
-                                <p class="card-text">Pacchetti dati per connessione internet mobile e fissa, con velocità garantita.</p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>GB illimitati</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Velocità fino a 1 Gbps</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Attivazione immediata</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-gamepad fa-2x text-primary me-3"></i>
-                                    <h5 class="card-title mb-0">Gaming e Intrattenimento</h5>
-                                </div>
-                                <p class="card-text">Crediti per piattaforme di gaming, streaming e servizi digitali.</p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>PlayStation, Xbox, Nintendo</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Netflix, Disney+, Spotify</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Codici digitali sicuri</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Vantaggi -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="bg-light rounded-3 p-4">
-                    <h3 class="text-center mb-4">Perché Affidarsi a Noi</h3>
-                    <div class="row g-4">
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-heart fa-3x text-danger mb-3"></i>
-                                <h6>Passione per il Servizio</h6>
-                                <p class="small text-muted">Ogni ricarica è gestita con cura e attenzione ai dettagli.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-award fa-3x text-warning mb-3"></i>
-                                <h6>Qualità Certificata</h6>
-                                <p class="small text-muted">Partner ufficiali e processi certificati per la tua sicurezza.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                                <h6>Clienti Soddisfatti</h6>
-                                <p class="small text-muted">Migliaia di clienti felici che si affidano a noi ogni giorno.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Call to Action -->
+        <!-- Call to Action Pulita -->
         <div class="row">
-            <div class="col-12 text-center">
-                <div class="bg-warning text-white rounded-3 p-4">
-                    <h3 class="mb-3">Pronto a Ricaricare?</h3>
-                    <p class="mb-4">Scopri tutti i nostri servizi di ricarica e trova quello perfetto per te.</p>
-                    <a href="?page=contatti" class="btn btn-dark btn-lg">
-                        <i class="fas fa-phone me-2"></i>Contattaci
+            <div class="col-12">
+                <div class="cta-clean text-center">
+                    <h3 class="mb-3 fw-bold">
+                        <i class="fas fa-handshake me-2"></i>Hai Bisogno di una Ricarica?
+                    </h3>
+                    <p class="mb-4 fs-5">Siamo qui per aiutarti con qualsiasi tipo di ricarica. Contattaci per assistenza personalizzata.</p>
+                    <a href="?page=contatti" class="btn">
+                        <i class="fas fa-envelope me-2"></i>Richiedi Assistenza
                     </a>
                 </div>
             </div>
