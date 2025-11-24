@@ -3,29 +3,34 @@
  * Sezione Pagamenti Certificati
  */
 ?>
+<?php
+/**
+ * Sezione Pagamenti Certificati
+ */
+?>
 <section class="section-padding bg-white">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="text-center mb-5">
-                    <h1 class="display-4 fw-bold text-primary mb-3">Pagamenti Certificati</h1>
+                    <h1 class="display-4 fw-bold text-primary mb-3">Servizi di Pagamento</h1>
                     <p class="lead text-muted mb-4">
-                        Scopri come rendere i tuoi pagamenti quotidiani più semplici, sicuri e affidabili con i nostri servizi certificati.
+                        Presso la nostra agenzia puoi effettuare tutti i principali pagamenti in modo semplice, veloce e con commissioni tra le più basse del mercato. Siamo qui per aiutarti e garantirti un'assistenza completa su ogni operazione.
                     </p>
                     <div class="row g-3 justify-content-center">
                         <div class="col-auto">
                             <span class="badge bg-success fs-6 px-3 py-2">
-                                <i class="fas fa-shield-alt me-1"></i>100% Sicuro
-                            </span>
-                        </div>
-                        <div class="col-auto">
-                            <span class="badge bg-info fs-6 px-3 py-2">
                                 <i class="fas fa-clock me-1"></i>Rapido
                             </span>
                         </div>
                         <div class="col-auto">
+                            <span class="badge bg-info fs-6 px-3 py-2">
+                                <i class="fas fa-euro-sign me-1"></i>Conveniente
+                            </span>
+                        </div>
+                        <div class="col-auto">
                             <span class="badge bg-warning fs-6 px-3 py-2">
-                                <i class="fas fa-star me-1"></i>Certificato
+                                <i class="fas fa-shield-alt me-1"></i>Sicuro
                             </span>
                         </div>
                     </div>
@@ -33,175 +38,144 @@
             </div>
         </div>
 
-        <!-- Hero Image -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="position-relative">
-                    <img src="assets/img/hero-bg.svg" alt="Pagamenti Certificati" class="img-fluid rounded-3 shadow-lg" style="width: 100%; max-height: 400px; object-fit: cover;">
-                    <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
-                        <h2 class="display-5 fw-bold mb-3">La tranquillità di pagare con fiducia</h2>
-                        <p class="fs-5">Ogni transazione è protetta e tracciata per la tua serenità</p>
-                    </div>
-                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded-3"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Perché scegliere -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <h2 class="text-center mb-4">Perché scegliere i nostri Pagamenti Certificati?</h2>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <div class="mb-3">
-                                    <i class="fas fa-lock fa-3x text-primary"></i>
-                                </div>
-                                <h5 class="card-title">Sicurezza Assoluta</h5>
-                                <p class="card-text">Ogni pagamento è protetto da crittografia avanzata e sistemi di verifica multi-livello.</p>
-                            </div>
+        <!-- Servizi di Pagamento -->
+        <div class="row g-4 mb-5">
+            <!-- Bollettini Postali -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-envelope fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">Bollettini Postali</h5>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <div class="mb-3">
-                                    <i class="fas fa-check-circle fa-3x text-success"></i>
-                                </div>
-                                <h5 class="card-title">Conferma Istantanea</h5>
-                                <p class="card-text">Ricevi conferma immediata del pagamento con ricevuta digitale via email o SMS.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <div class="mb-3">
-                                    <i class="fas fa-clock fa-3x text-info"></i>
-                                </div>
-                                <h5 class="card-title">Sempre Disponibile</h5>
-                                <p class="card-text">Servizio attivo 24/7, anche nei giorni festivi, per le tue esigenze urgenti.</p>
-                            </div>
-                        </div>
+                        <p class="card-text">
+                            Puoi pagare i tuoi bollettini bianchi (TD 123 e TD 451) e premarcati (TD 674 e TD 896) senza stress e senza code.
+                            Accettiamo oltre 20.000 beneficiari grazie alla rete A-Tono Payment Institute.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Come funziona -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <h2 class="text-center mb-4">Come Funziona</h2>
-                <div class="row g-4">
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">1</span>
-                            </div>
-                            <h5>Scegli il Servizio</h5>
-                            <p class="text-muted">Seleziona il tipo di pagamento che desideri effettuare.</p>
+            <!-- Bollettini pagoPA -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-university fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">Bollettini pagoPA</h5>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">2</span>
-                            </div>
-                            <h5>Inserisci i Dati</h5>
-                            <p class="text-muted">Compila i campi richiesti in modo sicuro e protetto.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">3</span>
-                            </div>
-                            <h5>Paga Sicuramente</h5>
-                            <p class="text-muted">Effettua il pagamento con i metodi che preferisci.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <span class="fw-bold fs-4">4</span>
-                            </div>
-                            <h5>Ricevi Conferma</h5>
-                            <p class="text-muted">Ottieni la ricevuta digitale e il tracking del pagamento.</p>
-                        </div>
+                        <p class="card-text">
+                            Paghi comodamente qualsiasi avviso pagoPA:
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Utenze</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Tasse</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Multe</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Ticket sanitari</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Pagamenti verso Pubblica Amministrazione ed enti pubblici e privati</li>
+                        </ul>
+                        <p class="card-text small text-muted">
+                            Ti basta portarci l'avviso o mostrarlo dal telefono.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Servizi specifici -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <h2 class="text-center mb-4">I Nostri Servizi di Pagamento</h2>
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-file-invoice-dollar fa-2x text-primary me-3"></i>
-                                    <h5 class="card-title mb-0">Bollettini Postali</h5>
-                                </div>
-                                <p class="card-text">Paga bollettini di qualsiasi importo con consegna garantita e tracking in tempo reale.</p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>Consegna in 24-48 ore</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Ricevuta digitale immediata</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Tracking completo</li>
-                                </ul>
-                            </div>
+            <!-- Deleghe F24 -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-file-invoice-dollar fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">Deleghe F24</h5>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-university fa-2x text-primary me-3"></i>
-                                    <h5 class="card-title mb-0">PagoPA e F24</h5>
-                                </div>
-                                <p class="card-text">Gestione completa di pagamenti verso la Pubblica Amministrazione con riconciliazione automatica.</p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>Riconciliazione automatica</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Reminder programmati</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Archivio digitale</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <p class="card-text">
+                            Hai un F24 da pagare? Pensiamo a tutto noi.
+                            Gestiamo qualsiasi tipologia di imposta, tributo o contributo, in totale sicurezza.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Vantaggi -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="bg-light rounded-3 p-4">
-                    <h3 class="text-center mb-4">I Vantaggi per Te</h3>
-                    <div class="row g-4">
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-smile fa-3x text-warning mb-3"></i>
-                                <h6>Soddisfazione Garantita</h6>
-                                <p class="small text-muted">Ogni servizio è progettato per la tua comodità e tranquillità.</p>
-                            </div>
+            <!-- Bollettini Bancari -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-piggy-bank fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">Bollettini Bancari</h5>
                         </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-handshake fa-3x text-success mb-3"></i>
-                                <h6>Affidabilità Totale</h6>
-                                <p class="small text-muted">Partner certificati e processi verificati per la massima sicurezza.</p>
-                            </div>
+                        <p class="card-text">
+                            Effettuiamo pagamenti verso qualsiasi beneficiario dotato di IBAN bancario o postale, anche con prenotazione.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bollettini MAV e RAV -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-receipt fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">Bollettini MAV e RAV</h5>
                         </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-rocket fa-3x text-primary mb-3"></i>
-                                <h6>Velocità e Precisione</h6>
-                                <p class="small text-muted">Servizi rapidi e accurati per non perdere tempo prezioso.</p>
-                            </div>
+                        <p class="card-text">
+                            Puoi saldare MAV e RAV in pochi minuti.
+                            Sono i bollettini emessi da banche e istituti di credito per pagamenti a distanza o riscossioni iscritte a ruolo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bollo Auto -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-car fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">Bollo Auto</h5>
                         </div>
+                        <p class="card-text">
+                            Da noi puoi pagare anche il tuo Bollo Auto in modo rapido e senza preoccupazioni.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Versamenti su Conti DropPay -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-money-bill-wave fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">Versamenti su Conti DropPay</h5>
+                        </div>
+                        <p class="card-text">
+                            Effettuiamo per te versamenti di contanti direttamente sul tuo conto DropPay.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DropPayCard -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-credit-card fa-2x text-primary me-3"></i>
+                            <h5 class="card-title mb-0">DropPayCard</h5>
+                        </div>
+                        <p class="card-text">
+                            Presso la nostra agenzia puoi:
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Acquistare la DropPayCard by Mastercard</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Ricaricare il tuo conto DropPay associato</li>
+                        </ul>
+                        <p class="card-text small">
+                            Perfetta per chi vuole una carta versatile e subito disponibile.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -211,10 +185,10 @@
         <div class="row">
             <div class="col-12 text-center">
                 <div class="bg-primary text-white rounded-3 p-4">
-                    <h3 class="mb-3">Pronto a Semplificare i Tuoi Pagamenti?</h3>
-                    <p class="mb-4">Contattaci oggi stesso per scoprire come possiamo aiutarti con i tuoi pagamenti certificati.</p>
+                    <h3 class="mb-3">Hai Bisogno di Effettuare un Pagamento?</h3>
+                    <p class="mb-4">Siamo qui per aiutarti con qualsiasi tipo di pagamento. Contattaci per assistenza personalizzata.</p>
                     <a href="?page=contatti" class="btn btn-light btn-lg">
-                        <i class="fas fa-envelope me-2"></i>Richiedi Informazioni
+                        <i class="fas fa-envelope me-2"></i>Richiedi Assistenza
                     </a>
                 </div>
             </div>
