@@ -574,14 +574,16 @@ function ap_action_admin_save_product(): void
         $customFields = $_POST['custom_fields'] ?? [];
         foreach ($customFields as $fieldId => $fieldData) {
             if (empty($fieldData['name']) || empty($fieldData['label'])) continue;
-            ap_save_product_custom_field($id, [
+            $data = [
+                'id' => is_numeric($fieldId) ? (int)$fieldId : null,
                 'name' => trim($fieldData['name']),
                 'label' => trim($fieldData['label']),
                 'type' => $fieldData['type'] ?? 'text',
                 'options' => trim($fieldData['options'] ?? ''),
                 'required' => isset($fieldData['required']),
                 'sort' => 0,
-            ]);
+            ];
+            ap_save_product_custom_field($id, $data);
         }
         $customFieldsSaved = true;
     }
