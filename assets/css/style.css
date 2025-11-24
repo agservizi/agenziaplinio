@@ -1325,11 +1325,19 @@ body.cart-sidebar-open {
 }
 
 .hero-card {
-    padding: 2rem;
+    padding: 2rem 0;
     border-radius: var(--radius-xl);
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(33, 44, 78, 0.08);
     box-shadow: var(--shadow-soft);
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    right: 50%;
+    margin-right: -50vw;
+    border-radius: 0;
 }
 
 /* Services */
