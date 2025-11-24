@@ -69,6 +69,11 @@ return [
             'description' => 'Servizi di pagamento sicuri e certificati per bollettini, pagoPA, F24 e molto altro.',
             'sections' => ['pagamenti-certificati']
         ],
+        'ricariche-multicanale' => [
+            'title' => 'Ricariche Multi-Canale | Agenzia Plinio',
+            'description' => 'Ricariche telefoniche, carte prepagate e device tech con conferma istantanea e massima comodità.',
+            'sections' => ['ricariche-multicanale']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',
