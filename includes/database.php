@@ -275,7 +275,7 @@ function ap_seed_products(PDO $pdo): void
             'description' => 'Certificato di iscrizione al Registro delle Imprese della Camera di Commercio. Include dati societari, amministratori e attività economica.',
             'price_cents' => 1500, // €15.00
             'sku' => 'VIS-CAM-001',
-            'category_key' => 'certificati',
+            'category_key' => 'camerali',
             'fulfillment_type' => 'digital',
             'stock' => 999,
             'image_url' => 'assets/img/og-image.jpg',
@@ -287,7 +287,7 @@ function ap_seed_products(PDO $pdo): void
             'description' => 'Documento che attesta la destinazione urbanistica di un immobile secondo gli strumenti urbanistici vigenti.',
             'price_cents' => 2500, // €25.00
             'sku' => 'CDU-001',
-            'category_key' => 'certificati',
+            'category_key' => 'catastali',
             'fulfillment_type' => 'digital',
             'stock' => 999,
             'image_url' => 'assets/img/og-image.jpg',
@@ -299,7 +299,7 @@ function ap_seed_products(PDO $pdo): void
             'description' => 'Estratto di mappa catastale con certificato di proprietà immobiliare.',
             'price_cents' => 2000, // €20.00
             'sku' => 'CERT-PROP-001',
-            'category_key' => 'certificati',
+            'category_key' => 'catastali',
             'fulfillment_type' => 'digital',
             'stock' => 999,
             'image_url' => 'assets/img/og-image.jpg',
@@ -311,7 +311,7 @@ function ap_seed_products(PDO $pdo): void
             'description' => 'Gestione completa della pratica SUAP per apertura/modifica attività produttive. Include consulenza e presentazione domanda.',
             'price_cents' => 50000, // €500.00
             'sku' => 'SUAP-PROD-001',
-            'category_key' => 'pratiche',
+            'category_key' => 'uffici-pubblici',
             'fulfillment_type' => 'digital',
             'stock' => 999,
             'image_url' => 'assets/img/og-image.jpg',
@@ -323,7 +323,7 @@ function ap_seed_products(PDO $pdo): void
             'description' => 'Servizio completo di consulenza legale per costituzione di società. Include statuto, atto costitutivo e registrazione.',
             'price_cents' => 75000, // €750.00
             'sku' => 'CONS-SOC-001',
-            'category_key' => 'consulenze',
+            'category_key' => 'servizi-premium',
             'fulfillment_type' => 'digital',
             'stock' => 999,
             'image_url' => 'assets/img/og-image.jpg',

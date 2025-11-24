@@ -207,40 +207,115 @@ function ap_delete_product(int $id): bool
 function ap_product_category_map(): array
 {
     return [
-        'connettivita-sim' => [
-            'label' => 'Connettività & SIM',
-            'keywords' => ['sim', 'dati', 'connettivita'],
-            'highlights' => ['Attivazione express', 'Copertura 4G/5G certificata', 'Supporto tecnico dedicato'],
+        'anagrafe' => [
+            'label' => 'Anagrafe',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['anagrafe', 'residenza', 'cambio'],
+            'highlights' => ['Certificati anagrafici ufficiali', 'Richiesta online veloce', 'Consegna digitale immediata'],
         ],
-        'digitale-identita' => [
-            'label' => 'Digitale & Identità',
-            'keywords' => ['pec', 'firma', 'digitale', 'identita'],
-            'highlights' => ['Firma remota e PEC inclusa', 'Compliance normativa aggiornata', 'Onboarding guidato dal team'],
+        'stato-civile' => [
+            'label' => 'Stato Civile',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['stato civile', 'nascita', 'matrimonio', 'morte'],
+            'highlights' => ['Certificati di stato civile', 'Documenti ufficiali certificati', 'Supporto per pratiche legali'],
         ],
-        'logistica-spedizioni' => [
-            'label' => 'Logistica & Spedizioni',
-            'keywords' => ['sped', 'corriere', 'logistica'],
-            'highlights' => ['Tracking premium incluso', 'Assicurazione fino a 1.000€', 'Consegna express 24/48h'],
+        'giudiziarie' => [
+            'label' => 'Giudiziarie',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['giudiziario', 'casellario', 'carichi pendenti'],
+            'highlights' => ['Certificati giudiziari completi', 'Verifiche penali e civili', 'Documentazione legale affidabile'],
         ],
-        'pagamenti-ricariche' => [
-            'label' => 'Pagamenti & Ricariche',
-            'keywords' => ['pagamento', 'ricarica', 'pos'],
-            'highlights' => ['Accredito immediato', 'Reportistica exportabile', 'Supporto multi-canale'],
+        'camerali' => [
+            'label' => 'Camerali',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['camera commercio', 'visura', 'iscrizione'],
+            'highlights' => ['Visure camerali aggiornate', 'Dati societari ufficiali', 'Certificati di iscrizione'],
+        ],
+        'catastali' => [
+            'label' => 'Catastali',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['catasto', 'visura catastale', 'proprietà'],
+            'highlights' => ['Visure catastali dettagliate', 'Informazioni immobiliari', 'Documenti per compravendite'],
+        ],
+        'pra' => [
+            'label' => 'PRA',
+            'parent' => 'certificazioni-documenti',
+            'keywords' => ['pra', 'veicoli', 'automobili', 'immatricolazione'],
+            'highlights' => ['Certificati PRA ufficiali', 'Storico veicoli completo', 'Supporto per passaggi di proprietà'],
+        ],
+        'veicoli' => [
+            'label' => 'Veicoli',
+            'parent' => 'pratiche-online',
+            'keywords' => ['veicoli', 'auto', 'motorino', 'immatricolazione'],
+            'highlights' => ['Pratiche veicoli semplificate', 'Immatricolazioni e passaggi', 'Assistenza completa'],
+        ],
+        'uffici-pubblici' => [
+            'label' => 'Uffici Pubblici',
+            'parent' => 'pratiche-online',
+            'keywords' => ['uffici pubblici', 'comunali', 'enti'],
+            'highlights' => ['Richieste verso enti pubblici', 'Pratiche comunali online', 'Deleghe e prenotazioni'],
+        ],
+        'documenti-rapidi' => [
+            'label' => 'Documenti Rapidi',
+            'parent' => 'pratiche-online',
+            'keywords' => ['documenti rapidi', 'recupero', 'duplicati'],
+            'highlights' => ['Recupero documenti urgente', 'Duplicati certificati', 'Servizio express'],
         ],
         'servizi-premium' => [
-            'label' => 'Servizi premium',
+            'label' => 'Servizi Premium',
+            'parent' => 'servizi-digitali',
             'keywords' => [],
             'highlights' => ['Setup white-glove', 'Monitoraggio stato in tempo reale', 'Account manager dedicato'],
         ],
     ];
 }
 
+function ap_product_category_parent_map(): array
+{
+    return [
+        'certificazioni-documenti' => [
+            'label' => 'Certificazioni & Documenti',
+            'parent' => 'servizi-digitali',
+        ],
+        'pratiche-online' => [
+            'label' => 'Pratiche Online',
+            'parent' => 'servizi-digitali',
+        ],
+        'servizi-digitali' => [
+            'label' => 'Servizi Digitali',
+            'parent' => null,
+        ],
+    ];
+}
+
+function ap_product_category_parent(string $key): ?string
+{
+    $map = ap_product_category_map();
+    return $map[$key]['parent'] ?? null;
+}
+
+function ap_product_category_children(string $parentKey): array
+{
+    $map = ap_product_category_map();
+    $children = [];
+    foreach ($map as $key => $meta) {
+        if (($meta['parent'] ?? null) === $parentKey) {
+            $children[$key] = $meta;
+        }
+    }
+    return $children;
+}
+
 function ap_product_category_options(): array
 {
     $map = ap_product_category_map();
+    $parentMap = ap_product_category_parent_map();
     $options = [];
     foreach ($map as $key => $meta) {
-        $options[$key] = $meta['label'];
+        $parentKey = $meta['parent'] ?? null;
+        $parentLabel = $parentKey && isset($parentMap[$parentKey]) ? $parentMap[$parentKey]['label'] : null;
+        $label = $parentLabel ? $parentLabel . ' > ' . $meta['label'] : $meta['label'];
+        $options[$key] = $label;
     }
     return $options;
 }
