@@ -840,7 +840,6 @@ main {
 .mega-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 25px 45px rgba(24, 39, 79, 0.2);
-    border-color: rgba(45, 107, 255, 0.45);
 }
 
 .nav-item--mega:hover > .nav-link--toggle .chevron,
