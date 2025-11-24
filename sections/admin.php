@@ -475,8 +475,13 @@ $newsIconOptions = [
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="prod_category">Categoria shop</label>
-                            <input class="form-control" type="text" id="prod_category" name="category_key" value="<?php echo htmlspecialchars($editingProduct['category_key'] ?? '', ENT_QUOTES); ?>" placeholder="es. certificati, visure, pratiche">
-                            <small class="text-muted">Serve per i filtri avanzati della pagina shop. Lascia vuoto per auto-categorizzazione.</small>
+                            <select class="form-select" id="prod_category" name="category_key">
+                                <option value="">Seleziona categoria</option>
+                                <?php foreach ($categoryOptions as $key => $label): ?>
+                                    <option value="<?php echo htmlspecialchars($key, ENT_QUOTES); ?>" <?php echo ($editingProduct['category_key'] ?? '') === $key ? 'selected' : ''; ?>><?php echo htmlspecialchars($label, ENT_QUOTES); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="text-muted">Seleziona la categoria appropriata per il prodotto.</small>
                         </div>
                         <?php $editingFulfillment = strtolower((string) ($editingProduct['fulfillment_type'] ?? 'digital')); ?>
                         <div class="mb-3">
@@ -599,7 +604,7 @@ $newsIconOptions = [
                                                 <?php endif; ?>
                                             </td>
                                             <td><?php echo ap_price_format((int) $product['price_cents']); ?></td>
-                                            <td><?php echo htmlspecialchars($product['category_key'] ?? '-', ENT_QUOTES); ?></td>
+                                            <td><?php echo htmlspecialchars($categoryOptions[$product['category_key']] ?? ($product['category_key'] ?? '-'), ENT_QUOTES); ?></td>
                                             <td>
                                                 <span class="badge <?php echo (int) $product['is_active'] === 1 ? 'bg-success-subtle text-success' : 'bg-secondary-subtle text-secondary'; ?>">
                                                     <?php echo (int) $product['is_active'] === 1 ? 'Attivo' : 'Nascosto'; ?>
@@ -648,8 +653,13 @@ $newsIconOptions = [
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="prod_category">Categoria shop</label>
-                            <input class="form-control" type="text" id="prod_category" name="category_key" value="<?php echo htmlspecialchars($editingProduct['category_key'] ?? '', ENT_QUOTES); ?>" placeholder="es. certificati, visure, pratiche">
-                            <small class="text-muted">Serve per i filtri avanzati della pagina shop. Lascia vuoto per auto-categorizzazione.</small>
+                            <select class="form-select" id="prod_category" name="category_key">
+                                <option value="">Seleziona categoria</option>
+                                <?php foreach ($categoryOptions as $key => $label): ?>
+                                    <option value="<?php echo htmlspecialchars($key, ENT_QUOTES); ?>" <?php echo ($editingProduct['category_key'] ?? '') === $key ? 'selected' : ''; ?>><?php echo htmlspecialchars($label, ENT_QUOTES); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="text-muted">Seleziona la categoria appropriata per il prodotto.</small>
                         </div>
                         <?php $editingFulfillment = strtolower((string) ($editingProduct['fulfillment_type'] ?? 'digital')); ?>
                         <div class="mb-3">
