@@ -31,12 +31,13 @@ function ap_action_save_order_custom_data(): void
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['ap_action'] ?? null;
     if ($action) {
+        echo "DEBUG: Action received: $action<br>";
         try {
             ap_handle_action($action);
         } catch (Throwable $exception) {
             ap_flash('Si è verificato un errore inatteso. Riprova.', 'error');
         }
-        ap_redirect_after_post();
+        // ap_redirect_after_post();
     }
 }
 
