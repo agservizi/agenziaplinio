@@ -89,6 +89,9 @@ function ap_handle_action(string $action): void
         case 'admin_save_faq':
             ap_action_admin_save_faq();
             break;
+        case 'admin_delete_user':
+            ap_action_admin_delete_user();
+            break;
         case 'admin_save_user':
             ap_action_admin_save_user();
             break;
@@ -1145,6 +1148,43 @@ function ap_action_admin_save_user(): void
         ]);
     } else {
         ap_flash('Errore nel salvataggio dell\'utente.', 'error');
+    }
+}
+
+function ap_action_admin_delete_user(): void
+{
+    if (!ap_auth_is_admin()) {
+        ap_flash('Non autorizzato.', 'error');
+        return;
+    }
+    $user = ap_auth_current_user();
+    $id = isset($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
+    if ($id <= 0) {
+        ap_flash('Utente non trovato.', 'error');
+        return;
+    }
+    // Prevent deleting self
+    if ($id === (int) $user['id']) {
+        ap_flash('Non puoi eliminare il tuo stesso account.', 'error');
+        return;
+    }
+    $userToDelete = ap_find_user($id);
+    if (!$userToDelete) {
+        ap_flash('Utente non trovato.', 'error');
+        return;
+    }
+    $result = ap_delete_user($id);
+    if ($result) {
+        ap_flash('Utente eliminato definitivamente.', 'warning');
+        // Log audit event
+        ap_log_audit_event('admin_action', 'Utente eliminato: ' . $userToDelete['name'] . ' (' . $userToDelete['email'] . ')', $user['id'] ?? null, [
+            'action' => 'user_deleted',
+            'deleted_user_id' => $id,
+            'deleted_user_name' => $userToDelete['name'],
+            'deleted_user_email' => $userToDelete['email']
+        ]);
+    } else {
+        ap_flash('Errore durante l\'eliminazione dell\'utente.', 'error');
     }
 }
 

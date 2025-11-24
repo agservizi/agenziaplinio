@@ -1149,6 +1149,7 @@ $auditEventTypes = [
                                     <td><?php echo date('d/m/Y', strtotime((string) $user['created_at'])); ?></td>
                                     <td>
                                         <a class="btn btn-sm btn-outline-primary" href="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti', 'user' => (int) $user['id']]), ENT_QUOTES); ?>">Modifica</a>
+                                        <button class="btn btn-sm btn-danger ms-2" type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-user-id="<?php echo (int) $user['id']; ?>" data-user-name="<?php echo htmlspecialchars($user['name'], ENT_QUOTES); ?>" data-user-email="<?php echo htmlspecialchars($user['email'], ENT_QUOTES); ?>">Elimina</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -1177,7 +1178,7 @@ $auditEventTypes = [
             <?php endif; ?>
         </div>
         <?php endif; ?>
-        <?php if ($section === 'edit_user' && ($editingUser || $userEditingId === 'new')): ?>
+        <?php if ($userEditingId && ($editingUser || $userEditingId === 'new')): ?>
         <div class="row g-4 align-items-stretch">
             <div class="col-12">
                 <div class="admin-card h-100 d-flex flex-column">
@@ -1994,6 +1995,32 @@ $auditEventTypes = [
                 });
             }
         </script>
+        <script>
+            // Handle delete user modal
+            const deleteUserModal = document.getElementById('deleteUserModal');
+            if (deleteUserModal) {
+                deleteUserModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    const userId = button.getAttribute('data-user-id');
+                    const userName = button.getAttribute('data-user-name');
+                    const userEmail = button.getAttribute('data-user-email');
+                    
+                    const userNameElement = document.getElementById('userName');
+                    const userEmailElement = document.getElementById('userEmail');
+                    const userIdInput = document.getElementById('deleteUserId');
+                    
+                    if (userNameElement) {
+                        userNameElement.textContent = userName;
+                    }
+                    if (userEmailElement) {
+                        userEmailElement.textContent = userEmail;
+                    }
+                    if (userIdInput) {
+                        userIdInput.value = userId;
+                    }
+                });
+            }
+        </script>
         <?php if ($section === 'statistiche'): ?>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
@@ -2135,6 +2162,31 @@ $auditEventTypes = [
                     <input type="hidden" name="ap_action" value="admin_delete_product">
                     <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>">
                     <input type="hidden" name="product_id" id="deleteProductId">
+                    <button type="submit" class="btn btn-danger">Elimina definitivamente</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Conferma eliminazione utente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+            </div>
+            <div class="modal-body">
+                <p>Sei sicuro di voler eliminare definitivamente l'utente <strong id="userName"></strong> (<span id="userEmail"></span>)?</p>
+                <p class="text-danger small">Questa azione non può essere annullata e rimuoverà definitivamente l'account utente.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <form method="post" id="deleteUserForm" class="d-inline">
+                    <input type="hidden" name="ap_action" value="admin_delete_user">
+                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($adminUrl(['section' => 'utenti']), ENT_QUOTES); ?>">
+                    <input type="hidden" name="user_id" id="deleteUserId">
                     <button type="submit" class="btn btn-danger">Elimina definitivamente</button>
                 </form>
             </div>
