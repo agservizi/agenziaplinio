@@ -262,9 +262,12 @@ function ap_seed_admin(PDO $pdo): void
 
 function ap_seed_products(PDO $pdo): void
 {
-    // Clear existing products for fresh seeding during development
-    $pdo->exec('DELETE FROM product_custom_fields WHERE product_id IN (SELECT id FROM products)');
-    $pdo->exec('DELETE FROM products');
+    // Check if products already exist to avoid re-seeding during development
+    $stmt = $pdo->query('SELECT COUNT(*) AS total FROM products');
+    $count = (int) ($stmt->fetch()['total'] ?? 0);
+    if ($count > 0) {
+        return; // Products already seeded
+    }
 
     $products = [
         [
@@ -375,7 +378,14 @@ function ap_seed_products(PDO $pdo): void
     $stmt = $pdo->prepare('SELECT id FROM products WHERE slug = :slug');
     $stmt->execute([':slug' => 'visura-camerale']);
     $visuraProductId = $stmt->fetchColumn();
-    $customFields = [
+    if ($visuraProductId) {
+        // Check if custom fields already exist
+        $fieldStmt = $pdo->prepare('SELECT COUNT(*) FROM product_custom_fields WHERE product_id = :product_id');
+        $fieldStmt->execute([':product_id' => $visuraProductId]);
+        $fieldCount = (int) $fieldStmt->fetchColumn();
+        
+        if ($fieldCount === 0) {
+            $customFields = [
         [
             'field_name' => 'company_name',
             'field_label' => 'Ragione Sociale o Denominazione',
@@ -425,6 +435,8 @@ function ap_seed_products(PDO $pdo): void
     foreach ($customFields as $field) {
         $field['product_id'] = $visuraProductId;
         $fieldInsert->execute($field);
+    }
+        }
     }
 }
 
