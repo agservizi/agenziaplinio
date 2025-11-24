@@ -218,19 +218,25 @@ function ap_bootstrap_schema(PDO $pdo): void
         updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
-    $pdo->exec('CREATE TABLE IF NOT EXISTS security_logs (
+    $pdo->exec('CREATE TABLE IF NOT EXISTS audit_logs (
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         event_type VARCHAR(50) NOT NULL,
         description TEXT NOT NULL,
         user_id INT UNSIGNED NULL,
-        metadata JSON NULL,
+        session_id VARCHAR(120) NULL,
         ip_address VARCHAR(45) NOT NULL,
-        user_agent TEXT NOT NULL,
+        user_agent TEXT NULL,
+        request_uri VARCHAR(500) NULL,
+        request_method VARCHAR(10) NULL,
+        metadata JSON NULL,
+        severity ENUM("info","warning","error","critical") NOT NULL DEFAULT "info",
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
         INDEX idx_event_type (event_type),
+        INDEX idx_severity (severity),
         INDEX idx_created_at (created_at),
-        INDEX idx_user_id (user_id)
+        INDEX idx_user_id (user_id),
+        INDEX idx_session_id (session_id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_method VARCHAR(60) DEFAULT "standard"');
@@ -259,6 +265,7 @@ function ap_bootstrap_schema(PDO $pdo): void
     ap_seed_admin($pdo);
     ap_seed_products($pdo);
     ap_seed_security_logs($pdo);
+    ap_seed_audit_logs($pdo);
 }
 
 function ap_try_exec(PDO $pdo, string $sql): void
@@ -623,6 +630,138 @@ function ap_seed_security_logs(PDO $pdo): void
     
     $insert = $pdo->prepare('INSERT INTO security_logs (event_type, description, user_id, metadata, ip_address, user_agent, created_at) VALUES (:event_type, :description, :user_id, :metadata, :ip_address, :user_agent, :created_at)');
     
+    foreach ($logs as $log) {
+        $insert->execute($log);
+    }
+}
+
+function ap_seed_audit_logs(PDO $pdo): void
+{
+    // Check if audit logs already exist
+    $stmt = $pdo->query('SELECT COUNT(*) AS total FROM audit_logs');
+    $count = (int) ($stmt->fetch()['total'] ?? 0);
+    if ($count > 0) {
+        return; // Already seeded
+    }
+
+    // Get admin user ID
+    $adminStmt = $pdo->prepare('SELECT id FROM users WHERE role = :role LIMIT 1');
+    $adminStmt->execute([':role' => 'admin']);
+    $adminId = $adminStmt->fetchColumn();
+
+    $logs = [
+        [
+            'event_type' => 'php_error',
+            'description' => 'Errore PHP: Undefined variable in includes/router.php line 45',
+            'user_id' => null,
+            'metadata' => json_encode([
+                'error_type' => 'E_NOTICE',
+                'file' => 'includes/router.php',
+                'line' => 45,
+                'message' => 'Undefined variable: $page',
+                'trace' => 'includes/router.php:45 -> index.php:12'
+            ]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'System',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-5 days')),
+        ],
+        [
+            'event_type' => 'admin_action',
+            'description' => 'Aggiunto nuovo prodotto al catalogo',
+            'user_id' => $adminId,
+            'metadata' => json_encode([
+                'action' => 'product_created',
+                'product_id' => 1,
+                'product_name' => 'Visura Camerale'
+            ]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-4 days')),
+        ],
+        [
+            'event_type' => 'site_error',
+            'description' => 'Errore 404: Pagina non trovata /admin/nonexistent',
+            'user_id' => null,
+            'metadata' => json_encode([
+                'error_code' => 404,
+                'requested_url' => '/admin/nonexistent',
+                'referrer' => 'https://agenziaplinio.it/admin'
+            ]),
+            'ip_address' => '192.168.1.50',
+            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-3 days')),
+        ],
+        [
+            'event_type' => 'database_error',
+            'description' => 'Errore database: Duplicate entry in orders table',
+            'user_id' => null,
+            'metadata' => json_encode([
+                'error_code' => '23000',
+                'sql_state' => '1062',
+                'query' => 'INSERT INTO orders ...',
+                'table' => 'orders'
+            ]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'System',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-2 days')),
+        ],
+        [
+            'event_type' => 'admin_action',
+            'description' => 'Aggiornate impostazioni sito',
+            'user_id' => $adminId,
+            'metadata' => json_encode([
+                'action' => 'settings_updated',
+                'changed_fields' => ['site_name', 'contact_email', 'maintenance_mode']
+            ]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-2 days')),
+        ],
+        [
+            'event_type' => 'php_warning',
+            'description' => 'Avviso PHP: Deprecated function mysql_connect used',
+            'user_id' => null,
+            'metadata' => json_encode([
+                'error_type' => 'E_DEPRECATED',
+                'file' => 'includes/legacy.php',
+                'line' => 23,
+                'message' => 'mysql_connect(): This function was deprecated in PHP 5.5.0'
+            ]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'System',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-1 day')),
+        ],
+        [
+            'event_type' => 'user_action',
+            'description' => 'Ordine completato con successo',
+            'user_id' => null, // Assuming guest order
+            'metadata' => json_encode([
+                'action' => 'order_completed',
+                'order_id' => 'ORD-001',
+                'total_amount' => 15000, // cents
+                'products' => ['Visura Camerale']
+            ]),
+            'ip_address' => '10.0.0.100',
+            'user_agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-12 hours')),
+        ],
+        [
+            'event_type' => 'system_info',
+            'description' => 'Cache svuotata automaticamente',
+            'user_id' => null,
+            'metadata' => json_encode([
+                'action' => 'cache_cleared',
+                'reason' => 'scheduled_cleanup',
+                'files_removed' => 15
+            ]),
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'System Cron',
+            'created_at' => date('Y-m-d H:i:s', strtotime('-6 hours')),
+        ],
+    ];
+
+    $insert = $pdo->prepare('INSERT INTO audit_logs (event_type, description, user_id, metadata, ip_address, user_agent, created_at) VALUES (:event_type, :description, :user_id, :metadata, :ip_address, :user_agent, :created_at)');
+
     foreach ($logs as $log) {
         $insert->execute($log);
     }

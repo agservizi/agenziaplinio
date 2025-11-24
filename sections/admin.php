@@ -159,6 +159,51 @@ $newsIconOptions = [
 $italianProvinces = [
     'Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta-Andria-Trani', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Caltanissetta', 'Campobasso', 'Carbonia-Iglesias', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', 'Forlì-Cesena', 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', 'La Spezia', 'L\'Aquila', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa-Carrara', 'Matera', 'Medio Campidano', 'Messina', 'Milano', 'Modena', 'Monza e della Brianza', 'Napoli', 'Novara', 'Nuoro', 'Ogliastra', 'Olbia-Tempio', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro e Urbino', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbano-Cusio-Ossola', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
 ];
+$auditFilters = [];
+$auditEventFilter = $_GET['audit_event'] ?? 'all';
+$auditUserFilter = trim((string) ($_GET['audit_user'] ?? ''));
+$auditSearchTerm = trim((string) ($_GET['audit_q'] ?? ''));
+if ($auditEventFilter !== 'all') {
+    $auditFilters['event_type'] = $auditEventFilter;
+}
+if ($auditUserFilter !== '') {
+    $auditFilters['user'] = $auditUserFilter;
+}
+if ($auditSearchTerm !== '') {
+    $auditFilters['search'] = $auditSearchTerm;
+}
+$auditLogsPerPage = 50;
+$auditLogsPage = max(1, (int) ($_GET['audit_page'] ?? 1));
+$auditLogsTotal = ap_count_audit_logs($auditFilters);
+$auditLogsPages = max(1, (int) ceil($auditLogsTotal / $auditLogsPerPage));
+if ($auditLogsPage > $auditLogsPages) {
+    $auditLogsPage = $auditLogsPages;
+}
+$auditFiltersPaginated = $auditFilters;
+$auditFiltersPaginated['limit'] = $auditLogsPerPage;
+$auditFiltersPaginated['offset'] = ($auditLogsPage - 1) * $auditLogsPerPage;
+$auditLogs = ap_get_audit_logs($auditFiltersPaginated);
+$buildAuditLogsPageUrl = function (int $page) use ($auditSearchTerm, $auditEventFilter, $auditUserFilter, $adminUrl) {
+    $query = ['audit_page' => max(1, $page)];
+    if ($auditSearchTerm !== '') {
+        $query['audit_q'] = $auditSearchTerm;
+    }
+    if ($auditEventFilter !== 'all') {
+        $query['audit_event'] = $auditEventFilter;
+    }
+    if ($auditUserFilter !== '') {
+        $query['audit_user'] = $auditUserFilter;
+    }
+    return $adminUrl($query);
+};
+$auditEventTypes = [
+    'error' => ['label' => 'Errore', 'color' => 'danger'],
+    'warning' => ['label' => 'Avviso', 'color' => 'warning'],
+    'info' => ['label' => 'Info', 'color' => 'info'],
+    'admin_action' => ['label' => 'Azione admin', 'color' => 'primary'],
+    'user_action' => ['label' => 'Azione utente', 'color' => 'secondary'],
+    'system' => ['label' => 'Sistema', 'color' => 'dark'],
+];
 ?>
 <section class="admin-section section-padding">
     <div class="container-xxl">
@@ -1617,6 +1662,124 @@ $italianProvinces = [
             <?php endif; ?>
         </div>
         <?php endif; ?>
+        <?php if ($section === 'audit'): ?>
+        <div class="admin-card mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="mb-0">Audit Log</h4>
+                    <small class="text-muted">Monitoraggio errori e attività del sistema</small>
+                </div>
+                <div class="text-end">
+                    <small class="text-muted d-block"><?php echo $auditLogsTotal; ?> eventi totali</small>
+                    <small class="text-muted">Ultimo aggiornamento: <?php echo date('d/m/Y H:i'); ?></small>
+                </div>
+            </div>
+            
+            <!-- Filtri e ricerca -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <select class="form-select" id="auditEventFilter">
+                        <option value="all">Tutti gli eventi</option>
+                        <?php foreach ($auditEventTypes as $key => $config): ?>
+                            <option value="<?php echo $key; ?>" <?php echo $auditEventFilter === $key ? 'selected' : ''; ?>><?php echo $config['label']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="auditUserFilter" placeholder="Filtra per utente" value="<?php echo htmlspecialchars($auditUserFilter, ENT_QUOTES); ?>">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="auditSearchFilter" placeholder="Ricerca descrizione" value="<?php echo htmlspecialchars($auditSearchTerm, ENT_QUOTES); ?>">
+                </div>
+            </div>
+            
+            <!-- Tabella audit log -->
+            <div class="table-responsive">
+                <table class="table table-sm align-middle" id="auditLogsTable">
+                    <thead>
+                        <tr>
+                            <th>Data/Ora</th>
+                            <th>Evento</th>
+                            <th>Utente</th>
+                            <th>IP</th>
+                            <th>Descrizione</th>
+                            <th>Metadata</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($auditLogs)): ?>
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    Nessun evento audit registrato
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($auditLogs as $log): ?>
+                                <tr data-event-type="<?php echo htmlspecialchars($log['event_type'], ENT_QUOTES); ?>">
+                                    <td>
+                                        <div class="small"><?php echo date('d/m/Y', strtotime($log['created_at'])); ?></div>
+                                        <div class="small text-muted"><?php echo date('H:i:s', strtotime($log['created_at'])); ?></div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-<?php echo $auditEventTypes[$log['event_type']]['color'] ?? 'secondary'; ?>">
+                                            <?php echo $auditEventTypes[$log['event_type']]['label'] ?? ucfirst(str_replace('_', ' ', $log['event_type'])); ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($log['user_name'])): ?>
+                                            <strong><?php echo htmlspecialchars($log['user_name'], ENT_QUOTES); ?></strong>
+                                            <div class="small text-muted"><?php echo htmlspecialchars($log['user_email'], ENT_QUOTES); ?></div>
+                                        <?php elseif (!empty($log['user_id'])): ?>
+                                            <span class="text-muted">User #<?php echo $log['user_id']; ?></span>
+                                        <?php else: ?>
+                                            <span class="text-muted">-</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <code class="small"><?php echo htmlspecialchars($log['ip_address'], ENT_QUOTES); ?></code>
+                                    </td>
+                                    <td>
+                                        <div><?php echo htmlspecialchars($log['description'], ENT_QUOTES); ?></div>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($log['metadata'])): ?>
+                                            <details class="mt-1">
+                                                <summary class="small text-muted" style="cursor: pointer;">Dettagli</summary>
+                                                <pre class="small mt-1"><code><?php echo htmlspecialchars(json_encode(json_decode($log['metadata'], true), JSON_PRETTY_PRINT), ENT_QUOTES); ?></code></pre>
+                                            </details>
+                                        <?php else: ?>
+                                            <span class="text-muted small">-</span>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Paginazione -->
+            <?php if ($auditLogsPages > 1): ?>
+                <nav class="mt-3">
+                    <ul class="pagination pagination-sm mb-0 justify-content-center">
+                        <?php $prevPage = max(1, $auditLogsPage - 1); ?>
+                        <li class="page-item <?php echo $auditLogsPage === 1 ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="<?php echo htmlspecialchars($buildAuditLogsPageUrl($prevPage), ENT_QUOTES); ?>" aria-label="Pagina precedente">&laquo;</a>
+                        </li>
+                        <?php for ($pageNumber = 1; $pageNumber <= $auditLogsPages; $pageNumber++): ?>
+                            <li class="page-item <?php echo $pageNumber === $auditLogsPage ? 'active' : ''; ?>">
+                                <a class="page-link" href="<?php echo htmlspecialchars($buildAuditLogsPageUrl($pageNumber), ENT_QUOTES); ?>"><?php echo $pageNumber; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        <?php $nextPage = min($auditLogsPages, $auditLogsPage + 1); ?>
+                        <li class="page-item <?php echo $auditLogsPage === $auditLogsPages ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="<?php echo htmlspecialchars($buildAuditLogsPageUrl($nextPage), ENT_QUOTES); ?>" aria-label="Pagina successiva">&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
         <?php if ($section === 'sicurezza'): ?>
         <script>
             // Filtri per i log di sicurezza
@@ -1650,6 +1813,55 @@ $italianProvinces = [
                 eventFilter.addEventListener('change', filterLogs);
                 userFilter.addEventListener('input', filterLogs);
                 ipFilter.addEventListener('input', filterLogs);
+            });
+        </script>
+        <?php endif; ?>
+        <?php if ($section === 'audit'): ?>
+        <script>
+            // Filtri per i log di audit
+            document.addEventListener('DOMContentLoaded', function() {
+                const eventFilter = document.getElementById('auditEventFilter');
+                const userFilter = document.getElementById('auditUserFilter');
+                const searchFilter = document.getElementById('auditSearchFilter');
+                
+                function applyFilters() {
+                    const eventValue = eventFilter.value;
+                    const userValue = userFilter.value.toLowerCase();
+                    const searchValue = searchFilter.value.toLowerCase();
+                    
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('section', 'audit');
+                    
+                    if (eventValue !== 'all') {
+                        params.set('audit_event', eventValue);
+                    } else {
+                        params.delete('audit_event');
+                    }
+                    
+                    if (userValue !== '') {
+                        params.set('audit_user', userValue);
+                    } else {
+                        params.delete('audit_user');
+                    }
+                    
+                    if (searchValue !== '') {
+                        params.set('audit_q', searchValue);
+                    } else {
+                        params.delete('audit_q');
+                    }
+                    
+                    window.location.href = '?' + params.toString();
+                }
+                
+                eventFilter.addEventListener('change', applyFilters);
+                userFilter.addEventListener('input', function() {
+                    clearTimeout(this.timeout);
+                    this.timeout = setTimeout(applyFilters, 500);
+                });
+                searchFilter.addEventListener('input', function() {
+                    clearTimeout(this.timeout);
+                    this.timeout = setTimeout(applyFilters, 500);
+                });
             });
         </script>
         <?php endif; ?>

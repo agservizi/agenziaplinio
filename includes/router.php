@@ -5,6 +5,13 @@ $site = $config['site'];
 
 $pageKey = isset($_GET['page']) ? strtolower(trim($_GET['page'])) : 'home';
 if (!array_key_exists($pageKey, $pages)) {
+    // Log 404 error
+    ap_log_audit_event('site_error', 'Errore 404: Pagina non trovata', null, [
+        'error_code' => 404,
+        'requested_url' => $_SERVER['REQUEST_URI'] ?? '/',
+        'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null
+    ]);
     $pageKey = 'home';
 }
 

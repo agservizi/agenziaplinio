@@ -568,6 +568,15 @@ function ap_fetch_order_items(int $orderId): array
     return $stmt->fetchAll();
 }
 
+function ap_fetch_order_item(int $orderId, int $productId): ?array
+{
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('SELECT order_items.*, products.name FROM order_items INNER JOIN products ON products.id = order_items.product_id WHERE order_id = :order AND product_id = :product LIMIT 1');
+    $stmt->execute([':order' => $orderId, ':product' => $productId]);
+    $item = $stmt->fetch();
+    return $item ?: null;
+}
+
 function ap_fetch_order(int $orderId): ?array
 {
     $pdo = ap_db();
@@ -1801,6 +1810,132 @@ function ap_log_security_event(string $event_type, string $description, ?int $us
         $description,
         $user_id,
         json_encode($metadata),
+        $ip,
+        $userAgent
+    ]);
+}
+
+function ap_get_audit_logs(array $filters = [], int $limit = 50, int $offset = 0): array
+{
+    $pdo = ap_db();
+
+    $conditions = [];
+    $params = [];
+
+    if (!empty($filters['event_type'])) {
+        $conditions[] = 'al.event_type = :event_type';
+        $params[':event_type'] = $filters['event_type'];
+    }
+
+    if (!empty($filters['user_id'])) {
+        $conditions[] = 'al.user_id = :user_id';
+        $params[':user_id'] = $filters['user_id'];
+    }
+
+    if (!empty($filters['search'])) {
+        $conditions[] = '(al.description LIKE :search OR u.name LIKE :search OR u.email LIKE :search)';
+        $params[':search'] = '%' . $filters['search'] . '%';
+    }
+
+    if (!empty($filters['date_from'])) {
+        $conditions[] = 'al.created_at >= :date_from';
+        $params[':date_from'] = $filters['date_from'];
+    }
+
+    if (!empty($filters['date_to'])) {
+        $conditions[] = 'al.created_at <= :date_to';
+        $params[':date_to'] = $filters['date_to'];
+    }
+
+    $sql = '
+        SELECT
+            al.*,
+            u.name as user_name,
+            u.email as user_email
+        FROM audit_logs al
+        LEFT JOIN users u ON u.id = al.user_id
+    ';
+
+    if ($conditions) {
+        $sql .= ' WHERE ' . implode(' AND ', $conditions);
+    }
+
+    $sql .= ' ORDER BY al.created_at DESC LIMIT :limit OFFSET :offset';
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+
+    $stmt->execute();
+    $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $logs;
+}
+
+function ap_count_audit_logs(array $filters = []): int
+{
+    $pdo = ap_db();
+
+    $conditions = [];
+    $params = [];
+
+    if (!empty($filters['event_type'])) {
+        $conditions[] = 'event_type = :event_type';
+        $params[':event_type'] = $filters['event_type'];
+    }
+
+    if (!empty($filters['user_id'])) {
+        $conditions[] = 'user_id = :user_id';
+        $params[':user_id'] = $filters['user_id'];
+    }
+
+    if (!empty($filters['search'])) {
+        $conditions[] = '(description LIKE :search)';
+        $params[':search'] = '%' . $filters['search'] . '%';
+    }
+
+    if (!empty($filters['date_from'])) {
+        $conditions[] = 'created_at >= :date_from';
+        $params[':date_from'] = $filters['date_from'];
+    }
+
+    if (!empty($filters['date_to'])) {
+        $conditions[] = 'created_at <= :date_to';
+        $params[':date_to'] = $filters['date_to'];
+    }
+
+    $sql = 'SELECT COUNT(*) FROM audit_logs';
+
+    if ($conditions) {
+        $sql .= ' WHERE ' . implode(' AND ', $conditions);
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return (int) $stmt->fetchColumn();
+}
+
+function ap_log_audit_event(string $event_type, string $description, ?int $user_id = null, array $metadata = []): void
+{
+    $pdo = ap_db();
+
+    $stmt = $pdo->prepare("
+        INSERT INTO audit_logs (event_type, description, user_id, metadata, ip_address, user_agent, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, NOW())
+    ");
+
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
+
+    $stmt->execute([
+        $event_type,
+        $description,
+        $user_id,
+        json_encode($metadata, JSON_UNESCAPED_UNICODE),
         $ip,
         $userAgent
     ]);

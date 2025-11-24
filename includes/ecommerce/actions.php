@@ -507,6 +507,14 @@ function ap_action_checkout(): void
     } else {
         ap_flash("Ordine #{$orderId} confermato. Ti aggiorneremo via email.", 'success');
     }
+    // Log audit event for order completion
+    ap_log_audit_event('user_action', 'Ordine completato con successo', (int) $user['id'], [
+        'action' => 'order_completed',
+        'order_id' => $orderId,
+        'total_amount' => $total,
+        'payment_method' => $paymentMethod,
+        'items_count' => count($items)
+    ]);
 }
 
 function ap_action_admin_save_product(): void
@@ -515,6 +523,7 @@ function ap_action_admin_save_product(): void
         ap_flash('Non autorizzato.', 'error');
         return;
     }
+    $user = ap_auth_current_user();
     $id = isset($_POST['product_id']) ? (int) $_POST['product_id'] : null;
     $name = trim($_POST['name'] ?? '');
     $price = (float) str_replace(',', '.', (string) ($_POST['price'] ?? '0'));
@@ -561,6 +570,13 @@ function ap_action_admin_save_product(): void
     $result = ap_save_product($data, $id);
     if ($result) {
         ap_flash('Catalogo aggiornato.', 'success');
+        // Log audit event
+        ap_log_audit_event('admin_action', $id ? 'Prodotto aggiornato: ' . $name : 'Prodotto creato: ' . $name, $user['id'] ?? null, [
+            'action' => $id ? 'product_updated' : 'product_created',
+            'product_id' => $result,
+            'product_name' => $name,
+            'changes' => $data
+        ]);
     } else {
         ap_flash('Prodotto non trovato o nessuna modifica rilevata.', 'error');
     }
@@ -754,6 +770,7 @@ function ap_action_admin_update_order(): void
         ap_flash('Operazione non consentita.', 'error');
         return;
     }
+    $user = ap_auth_current_user();
     $orderId = (int) ($_POST['order_id'] ?? 0);
     if ($orderId <= 0) {
         ap_flash('Ordine non valido.', 'error');
@@ -790,6 +807,14 @@ function ap_action_admin_update_order(): void
     }
     ap_notify_order_status($orderId, $status);
     ap_flash('Dati ordine aggiornati.', 'success');
+    // Log audit event
+    ap_log_audit_event('admin_action', 'Ordine aggiornato: stato cambiato a ' . $status, $user['id'] ?? null, [
+        'action' => 'order_updated',
+        'order_id' => $orderId,
+        'new_status' => $status,
+        'shipping_status' => $shippingStatus,
+        'tracking_code' => $tracking
+    ]);
 }
 
 function ap_action_save_address(): void
@@ -1071,6 +1096,7 @@ function ap_action_admin_save_user(): void
         ap_flash('Non autorizzato.', 'error');
         return;
     }
+    $user = ap_auth_current_user();
     $id = isset($_POST['user_id']) ? (int) $_POST['user_id'] : null;
     $name = trim($_POST['name'] ?? '');
     $email = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL) ?: '';
@@ -1109,6 +1135,14 @@ function ap_action_admin_save_user(): void
     $result = ap_save_user($data, $id);
     if ($result) {
         ap_flash($id ? 'Utente aggiornato.' : 'Utente creato.', 'success');
+        // Log audit event
+        ap_log_audit_event('admin_action', $id ? 'Utente aggiornato: ' . $name : 'Utente creato: ' . $name, $user['id'] ?? null, [
+            'action' => $id ? 'user_updated' : 'user_created',
+            'user_id' => $result,
+            'user_name' => $name,
+            'user_email' => $email,
+            'changes' => $data
+        ]);
     } else {
         ap_flash('Errore nel salvataggio dell\'utente.', 'error');
     }
@@ -1120,6 +1154,7 @@ function ap_action_admin_save_settings(): void
         ap_flash('Non autorizzato.', 'error');
         return;
     }
+    $user = ap_auth_current_user();
     $settings = $_POST['settings'] ?? [];
     if (!is_array($settings)) {
         ap_flash('Dati non validi.', 'error');
@@ -1131,6 +1166,11 @@ function ap_action_admin_save_settings(): void
         ap_set_setting($key, $value, $type, $description);
     }
     ap_flash('Impostazioni salvate.', 'success');
+    // Log audit event
+    ap_log_audit_event('admin_action', 'Impostazioni sito aggiornate', $user['id'] ?? null, [
+        'action' => 'settings_updated',
+        'updated_settings' => array_keys($settings)
+    ]);
 }
 
 // Force cache reload - added 2025-01-24
