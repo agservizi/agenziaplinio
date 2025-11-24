@@ -1254,14 +1254,23 @@ body.cart-sidebar-open {
 }
 
 .ap-btn--ghost {
-    background: #ffffff !important;
-    border: 2px solid var(--color-primary-500) !important;
-    color: var(--color-primary-500) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(45, 107, 255, 0.25);
+    color: var(--color-primary-600);
+    font-size: 0.85rem;
+    background: rgba(45, 107, 255, 0.08);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .ap-btn--ghost:hover {
-    background: var(--color-primary-500) !important;
-    color: #ffffff !important;
+    background: rgba(45, 107, 255, 0.15);
+    border-color: rgba(45, 107, 255, 0.45);
 }
 
 .ap-btn:hover {
