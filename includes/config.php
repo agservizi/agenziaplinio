@@ -79,6 +79,11 @@ return [
             'description' => 'Servizi digitali per SPID, firma digitale e PEC con attivazione semplice e sicura.',
             'sections' => ['identita-digitale']
         ],
+        'soluzioni-voce-dati' => [
+            'title' => 'Soluzioni Voce e Dati | Agenzia Plinio',
+            'description' => 'Linee telefoniche, connessioni internet e dispositivi tech con attivazione guidata e assistenza completa.',
+            'sections' => ['soluzioni-voce-dati']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',
