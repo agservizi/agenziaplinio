@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-file_put_contents(__DIR__ . '/../../debug.log', 'Actions file loaded' . "\n", FILE_APPEND);
 
 require_once __DIR__ . '/../auth.php';
 require_once __DIR__ . '/../cart.php';
@@ -28,7 +27,6 @@ function ap_action_save_order_custom_data(): void
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['ap_action'] ?? null;
-    file_put_contents(__DIR__ . '/../../debug.log', 'POST received, action: ' . ($action ?? 'null') . "\n", FILE_APPEND);
     if ($action) {
         try {
             ap_handle_action($action);
@@ -41,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function ap_handle_action(string $action): void
 {
-    file_put_contents(__DIR__ . '/../../debug.log', 'Received action: ' . $action . "\n", FILE_APPEND);
     switch ($action) {
         case 'login':
             ap_action_login();
@@ -72,6 +69,7 @@ function ap_handle_action(string $action): void
             ap_action_admin_delete_product();
             break;
         case 'admin_save_product':
+            echo "DEBUG: admin_save_product case reached";
             ap_action_admin_save_product();
             break;
         case 'admin_save_coupon':
@@ -114,7 +112,6 @@ function ap_handle_action(string $action): void
             ap_action_save_order_custom_data();
             break;
         default:
-            file_put_contents(__DIR__ . '/../../debug.log', 'Unrecognized action: ' . $action . "\n", FILE_APPEND);
             ap_flash('Azione non riconosciuta.', 'error');
     }
 }
