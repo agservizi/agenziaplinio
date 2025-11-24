@@ -208,6 +208,23 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                             <p class="h2 text-info mb-0">10+</p>
                         </div>
                     </div>
+
+                    <!-- Mappa OpenStreetMap -->
+                    <div class="map-container mt-4">
+                        <iframe
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=14.485,40.692,14.496,40.702&layer=mapnik&marker=40.6968,14.4908"
+                            width="100%"
+                            height="250"
+                            style="border-radius: 12px; border: 1px solid #e9ecef;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        <p class="text-center mt-2 small text-muted">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            Via Plinio il Vecchio, 72 - Castellammare di Stabia (NA)
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
