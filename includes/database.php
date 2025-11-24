@@ -282,6 +282,18 @@ function ap_seed_products(PDO $pdo): void
             'is_active' => 1,
         ],
         [
+            'name' => 'Visura Ipotecaria',
+            'slug' => 'visura-ipotecaria',
+            'description' => 'Verifica ipoteche, pignoramenti e trascrizioni su immobili. Documentazione completa e aggiornata per compravendite immobiliari.',
+            'price_cents' => 2500, // €25.00
+            'sku' => 'VIS-IPO-001',
+            'category_key' => 'ipotecarie',
+            'fulfillment_type' => 'digital',
+            'stock' => 999,
+            'image_url' => 'assets/img/og-image.jpg',
+            'is_active' => 1,
+        ],
+        [
             'name' => 'Certificato di Destinazione Urbanistica',
             'slug' => 'certificato-destinazione-urbanistica',
             'description' => 'Documento che attesta la destinazione urbanistica di un immobile secondo gli strumenti urbanistici vigenti.',
@@ -306,12 +318,36 @@ function ap_seed_products(PDO $pdo): void
             'is_active' => 1,
         ],
         [
+            'name' => 'Cambio Residenza Anagrafica',
+            'slug' => 'cambio-residenza-anagrafica',
+            'description' => 'Procedura completa di cambio residenza o domicilio senza code e moduli complicati. Assistenza passo-passo per il trasloco anagrafico.',
+            'price_cents' => 3500, // €35.00
+            'sku' => 'CAMBIO-RES-001',
+            'category_key' => 'cambio-residenza',
+            'fulfillment_type' => 'digital',
+            'stock' => 999,
+            'image_url' => 'assets/img/og-image.jpg',
+            'is_active' => 1,
+        ],
+        [
             'name' => 'Pratica SUAP - Attività Produttive',
             'slug' => 'pratica-suap-attivita-produttive',
             'description' => 'Gestione completa della pratica SUAP per apertura/modifica attività produttive. Include consulenza e presentazione domanda.',
             'price_cents' => 50000, // €500.00
             'sku' => 'SUAP-PROD-001',
             'category_key' => 'uffici-pubblici',
+            'fulfillment_type' => 'digital',
+            'stock' => 999,
+            'image_url' => 'assets/img/og-image.jpg',
+            'is_active' => 1,
+        ],
+        [
+            'name' => 'Certificato Casellario Giudiziale',
+            'slug' => 'certificato-casellario-giudiziale',
+            'description' => 'Certificato penale del casellario giudiziale. Documento ufficiale per verificare precedenti penali e carichi pendenti.',
+            'price_cents' => 1200, // €12.00
+            'sku' => 'CAS-GIU-001',
+            'category_key' => 'giudiziarie',
             'fulfillment_type' => 'digital',
             'stock' => 999,
             'image_url' => 'assets/img/og-image.jpg',
@@ -338,7 +374,7 @@ function ap_seed_products(PDO $pdo): void
     }
 
     // Add custom fields for Visura Camerale
-    $visuraProductId = $pdo->lastInsertId() - 4; // Assuming Visura Camerale is the first product inserted
+    $visuraProductId = $pdo->lastInsertId() - 7; // Visura Camerale is the first product inserted (8 total products)
     $customFields = [
         [
             'product_id' => $visuraProductId,
