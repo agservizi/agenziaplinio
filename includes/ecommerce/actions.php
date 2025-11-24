@@ -571,8 +571,8 @@ function ap_action_admin_save_product(): void
         $stmt->execute([':product_id' => $id]);
 
         // Save new fields
-        $productCustomFields = $_POST['custom_fields'][$id] ?? [];
-        foreach ($productCustomFields as $fieldData) {
+        $customFields = $_POST['custom_fields'] ?? [];
+        foreach ($customFields as $fieldId => $fieldData) {
             if (empty($fieldData['name']) || empty($fieldData['label'])) continue;
             ap_save_product_custom_field($id, [
                 'name' => trim($fieldData['name']),
