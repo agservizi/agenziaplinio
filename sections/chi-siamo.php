@@ -688,22 +688,12 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                     <div class="certifications-grid">
                         <div class="certification-item">
                             <div class="certification-icon">
-                                <i class="fas fa-certificate"></i>
+                                <i class="fas fa-id-card"></i>
                             </div>
                             <div class="certification-content">
-                                <h5>ISO 27001</h5>
-                                <p>Sistema di Gestione per la Sicurezza delle Informazioni</p>
-                                <small class="text-muted">Certificazione ottenuta nel 2019</small>
-                            </div>
-                        </div>
-                        <div class="certification-item">
-                            <div class="certification-icon">
-                                <i class="fas fa-user-shield"></i>
-                            </div>
-                            <div class="certification-content">
-                                <h5>Privacy Officer</h5>
-                                <p>Responsabile della Protezione dei Dati</p>
-                                <small class="text-muted">DPO qualificato GDPR</small>
+                                <h5>RAO - Registration Authority Officer</h5>
+                                <p>Soggetto autorizzato alla verifica dell'identità personale per SPID, firme digitali remote e tutti i servizi digitali nazionali.</p>
+                                <small class="text-muted">Certificazione ufficiale per identità digitali</small>
                             </div>
                         </div>
                         <div class="certification-item">
@@ -802,7 +792,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                     </h2>
                     <div id="about-faq4" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
                         <div class="accordion-body">
-                            Siamo certificati ISO 27001 per la sicurezza delle informazioni e abbiamo il Privacy Officer qualificato GDPR. Inoltre siamo partner ufficiali di TIM e Vodafone, con autorizzazioni per la rivendita di servizi telefonici e digitali.
+                            Siamo certificati come RAO (Registration Authority Officer) per la verifica dell'identità personale necessaria per SPID, firme digitali e servizi digitali. Inoltre siamo partner ufficiali di TIM e Vodafone, con autorizzazioni per la rivendita di servizi telefonici e digitali.
                         </div>
                     </div>
                 </div>
@@ -814,7 +804,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                     </h2>
                     <div id="about-faq5" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
                         <div class="accordion-body">
-                            La sicurezza è la nostra priorità assoluta. Tutti i nostri processi sono certificati ISO 27001, utilizziamo crittografia end-to-end e monitoriamo costantemente i sistemi. I dati dei clienti sono protetti con i più alti standard di sicurezza informatica.
+                            La sicurezza è la nostra priorità assoluta. Utilizziamo crittografia end-to-end e monitoriamo costantemente i sistemi. I dati dei clienti sono protetti con i più alti standard di sicurezza informatica.
                         </div>
                     </div>
                 </div>
@@ -1045,7 +1035,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                                 <span class="chart-label">Certificato</span>
                             </div>
                         </div>
-                        <p class="metric-description">Processi certificati ISO 27001 per la sicurezza delle informazioni</p>
+                        <p class="metric-description">Processi certificati per la sicurezza delle informazioni</p>
                     </div>
                 </div>
                 <div class="metric-highlights">
