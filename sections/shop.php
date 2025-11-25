@@ -52,8 +52,9 @@ $activeFilters = array_filter([
             <p class="lead text-muted">Completa l'ordine in autonomia: attiviamo SIM, PEC, spedizioni e servizi digitali in poche ore.</p>
         </div>
         <div class="row gy-4">
-            <div class="col-lg-4">
-                <div class="ap-card p-4 h-100" data-reveal>
+            <div class="col-lg-3">
+                <div class="ap-card p-4 h-100 position-sticky" style="top: 20px;" data-reveal>
+                    <h5 class="mb-3">Filtri</h5>
                     <form class="row g-3 align-items-end" method="get">
                         <input type="hidden" name="page" value="shop">
                         <div class="col-12">
@@ -140,7 +141,7 @@ $activeFilters = array_filter([
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <?php if (empty($products)): ?>
                     <div class="empty-state text-center p-5 h-100 d-flex flex-column justify-content-center" data-reveal>
                         <p class="mb-1">Nessun prodotto disponibile al momento.</p>
