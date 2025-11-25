@@ -2161,6 +2161,14 @@ body.has-chatbot #back-to-top {
         display: inline-flex;
         z-index: 1400;
         margin-right: 0.85rem;
+        border: 1px solid rgba(45, 107, 255, 0.25) !important;
+        background: rgba(45, 107, 255, 0.08) !important;
+        color: var(--color-primary-600) !important;
+        box-shadow: none !important;
+    }
+
+    .nav-toggle .bar {
+        background: var(--color-primary-600) !important;
     }
 
     .nav-link--toggle {
