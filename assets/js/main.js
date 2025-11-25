@@ -514,6 +514,7 @@ const App = (() => {
         document.addEventListener('click', async event => {
             const trigger = event.target.closest('[data-service-key]');
             const button = event.target.closest('.service-more');
+            const modalOpen = event.target.closest('[data-modal-open]');
             if (trigger) {
                 const key = trigger.getAttribute('data-service-key');
                 await openServiceModal(key);
@@ -522,6 +523,11 @@ const App = (() => {
                 if (!parent) return;
                 const key = parent.getAttribute('data-service-key');
                 await openServiceModal(key);
+            } else if (modalOpen) {
+                const modalType = modalOpen.getAttribute('data-modal-open');
+                if (modalType === 'login') {
+                    openLoginModal();
+                }
             }
             if (event.target.matches('[data-modal-close]')) {
                 closeModal();
@@ -532,7 +538,8 @@ const App = (() => {
                 closeModal();
             }
         });
-        state.modal.addEventListener('click', event => {
+        // Close modal on overlay click for all modals
+        document.addEventListener('click', event => {
             if (event.target.classList.contains('ap-modal')) {
                 closeModal();
             }
@@ -551,9 +558,16 @@ const App = (() => {
     }
 
     function closeModal() {
-        if (!state.modal) return;
-        state.modal.classList.remove('is-visible');
+        const modals = document.querySelectorAll('.ap-modal');
+        modals.forEach(modal => modal.classList.remove('is-visible'));
         document.body.style.overflow = '';
+    }
+
+    function openLoginModal() {
+        const loginModal = document.getElementById('login-modal');
+        if (!loginModal) return;
+        loginModal.classList.add('is-visible');
+        document.body.style.overflow = 'hidden';
     }
 
     async function loadServiceData() {

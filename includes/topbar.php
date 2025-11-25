@@ -115,7 +115,7 @@ if (is_file($servicesDataPath)) {
                     <?php echo htmlspecialchars($currentUser['name'], ENT_QUOTES); ?>
                 </a>
             <?php else: ?>
-                <a class="account-link" href="?page=account">Accedi</a>
+                <button type="button" class="account-link" data-modal-open="login">Accedi</button>
             <?php endif; ?>
         </div>
     </div>

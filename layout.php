@@ -81,6 +81,31 @@ if (!empty($chatbotFaqs)) {
             </div>
         </div>
     </div>
+    <div id="login-modal" class="ap-modal" aria-hidden="true">
+        <div class="ap-modal__overlay" data-modal-close></div>
+        <div class="ap-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+            <button type="button" class="ap-modal__close" data-modal-close>&times;</button>
+            <div class="ap-modal__content">
+                <h4 id="login-modal-title">Accedi al tuo account</h4>
+                <form method="post" class="mt-3">
+                    <input type="hidden" name="ap_action" value="login">
+                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'] ?? '?page=home', ENT_QUOTES); ?>">
+                    <div class="mb-3">
+                        <label class="form-label" for="modal_login_email">Email</label>
+                        <input class="form-control" type="email" id="modal_login_email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="modal_login_password">Password</label>
+                        <input class="form-control" type="password" id="modal_login_password" name="password" required>
+                    </div>
+                    <button class="ap-btn ap-btn--primary w-100" type="submit">Entra</button>
+                </form>
+                <p class="text-center mt-3 mb-0">
+                    <a href="?page=account">Non hai un account? Registrati</a>
+                </p>
+            </div>
+        </div>
+    </div>
     <?php include __DIR__ . '/components/cart-sidebar.php'; ?>
     <?php include __DIR__ . '/components/chatbot.php'; ?>
     <?php if (!empty($flashMessages)): ?>

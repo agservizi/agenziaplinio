@@ -4,7 +4,6 @@ session_start();
 require __DIR__ . '/../includes/env.php';
 require __DIR__ . '/../includes/database.php';
 require __DIR__ . '/../includes/faqs.php';
-require __DIR__ . '/../includes/ecommerce/helpers.php';
 require __DIR__ . '/../includes/ecommerce/notifications.php';
 require __DIR__ . '/../includes/auth.php';
 require __DIR__ . '/../includes/cart.php';
