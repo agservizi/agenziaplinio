@@ -368,7 +368,7 @@
 }
 </style>
 
-<section class="section-padding bg-light parallax-section" style="padding-left: 0; padding-right: 0;">
+<section class="section-padding bg-light parallax-section" style="padding-left: 0; padding-right: 0; margin-bottom: 0; padding-bottom: 0;">
     <div class="container-fluid">
         <!-- Hero Section with Parallax Effect -->
         <div class="contact-hero parallax-bg">
@@ -961,5 +961,16 @@ document.getElementById('preferred_date').addEventListener('input', function() {
     0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25); }
     50% { box-shadow: 0 0 0 0.3rem rgba(0, 123, 255, 0.4); }
     100% { box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+}
+
+/* Remove space after contact section */
+.parallax-section {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.parallax-section .container-fluid {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }
 </style>
