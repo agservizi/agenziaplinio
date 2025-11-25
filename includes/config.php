@@ -94,6 +94,11 @@ return [
             'description' => 'Scopri la nostra storia, i valori che ci guidano e il team che lavora ogni giorno per offrire servizi eccellenti alla comunità.',
             'sections' => ['chi-siamo']
         ],
+        'privacy' => [
+            'title' => 'Privacy Policy | Agenzia Plinio',
+            'description' => 'Informativa sulla privacy e trattamento dei dati personali secondo il Regolamento UE 2016/679 (GDPR).',
+            'sections' => ['privacy']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',
