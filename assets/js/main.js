@@ -1078,25 +1078,94 @@ const App = (() => {
             return 'Accettiamo pagamenti con carta di credito, PayPal, bonifico bancario e Klarna. Tutti i pagamenti sono sicuri e protetti.';
         }
 
-        // Conversazione generale
-        if (normalized.includes('sì') || normalized === 'si' || normalized.includes('certo') || normalized.includes('va bene')) {
-            return 'Ottimo! Sono felice di aiutarti. Cosa posso fare per te ora?';
+        // Servizi specifici immobiliari
+        if (normalized.includes('valutare') || normalized.includes('valutazione') || normalized.includes('prezzo casa') || normalized.includes('quanto vale')) {
+            return 'Per una valutazione immobiliare accurata, contattaci direttamente. Effettuiamo sopralluoghi gratuiti e forniamo perizie certificate. Puoi richiedere un appuntamento chiamandoci o scrivendo via email.';
         }
 
-        if (normalized.includes('no') || normalized.includes('non') && normalized.includes('grazie')) {
-            return 'Va bene, non c\'è problema. Se cambi idea o hai altre domande, sono qui.';
+        if (normalized.includes('vendere') || normalized.includes('vendita') || normalized.includes('immobile vendita')) {
+            return 'Ti aiutiamo a vendere il tuo immobile al miglior prezzo. Gestiamo tutto: dalla valutazione alla pubblicità, fino alla chiusura della vendita. Contattaci per iniziare il processo!';
         }
 
-        if (normalized.includes('forse') || normalized.includes('non so') || normalized.includes('incerto')) {
-            return 'Capisco la tua indecisione. Posso fornirti più informazioni per aiutarti a decidere?';
+        if (normalized.includes('comprare') || normalized.includes('acquisto') || normalized.includes('cercare casa')) {
+            return 'Cerchi casa? Abbiamo un ampio portafoglio di immobili residenziali e commerciali. Puoi sfogliare le nostre proprietà sul sito o contattarci per ricerche personalizzate.';
         }
 
-        if (normalized.includes('problema') || normalized.includes('difficoltà') || normalized.includes('non funziona')) {
-            return 'Mi dispiace sentire che hai un problema. Posso aiutarti a risolverlo o preferisci contattare il nostro supporto tecnico?';
+        if (normalized.includes('affitto') || normalized.includes('locazione') || normalized.includes('noleggio')) {
+            return 'Gestiamo locazioni residenziali e commerciali. Offriamo servizi completi: ricerca inquilini, contratti, gestione affitti. Contattaci per saperne di più sui nostri servizi di property management.';
         }
 
-        if (normalized.includes('complimenti') || normalized.includes('bravo') || normalized.includes('ottimo')) {
-            return 'Grazie mille! Cerchiamo sempre di offrire il meglio ai nostri clienti. Come posso aiutarti ulteriormente?';
+        if (normalized.includes('documenti') || normalized.includes('carta') || normalized.includes('certificati')) {
+            return 'Per pratiche immobiliari servono vari documenti: carta d\'identità, codice fiscale, visura catastale, ecc. Ti guideremo su cosa preparare per la tua specifica situazione. Chiedi pure!';
+        }
+
+        if (normalized.includes('mutuo') || normalized.includes('finanziamento') || normalized.includes('prestito')) {
+            return 'Collaboriamo con istituti bancari e finanziarie per mutui e finanziamenti. Possiamo aiutarti a trovare la soluzione migliore per il tuo acquisto immobiliare.';
+        }
+
+        if (normalized.includes('agenzia') || normalized.includes('mediatore') || normalized.includes('abilitazione')) {
+            return 'AG SERVIZI è un\'agenzia immobiliare regolarmente iscritta al Registro delle Imprese e abilitata all\'esercizio della mediazione. Operiamo nel rispetto delle normative vigenti.';
+        }
+
+        if (normalized.includes('commissioni') || normalized.includes('provvigione') || normalized.includes('costo servizio')) {
+            return 'Le nostre commissioni variano in base al servizio richiesto e al valore dell\'immobile. Forniamo preventivi trasparenti e senza impegno. Contattaci per un preventivo personalizzato.';
+        }
+
+        if (normalized.includes('tempi') || normalized.includes('quanto tempo') || normalized.includes('durata')) {
+            return 'I tempi per una compravendita immobiliare variano, ma generalmente vanno da 30 a 90 giorni. Dipende dalla complessità della pratica e dalla disponibilità delle parti. Ti aggiorneremo costantemente sui progressi.';
+        }
+
+        if (normalized.includes('consulenza') || normalized.includes('consulente') || normalized.includes('consiglio')) {
+            return 'Offriamo consulenze gratuite per compravendite, investimenti immobiliari e fiscalità. I nostri esperti sono a tua disposizione per guidarti nelle scelte migliori.';
+        }
+
+        if (normalized.includes('fiscale') || normalized.includes('tasse') || normalized.includes('imposte')) {
+            return 'Gestiamo tutti gli aspetti fiscali delle transazioni immobiliari: calcolo imposte, assistenza con F24, dichiarazioni. Ti aiutiamo a ottimizzare la fiscalità della tua operazione.';
+        }
+
+        if (normalized.includes('energ') || normalized.includes('certificazione') || normalized.includes('efficienza')) {
+            return 'Effettuiamo certificazioni energetiche (APE) per immobili in vendita o locazione. Richieste dalla legge per transazioni immobiliari, garantiscono trasparenza sul consumo energetico.';
+        }
+
+        if (normalized.includes('commercial') || normalized.includes('negozio') || normalized.includes('ufficio')) {
+            return 'Specializzati anche in immobili commerciali: negozi, uffici, capannoni. Gestiamo valutazioni, vendite e locazioni per investitori e imprese.';
+        }
+
+        if (normalized.includes('investimento') || normalized.includes('investire') || normalized.includes('rendita')) {
+            return 'Cerchi investimenti immobiliari? Valutiamo opportunità di acquisto per reddito o plusvalenza. Analizziamo rendimenti e rischi per consigliarti al meglio.';
+        }
+
+        if (normalized.includes('successione') || normalized.includes('eredità') || normalized.includes('donazione')) {
+            return 'Gestiamo pratiche di successione ereditaria e donazioni immobiliari. Assistenza completa per volture catastali, divisioni e trasferimenti.';
+        }
+
+        if (normalized.includes('condominio') || normalized.includes('amministratore') || normalized.includes('assemblea')) {
+            return 'Servizi di amministrazione condominiale: gestione contabile, assemblee, manutenzione. Affidati alla nostra esperienza per un condominio sereno.';
+        }
+
+        // Risposte combinate o più specifiche
+        if ((normalized.includes('casa') || normalized.includes('appartamento')) && normalized.includes('vendere')) {
+            return 'Vuoi vendere casa? Iniziamo con una valutazione gratuita! I nostri esperti visiteranno l\'immobile e ti forniranno una perizia dettagliata con prezzo di mercato aggiornato.';
+        }
+
+        if ((normalized.includes('casa') || normalized.includes('appartamento')) && normalized.includes('comprare')) {
+            return 'Cerchi casa? Dimmi le tue esigenze: zona, budget, tipologia. Abbiamo soluzioni per ogni necessità, da monolocali a ville. Possiamo organizzare visite guidate!';
+        }
+
+        if (normalized.includes('contatto') || normalized.includes('chiamare') || normalized.includes('telefono')) {
+            return 'Siamo facilmente raggiungibili! Chiamaci al numero indicato sul sito, oppure usa il modulo contatti. Rispondiamo entro 24 ore nei giorni lavorativi.';
+        }
+
+        if (normalized.includes('appuntamento') || normalized.includes('visita') || normalized.includes('incontro')) {
+            return 'Prenota un appuntamento gratuito! Puoi chiamarci o scrivere per fissare una visita in agenzia o un sopralluogo immobiliare. Scegli l\'orario che preferisci.';
+        }
+
+        if (normalized.includes('novità') || normalized.includes('nuovi') || normalized.includes('aggiornamenti')) {
+            return 'Vuoi essere aggiornato sulle novità immobiliari? Seguici sui social o iscriviti alla nostra newsletter. Pubblichiamo regolarmente nuovi annunci e consigli di mercato.';
+        }
+
+        if (normalized.includes('feedback') || normalized.includes('recensione') || normalized.includes('opinione')) {
+            return 'Le tue opinioni sono importanti! Puoi lasciare una recensione su Google o contattarci direttamente. Leggiamo tutti i feedback per migliorare i nostri servizi.';
         }
 
         // Domande vaghe o generiche
