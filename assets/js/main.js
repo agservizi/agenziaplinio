@@ -31,6 +31,7 @@ const App = (() => {
         chatbotFaqList: null,
         chatbotTabs: null,
         chatbotTabContents: null,
+        chatbotIsLoggedIn: false,
         chatbotFaqs: [],
         chatbotTyping: null,
     };
@@ -136,6 +137,7 @@ const App = (() => {
         state.chatbotFaqList = state.chatbotRoot?.querySelector('[data-chatbot-faq-list]') ?? null;
         state.chatbotTabs = state.chatbotRoot?.querySelectorAll('[data-chatbot-tab]') ?? null;
         state.chatbotTabContents = state.chatbotRoot?.querySelectorAll('[data-chatbot-tab-content]') ?? null;
+        state.chatbotIsLoggedIn = state.chatbotRoot?.getAttribute('data-logged-in') === 'true';
     }
 
     /* Preloader */
@@ -902,7 +904,7 @@ const App = (() => {
         const delay = 450 + Math.random() * 400;
         setTimeout(() => {
             hideChatbotTyping(typing);
-            const predefined = getPredefinedResponse(question);
+            const predefined = getPredefinedResponse(question, state.chatbotIsLoggedIn);
             if (predefined) {
                 appendChatbotMessage(predefined, 'bot');
             } else {
@@ -982,7 +984,7 @@ const App = (() => {
         messages.scrollTop = messages.scrollHeight;
     }
 
-    function getPredefinedResponse(question) {
+    function getPredefinedResponse(question, isLoggedIn) {
         const normalized = normalizeText(question);
         if (!normalized) return null;
 
@@ -1048,8 +1050,28 @@ const App = (() => {
         }
 
         // Ecommerce / Ordini
-        if (normalized.includes('ordine') || normalized.includes('acquisto') || normalized.includes('comprare') || normalized.includes('spedizione')) {
-            return 'Per ordini e acquisti, puoi utilizzare il nostro shop online. Offriamo spedizioni rapide e sicure. Se hai domande specifiche su un prodotto, dimmi pure!';
+        if (normalized.includes('ordine') || normalized.includes('ordini') || normalized.includes('acquisto') || normalized.includes('comprare') || normalized.includes('spedizione')) {
+            if (isLoggedIn) {
+                return 'Puoi vedere tutti i tuoi ordini, compreso lo stato e le spedizioni, nella sezione Account del sito. Se hai un ordine specifico di cui vuoi parlare, dimmi il numero!';
+            } else {
+                return 'Per vedere i tuoi ordini, devi accedere al tuo account. Se non hai ancora un account, puoi registrarti facilmente. Una volta loggato, potrai monitorare tutti i tuoi acquisti.';
+            }
+        }
+
+        if (normalized.includes('stato ordine') || normalized.includes('dove ordine') || normalized.includes('quando arriva')) {
+            if (isLoggedIn) {
+                return 'Per controllare lo stato del tuo ordine, vai nella sezione Account > I miei ordini. Lì troverai tutte le informazioni sulle spedizioni e le date di consegna previste.';
+            } else {
+                return 'Per verificare lo stato di un ordine, devi essere loggato. Accedi al tuo account e vai nella sezione "I miei ordini" per vedere tutti i dettagli.';
+            }
+        }
+
+        if (normalized.includes('reso') || normalized.includes('restituire') || normalized.includes('cambio')) {
+            if (isLoggedIn) {
+                return 'Per gestire un reso o cambio, contatta il nostro supporto clienti. Puoi anche iniziare la procedura dalla sezione Account > I miei ordini. Ti guideremo passo dopo passo.';
+            } else {
+                return 'Per richieste di reso o cambio, devi essere loggato. Accedi al tuo account e contatta il supporto per assistenza personalizzata.';
+            }
         }
 
         if (normalized.includes('pagamento') || normalized.includes('pagare') || normalized.includes('metodi')) {

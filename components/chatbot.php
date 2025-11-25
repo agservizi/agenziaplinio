@@ -7,8 +7,16 @@ if ($hasFaqs) {
     }
 }
 $featuredFaqs = $hasFaqs ? array_slice($chatbotFaqs, 0, 4) : [];
+$isLoggedIn = !empty(ap_auth_current_user());
 ?>
-<div class="ap-chatbot" data-chatbot>
+<div class="ap-chatbot" data-chatbot data-logged-in="<?php echo $isLoggedIn ? 'true' : 'false'; ?>">
+    <button class="ap-chatbot__toggle" type="button" data-chatbot-toggle aria-expanded="false" aria-controls="ap-chatbot-panel">
+        <span class="ap-chatbot__toggle-icon" aria-hidden="true">?</span>
+        <span class="ap-chatbot__toggle-copy">
+            <strong>Serve aiuto?</strong>
+            <small>Chatta con Plinio</small>
+        </span>
+    </button>
     <button class="ap-chatbot__toggle" type="button" data-chatbot-toggle aria-expanded="false" aria-controls="ap-chatbot-panel">
         <span class="ap-chatbot__toggle-icon" aria-hidden="true">?</span>
         <span class="ap-chatbot__toggle-copy">
