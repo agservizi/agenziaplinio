@@ -32,7 +32,9 @@ $isLoggedIn = !empty(ap_auth_current_user());
             </div>
             <nav class="ap-chatbot__tabs" role="tablist">
                 <button type="button" class="ap-chatbot__tab is-active" data-chatbot-tab="chat" aria-selected="true">Chat</button>
+                <?php if ($hasFaqs): ?>
                 <button type="button" class="ap-chatbot__tab" data-chatbot-tab="faq" aria-selected="false">FAQ</button>
+                <?php endif; ?>
             </nav>
             <button type="button" class="ap-chatbot__close" data-chatbot-close aria-label="Chiudi chatbot">×</button>
         </header>
