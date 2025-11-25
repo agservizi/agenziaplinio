@@ -84,7 +84,7 @@ if (!empty($chatbotFaqs)) {
     <?php include __DIR__ . '/components/cart-sidebar.php'; ?>
     <?php include __DIR__ . '/components/chatbot.php'; ?>
     <?php if (!empty($flashMessages)): ?>
-        <div class="toast-stack position-fixed top-0 end-0 p-3" style="top: 80px; z-index: 1100;">
+        <div class="toast-stack position-fixed top-0 end-0 p-3" style="top: 120px; z-index: 1100;">
             <?php foreach ($flashMessages as $toast): ?>
                 <div class="toast align-items-center text-white bg-<?php echo htmlspecialchars($toast['type'] === 'success' ? 'success' : ($toast['type'] === 'error' ? 'danger' : 'info'), ENT_QUOTES); ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="d-flex">
