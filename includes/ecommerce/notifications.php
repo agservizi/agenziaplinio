@@ -15,6 +15,20 @@ function ap_mail_settings(): array
     return $settings;
 }
 
+function ap_mailer()
+{
+    static $mailer = null;
+    if ($mailer === null) {
+        $resendKey = ap_env('RESEND_API_KEY');
+        if ($resendKey) {
+            $mailer = new ResendMailer($resendKey);
+        } else {
+            $mailer = new SimpleSmtpMailer(ap_mail_settings());
+        }
+    }
+    return $mailer;
+}
+
 function ap_get_order_payment_provider(int $orderId): string
 {
     $pdo = ap_db();
