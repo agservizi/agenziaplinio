@@ -60,19 +60,19 @@ const App = (() => {
 
     function initTopbarSearch() {
         const header = state.header;
-        const toggle = state.topbarSearchToggle;
+        const toggles = state.topbarSearchToggles;
         const closeBtn = state.topbarSearchClose;
         const wrapper = state.topbarSearch;
         const input = state.topbarSearchInput;
         const form = state.topbarSearchForm;
-        if (!header || !toggle || !wrapper) {
+        if (!header || !toggles || !toggles.length) {
             return;
         }
 
         const setOpen = open => {
             header.classList.toggle('is-search-open', open);
             document.body.classList.toggle('topbar-search-open', open);
-            toggle.setAttribute('aria-expanded', String(open));
+            toggles.forEach?.(btn => btn.setAttribute('aria-expanded', String(open)));
             if (open) {
                 state.closeNavMenu?.();
                 state.closeMegaMenus?.();
@@ -82,9 +82,11 @@ const App = (() => {
             }
         };
 
-        toggle.addEventListener('click', () => {
-            const wantsOpen = !header.classList.contains('is-search-open');
-            setOpen(wantsOpen);
+        toggles.forEach?.(btn => {
+            btn.addEventListener('click', () => {
+                const wantsOpen = !header.classList.contains('is-search-open');
+                setOpen(wantsOpen);
+            });
         });
 
         closeBtn?.addEventListener('click', () => setOpen(false));
@@ -97,7 +99,7 @@ const App = (() => {
 
         document.addEventListener('click', event => {
             if (!header.classList.contains('is-search-open')) return;
-            if (wrapper.contains(event.target) || toggle.contains(event.target)) return;
+            if (wrapper.contains(event.target) || [...toggles].some(btn => btn.contains(event.target))) return;
             setOpen(false);
         });
 
@@ -119,7 +121,7 @@ const App = (() => {
         state.cartSidebarToggles = document.querySelectorAll('[data-cart-sidebar-open]');
         state.iconPickers = document.querySelectorAll('[data-announcement-icon-picker]');
         state.topbarSearch = document.querySelector('[data-topbar-search]');
-        state.topbarSearchToggle = document.querySelector('[data-topbar-search-toggle]');
+        state.topbarSearchToggles = document.querySelectorAll('[data-topbar-search-toggle]');
         state.topbarSearchClose = document.querySelector('[data-topbar-search-close]');
         state.topbarSearchInput = document.querySelector('[data-topbar-search-input]');
         state.topbarSearchForm = document.querySelector('[data-topbar-search-form]');
