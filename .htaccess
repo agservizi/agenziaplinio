@@ -4,8 +4,7 @@
 
 # Security Headers
 <IfModule mod_headers.c>
-    # Prevent clickjacking
-    Header always set X-Frame-Options SAMEORIGIN
+    # X-Frame-Options removed - CSP handles frame restrictions
 
     # Prevent MIME type sniffing
     Header always set X-Content-Type-Options nosniff
@@ -20,7 +19,7 @@
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
 
     # CSP (Content Security Policy)
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://js.klarna.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*; frame-src 'self' https://www.google.com https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://js.klarna.com https://www.google.com https://www.gstatic.com https://www.openstreetmap.org; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*; frame-src 'self' https://www.google.com https://www.youtube.com https://www.openstreetmap.org; object-src 'none'; base-uri 'self'; form-action 'self';"
 </IfModule>
 
 # Disable directory listing
