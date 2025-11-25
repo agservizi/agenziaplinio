@@ -29,7 +29,7 @@
                 <p class="mb-1">&copy; <?php echo date('Y'); ?> AG SERVIZI VIA PLINIO 72. Tutti i diritti riservati.</p>
                 <div class="legal-links">
                     <a href="?page=privacy" class="text-muted me-3">Privacy Policy</a>
-                    <a href="?page=privacy#cookies" class="text-muted me-3">Cookie Policy</a>
+                    <a href="?page=cookie-policy" class="text-muted me-3">Cookie Policy</a>
                     <a href="mailto:privacy@agenziaplinio.it" class="text-muted">Contatti Privacy</a>
                 </div>
             </div>

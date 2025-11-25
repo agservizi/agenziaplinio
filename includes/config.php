@@ -99,6 +99,11 @@ return [
             'description' => 'Informativa sulla privacy e trattamento dei dati personali secondo il Regolamento UE 2016/679 (GDPR).',
             'sections' => ['privacy']
         ],
+        'cookie-policy' => [
+            'title' => 'Cookie Policy | Agenzia Plinio',
+            'description' => 'Cookie Policy e gestione dei cookie utilizzati dal sito web secondo la normativa vigente.',
+            'sections' => ['cookie-policy']
+        ],
         'admin' => [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',
