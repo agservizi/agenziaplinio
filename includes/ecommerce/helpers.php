@@ -1980,28 +1980,6 @@ function ap_get_security_logs(int $limit = 50, int $offset = 0): array
     ];
 }
 
-function ap_log_security_event(string $event_type, string $description, ?int $user_id = null, array $metadata = []): void
-{
-    $pdo = ap_db();
-    
-    $stmt = $pdo->prepare("
-        INSERT INTO security_logs (event_type, description, user_id, metadata, ip_address, user_agent, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, NOW())
-    ");
-    
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
-    
-    $stmt->execute([
-        $event_type,
-        $description,
-        $user_id,
-        json_encode($metadata),
-        $ip,
-        $userAgent
-    ]);
-}
-
 function ap_get_audit_logs(array $filters = [], int $limit = 50, int $offset = 0): array
 {
     $pdo = ap_db();
