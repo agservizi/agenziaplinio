@@ -1152,7 +1152,37 @@ const App = (() => {
             return 'Problemi con internet o telefono? Ti aiutiamo con attivazioni Fastweb, WindTre e Iliad. Confronto offerte, portabilità e assistenza tecnica inclusa!';
         }
 
-        // Verifica copertura fibra
+        // Flusso SIM bloccate (PUK, PIN errato)
+        if (normalized.includes('sim bloccata') || normalized.includes('sbagliato pin') || normalized.includes('chiede puk') || normalized.includes('sim non funziona')) {
+            return 'Tranquillo, si risolve tutto. Se la SIM chiede il PUK significa che sono stati inseriti dei PIN errati. Vediamo insieme come sbloccarla. Di che operatore è la SIM? (WindTre, Iliad, Fastweb) Hai la confezione della SIM o la scheda plastica originale? Hai provato a vedere se il codice PUK è stampato sul supporto? Se hai il supporto originale, dietro trovi il codice PUK. Inserendo il PUK la SIM si sblocca e puoi scegliere un nuovo PIN. Se non hai il supporto, posso richiedere noi il duplicato della SIM. Porta un documento d\'identità e il numero da recuperare: il duplicato si attiva in pochi minuti. Vuoi provare ora a recuperare il PUK o preferisci fare direttamente un duplicato?';
+        }
+
+        // Flusso pagamento bollette andati KO
+        if (normalized.includes('pagamento ko') || normalized.includes('pagopa non accettato') || normalized.includes('errore pagamento') || normalized.includes('bollettino andato ko')) {
+            return 'Capita ogni tanto, nessun problema: verifichiamo cosa è successo e ti aiuto a completare il pagamento. Che tipo di bollettino stavi pagando? (F24, pagoPA, MAV, RAV, bollettino semplice) Hai ricevuto un messaggio di errore specifico? Hai una foto del bollettino o del QR code? Era un pagamento fatto in sede o online? Cause più comuni: QR code non leggibile, importo non riconosciuto, servizio momentaneamente non disponibile, dati mancanti. Se mi invii la foto del bollettino, posso dirti subito cosa non va e ripetiamo il pagamento correttamente. Vuoi inviarmi ora la foto del bollettino o preferisci passare in sede per farlo insieme?';
+        }
+
+        // Flusso problemi SPID
+        if (normalized.includes('spid non funziona') || normalized.includes('non arriva codice') || normalized.includes('non riesco accedere')) {
+            return 'Vediamo subito cosa c\'è che non va con il tuo SPID. Ricevi l\'errore prima o dopo l\'inserimento delle credenziali? Ti arriva SMS o email? Ricordi la password? Se è un problema di password, possiamo fare un reset. Se non arrivano i codici, potrebbe essere un blocco temporaneo o numero errato. Se vuoi, posso controllare con te e capire se serve una nuova attivazione. Vuoi provare ora il recupero o preferisci passare in sede e lo sistemiamo insieme?';
+        }
+
+        // Flusso problemi PEC
+        if (normalized.includes('pec non entra') || normalized.includes('non riceve mail') || normalized.includes('credenziali non valide')) {
+            return 'Nessun problema, facciamo un controllo rapido. Di che provider è la PEC? L\'errore riguarda password o accesso al server? Hai cambiato dispositivo recentemente? Spesso basta aggiornare i parametri IMAP/SMTP. Se la password è scaduta, la resettiamo. Se la casella è piena, la liberiamo o aumentiamo lo spazio. Vuoi inviarmi screenshot dell\'errore così ti guido passo dopo passo?';
+        }
+
+        // Flusso problemi Firma Digitale
+        if (normalized.includes('firma digitale non funziona') || normalized.includes('non riconosce token') || normalized.includes('non si apre software')) {
+            return 'Succede spesso, vediamo insieme come risolverlo. Usi firma remota, smart card o token USB? Windows, Mac o smartphone? Hai già provato a reinstallare il software? Se è token, potrebbe essere il driver. Se è firma remota, può essere scaduta. Se il software non parte, lo reinstalliamo. Vuoi che ti preparo il link ai driver/software corretti per il tuo dispositivo?';
+        }
+
+        // Flusso utente arrabbiato – de-escalation professionale
+        if (normalized.includes('vergogna') || normalized.includes('non funziona niente') || normalized.includes('stufo') || normalized.includes('non mi state aiutando')) {
+            return 'Capisco perfettamente il tuo disagio, e mi dispiace sinceramente per la situazione. Ci tengo a risolverti il problema nel modo più rapido possibile. Mi dai solo un attimo per aiutarti al meglio? Puoi dirmi esattamente cosa non sta funzionando? Da quando si presenta il problema? Hai ricevuto un messaggio o un errore preciso? Sono qui per risolverlo con te, passo dopo passo. Una volta capito il punto, troviamo la soluzione più veloce. Ti seguo io: sistemiamo tutto insieme. Puoi mandarmi ora un dettaglio o una foto dell\'errore?';
+        }
+
+        // Parla con operatore
         if (normalized.includes('copertura') || normalized.includes('fibra arriva') || normalized.includes('verifica fibra')) {
             return 'Posso verificarlo in un attimo per Fastweb, WindTre e Iliad. Qual è l\'indirizzo completo (via, numero civico, città)? Il palazzo è già servito o non lo sai? Controllo e ti dico subito le offerte disponibili.';
         }
