@@ -798,24 +798,26 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="lead">DropPoint offre questi servizi ma per il cittadino. <a href="https://drop-point.it/" target="_blank" class="text-primary">Scopri di più su drop-point.it</a></p>
+                        <p class="lead">DropPoint è la piattaforma digitale per servizi di pagamento e valore aggiunto nel retail, offrendo soluzioni convenienti per esercenti e cittadini.</p>
                         <div class="row">
                             <div class="col-md-6">
                                 <h6>Servizi Offeriti:</h6>
                                 <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>Ritiro pacchi a domicilio</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Consegna presso locker automatici</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Tracking in tempo reale</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Orari flessibili di ritiro</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Bollettini postali e bancari</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>PagoPA</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Mav e Rav</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>F24</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Ricariche telefoniche</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Biglietti trasporto pubblico</li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <h6>Vantaggi:</h6>
                                 <ul class="list-unstyled">
-                                    <li><i class="fas fa-star text-warning me-2"></i>Convenienza</li>
-                                    <li><i class="fas fa-star text-warning me-2"></i>Flessibilità oraria</li>
-                                    <li><i class="fas fa-star text-warning me-2"></i>Sicurezza garantita</li>
-                                    <li><i class="fas fa-star text-warning me-2"></i>Copertura nazionale</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Costi più bassi del mercato</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Nessun costo di attivazione</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Commissioni più alte</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Un solo POS per tutto</li>
                                 </ul>
                             </div>
                         </div>
