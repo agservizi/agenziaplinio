@@ -1010,7 +1010,7 @@ const App = (() => {
 
         // Chi sei / Cosa sei
         if (normalized.includes('chi sei') || normalized.includes('cosa sei') || normalized.includes('sei un bot') || normalized.includes('sei umano') || normalized.includes('sei artificiale')) {
-            return 'Sono Plinio, l\'assistente virtuale intelligente di AG SERVIZI VIA PLINIO 72. Sono qui per rispondere alle tue domande sui nostri servizi, aiutarti con ordini e fornirti informazioni utili.';
+            return 'Sono Plinio, l\'assistente virtuale intelligente di AG SERVIZI VIA PLINIO 72. Sono qui per rispondere alle tue domande sui nostri servizi multiservizi: pagamenti, ricariche, attivazioni digitali e telecomunicazioni. Posso aiutarti con bollettini, F24, SPID, PEC e molto altro!';
         }
 
         // Aiuto
@@ -1042,7 +1042,7 @@ const App = (() => {
 
         // Servizi
         if (normalized.includes('cosa fate') || normalized.includes('servizi') || normalized.includes('offerte') || normalized.includes('attività')) {
-            return 'AG SERVIZI offre una vasta gamma di servizi nel settore immobiliare e amministrativo. Puoi esplorare i nostri servizi nella sezione dedicata del sito o chiedermi specificamente su un argomento.';
+            return 'AG SERVIZI VIA PLINIO 72 è la tua agenzia multiservizi di fiducia! Offriamo: pagamenti bollettini e F24, ricariche telefoniche, attivazioni SPID/PEC/firme digitali, spedizioni pacchi, punto vendita WindTre/Fastweb/Iliad. Tutto in un unico sportello!';
         }
 
         if (normalized.includes('prezzi') || normalized.includes('costo') || normalized.includes('quanto costa') || normalized.includes('tariffe')) {
@@ -1078,94 +1078,78 @@ const App = (() => {
             return 'Accettiamo pagamenti con carta di credito, PayPal, bonifico bancario e Klarna. Tutti i pagamenti sono sicuri e protetti.';
         }
 
-        // Servizi specifici immobiliari
-        if (normalized.includes('valutare') || normalized.includes('valutazione') || normalized.includes('prezzo casa') || normalized.includes('quanto vale')) {
-            return 'Per una valutazione immobiliare accurata, contattaci direttamente. Effettuiamo sopralluoghi gratuiti e forniamo perizie certificate. Puoi richiedere un appuntamento chiamandoci o scrivendo via email.';
+        // Servizi specifici dell'agenzia multiservizi
+        if (normalized.includes('bollettino') || normalized.includes('bollettini') || normalized.includes('pagamento bollettini')) {
+            return 'Paghi bollettini postali, utenze, multe e tanto altro? Siamo il tuo sportello di fiducia! Porta i tuoi bollettini in agenzia e li paghiamo per te in pochi minuti.';
         }
 
-        if (normalized.includes('vendere') || normalized.includes('vendita') || normalized.includes('immobile vendita')) {
-            return 'Ti aiutiamo a vendere il tuo immobile al miglior prezzo. Gestiamo tutto: dalla valutazione alla pubblicità, fino alla chiusura della vendita. Contattaci per iniziare il processo!';
+        if (normalized.includes('f24') || normalized.includes('f24') || normalized.includes('modello f24')) {
+            return 'Hai bisogno di pagare F24 per tasse, contributi o rimborsi? Gestiamo pagamenti F24 per privati e aziende. Porta il tuo modello compilato e ci pensiamo noi!';
         }
 
-        if (normalized.includes('comprare') || normalized.includes('acquisto') || normalized.includes('cercare casa')) {
-            return 'Cerchi casa? Abbiamo un ampio portafoglio di immobili residenziali e commerciali. Puoi sfogliare le nostre proprietà sul sito o contattarci per ricerche personalizzate.';
+        if (normalized.includes('pagopa') || normalized.includes('pago pa') || normalized.includes('pagamenti elettronici')) {
+            return 'Utilizzi pagoPA per i tuoi pagamenti? Ti aiutiamo con tutti i pagamenti elettronici verso la Pubblica Amministrazione. Veloce, sicuro e senza code!';
         }
 
-        if (normalized.includes('affitto') || normalized.includes('locazione') || normalized.includes('noleggio')) {
-            return 'Gestiamo locazioni residenziali e commerciali. Offriamo servizi completi: ricerca inquilini, contratti, gestione affitti. Contattaci per saperne di più sui nostri servizi di property management.';
+        if (normalized.includes('mav') || normalized.includes('rav') || normalized.includes('mav rav')) {
+            return 'Pagamenti MAV e RAV per tributi comunali, regionali o statali? Accettiamo tutti i tipi di MAV e RAV. Porta il tuo avviso di pagamento e lo eseguiamo immediatamente.';
         }
 
-        if (normalized.includes('documenti') || normalized.includes('carta') || normalized.includes('certificati')) {
-            return 'Per pratiche immobiliari servono vari documenti: carta d\'identità, codice fiscale, visura catastale, ecc. Ti guideremo su cosa preparare per la tua specifica situazione. Chiedi pure!';
+        if (normalized.includes('ricarica') || normalized.includes('telefonica') || normalized.includes('cellulare')) {
+            return 'Hai bisogno di ricariche telefoniche? Vendiamo ricariche per tutti gli operatori: TIM, Vodafone, WindTre, Iliad. Scegli l\'importo che preferisci!';
         }
 
-        if (normalized.includes('mutuo') || normalized.includes('finanziamento') || normalized.includes('prestito')) {
-            return 'Collaboriamo con istituti bancari e finanziarie per mutui e finanziamenti. Possiamo aiutarti a trovare la soluzione migliore per il tuo acquisto immobiliare.';
+        if (normalized.includes('spid') || normalized.includes('identità digitale') || normalized.includes('attivazione spid')) {
+            return 'Attivi SPID per accedere ai servizi online della PA? Ti guidiamo passo dopo passo nell\'attivazione dell\'identità digitale. Richiedi un appuntamento!';
         }
 
-        if (normalized.includes('agenzia') || normalized.includes('mediatore') || normalized.includes('abilitazione')) {
-            return 'AG SERVIZI è un\'agenzia immobiliare regolarmente iscritta al Registro delle Imprese e abilitata all\'esercizio della mediazione. Operiamo nel rispetto delle normative vigenti.';
+        if (normalized.includes('pec') || normalized.includes('posta elettronica') || normalized.includes('certificata')) {
+            return 'Hai bisogno di una PEC per comunicazioni ufficiali? Attiviamo caselle di posta elettronica certificata per privati e aziende. Scegli il piano che fa per te!';
         }
 
-        if (normalized.includes('commissioni') || normalized.includes('provvigione') || normalized.includes('costo servizio')) {
-            return 'Le nostre commissioni variano in base al servizio richiesto e al valore dell\'immobile. Forniamo preventivi trasparenti e senza impegno. Contattaci per un preventivo personalizzato.';
+        if (normalized.includes('firma digitale') || normalized.includes('firme digitali') || normalized.includes('firma elettronica')) {
+            return 'Cerchi firme digitali per documenti ufficiali? Offriamo attivazioni di firme elettroniche qualificate. Sicure e legali per tutti i tuoi documenti!';
         }
 
-        if (normalized.includes('tempi') || normalized.includes('quanto tempo') || normalized.includes('durata')) {
-            return 'I tempi per una compravendita immobiliare variano, ma generalmente vanno da 30 a 90 giorni. Dipende dalla complessità della pratica e dalla disponibilità delle parti. Ti aggiorneremo costantemente sui progressi.';
+        if (normalized.includes('spedizioni') || normalized.includes('pacchi') || normalized.includes('corrispondenza')) {
+            return 'Spedisci pacchi o corrispondenza? Gestiamo spedizioni nazionali e internazionali con corrieri affidabili. Confezionamento incluso e tracking in tempo reale!';
         }
 
-        if (normalized.includes('consulenza') || normalized.includes('consulente') || normalized.includes('consiglio')) {
-            return 'Offriamo consulenze gratuite per compravendite, investimenti immobiliari e fiscalità. I nostri esperti sono a tua disposizione per guidarti nelle scelte migliori.';
+        if (normalized.includes('windtre') || normalized.includes('wind') || normalized.includes('tre')) {
+            return 'Sei cliente WindTre o vuoi diventarlo? Siamo punto vendita ufficiale! Attiviamo nuove linee, vendiamo dispositivi e gestiamo tutte le tue esigenze WindTre.';
         }
 
-        if (normalized.includes('fiscale') || normalized.includes('tasse') || normalized.includes('imposte')) {
-            return 'Gestiamo tutti gli aspetti fiscali delle transazioni immobiliari: calcolo imposte, assistenza con F24, dichiarazioni. Ti aiutiamo a ottimizzare la fiscalità della tua operazione.';
+        if (normalized.includes('fastweb') || normalized.includes('fibra') || normalized.includes('adsl')) {
+            return 'Cerchi connessioni Fastweb? Siamo rivenditore autorizzato! Attiviamo linee fibra, ADSL e offerte internet. Trova la soluzione perfetta per te!';
         }
 
-        if (normalized.includes('energ') || normalized.includes('certificazione') || normalized.includes('efficienza')) {
-            return 'Effettuiamo certificazioni energetiche (APE) per immobili in vendita o locazione. Richieste dalla legge per transazioni immobiliari, garantiscono trasparenza sul consumo energetico.';
+        if (normalized.includes('iliad') || normalized.includes('iliad')) {
+            return 'Vuoi Iliad per le sue offerte convenienti? Siamo rivenditore ufficiale! Attiviamo SIM Iliad, gestiamo portabilità e ti aiutiamo con tutte le promozioni.';
         }
 
-        if (normalized.includes('commercial') || normalized.includes('negozio') || normalized.includes('ufficio')) {
-            return 'Specializzati anche in immobili commerciali: negozi, uffici, capannoni. Gestiamo valutazioni, vendite e locazioni per investitori e imprese.';
+        if (normalized.includes('attivazioni') || normalized.includes('promozioni') || normalized.includes('offerte')) {
+            return 'Interessato alle nostre attivazioni e promozioni? Chiedici delle offerte speciali per SPID, PEC, firme digitali e servizi di telecomunicazione. Risparmia con noi!';
         }
 
-        if (normalized.includes('investimento') || normalized.includes('investire') || normalized.includes('rendita')) {
-            return 'Cerchi investimenti immobiliari? Valutiamo opportunità di acquisto per reddito o plusvalenza. Analizziamo rendimenti e rischi per consigliarti al meglio.';
+        if (normalized.includes('assistenza') || normalized.includes('aiuto') || normalized.includes('supporto')) {
+            return 'Hai bisogno di assistenza? I nostri operatori esperti ti aiutano con tutti i servizi: pagamenti, ricariche, attivazioni digitali e telecomunicazioni. Non esitare a chiedere!';
         }
 
-        if (normalized.includes('successione') || normalized.includes('eredità') || normalized.includes('donazione')) {
-            return 'Gestiamo pratiche di successione ereditaria e donazioni immobiliari. Assistenza completa per volture catastali, divisioni e trasferimenti.';
+        // Risposte combinate per servizi specifici
+        if ((normalized.includes('pagamento') || normalized.includes('pagare')) && (normalized.includes('bollettino') || normalized.includes('utenze'))) {
+            return 'Per pagamenti bollettini e utenze, siamo rapidi ed efficienti! Porta i tuoi documenti in agenzia e li eseguiamo mentre aspetti. Servizio cortese e professionale!';
         }
 
-        if (normalized.includes('condominio') || normalized.includes('amministratore') || normalized.includes('assemblea')) {
-            return 'Servizi di amministrazione condominiale: gestione contabile, assemblee, manutenzione. Affidati alla nostra esperienza per un condominio sereno.';
+        if ((normalized.includes('ricarica') || normalized.includes('telefono')) && (normalized.includes('tim') || normalized.includes('vodafone') || normalized.includes('windtre'))) {
+            return 'Ricariche per TIM, Vodafone, WindTre e Iliad? Abbiamo tutte le tagliandi disponibili. Scegli l\'operatore e l\'importo, paghi e ricarichi istantaneamente!';
         }
 
-        // Risposte combinate o più specifiche
-        if ((normalized.includes('casa') || normalized.includes('appartamento')) && normalized.includes('vendere')) {
-            return 'Vuoi vendere casa? Iniziamo con una valutazione gratuita! I nostri esperti visiteranno l\'immobile e ti forniranno una perizia dettagliata con prezzo di mercato aggiornato.';
+        if (normalized.includes('posta') || normalized.includes('comunicazioni') || normalized.includes('ufficiali')) {
+            return 'Per PEC e firme digitali, offriamo soluzioni complete per privati e aziende. Attivazione guidata, assistenza continua e prezzi competitivi. Contattaci per iniziare!';
         }
 
-        if ((normalized.includes('casa') || normalized.includes('appartamento')) && normalized.includes('comprare')) {
-            return 'Cerchi casa? Dimmi le tue esigenze: zona, budget, tipologia. Abbiamo soluzioni per ogni necessità, da monolocali a ville. Possiamo organizzare visite guidate!';
-        }
-
-        if (normalized.includes('contatto') || normalized.includes('chiamare') || normalized.includes('telefono')) {
-            return 'Siamo facilmente raggiungibili! Chiamaci al numero indicato sul sito, oppure usa il modulo contatti. Rispondiamo entro 24 ore nei giorni lavorativi.';
-        }
-
-        if (normalized.includes('appuntamento') || normalized.includes('visita') || normalized.includes('incontro')) {
-            return 'Prenota un appuntamento gratuito! Puoi chiamarci o scrivere per fissare una visita in agenzia o un sopralluogo immobiliare. Scegli l\'orario che preferisci.';
-        }
-
-        if (normalized.includes('novità') || normalized.includes('nuovi') || normalized.includes('aggiornamenti')) {
-            return 'Vuoi essere aggiornato sulle novità immobiliari? Seguici sui social o iscriviti alla nostra newsletter. Pubblichiamo regolarmente nuovi annunci e consigli di mercato.';
-        }
-
-        if (normalized.includes('feedback') || normalized.includes('recensione') || normalized.includes('opinione')) {
-            return 'Le tue opinioni sono importanti! Puoi lasciare una recensione su Google o contattarci direttamente. Leggiamo tutti i feedback per migliorare i nostri servizi.';
+        if (normalized.includes('internet') || normalized.includes('telefono') || normalized.includes('linea')) {
+            return 'Problemi con internet o telefono? Ti aiutiamo con attivazioni Fastweb, WindTre e Iliad. Confronto offerte, portabilità e assistenza tecnica inclusa!';
         }
 
         // Domande vaghe o generiche

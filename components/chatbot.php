@@ -35,7 +35,7 @@ $isLoggedIn = !empty(ap_auth_current_user());
             <div class="ap-chatbot__tab-content" data-chatbot-tab-content="chat">
                 <div class="ap-chatbot__messages" data-chatbot-messages role="log" aria-live="polite">
                     <div class="ap-chatbot__message ap-chatbot__message--bot">
-                        <p>Ciao sono Plinio! Il chatbot di AG SERVIZI VIA PLINIO 72. Come posso aiutarti oggi?</p>
+                        <p>Ciao sono Plinio! Il chatbot di AG SERVIZI VIA PLINIO 72. Come posso aiutarti con pagamenti, ricariche, SPID, PEC o altri servizi?</p>
                     </div>
                 </div>
                 <form class="ap-chatbot__form" data-chatbot-form autocomplete="off">
