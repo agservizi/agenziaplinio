@@ -1217,10 +1217,10 @@ const App = (() => {
                 exact: false
             },
             {
-                triggers: ['parlare con operatore', 'operatore umano', 'persona', 'uomo', 'contatto diretto'],
-                response: 'Capisco che preferisci parlare con una persona. Puoi lasciare un messaggio nel modulo di contatto del sito o venire direttamente in agenzia in Via Plinio il Vecchio 72, Castellammare di Stabia. Ti aspettiamo!',
+                triggers: ['shop', 'acquisti', 'comprare online', 'guidare acquisti', 'negozio online'],
+                response: 'Certo! Ti guido negli acquisti dal nostro shop online.<br><br>Per fare acquisti:<br>1. Vai alla sezione "Shop" del sito<br>2. Scegli la categoria di prodotto che ti interessa<br>3. Aggiungi gli articoli al carrello<br>4. Procedi al checkout e scegli il metodo di pagamento (carta, PayPal, Klarna)<br><br>Offriamo spedizioni rapide in Italia e all\'estero.<br>Hai bisogno di aiuto con un prodotto specifico o una categoria?',
                 exact: false
-            }
+            },
         ];
 
         // Calcola punteggio per ogni risposta
