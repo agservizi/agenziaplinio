@@ -29,6 +29,8 @@ const App = (() => {
         chatbotForm: null,
         chatbotInput: null,
         chatbotFaqList: null,
+        chatbotTabs: null,
+        chatbotTabContents: null,
         chatbotFaqs: [],
         chatbotTyping: null,
     };
@@ -132,6 +134,8 @@ const App = (() => {
         state.chatbotForm = state.chatbotRoot?.querySelector('[data-chatbot-form]') ?? null;
         state.chatbotInput = state.chatbotRoot?.querySelector('[data-chatbot-input]') ?? null;
         state.chatbotFaqList = state.chatbotRoot?.querySelector('[data-chatbot-faq-list]') ?? null;
+        state.chatbotTabs = state.chatbotRoot?.querySelectorAll('[data-chatbot-tab]') ?? null;
+        state.chatbotTabContents = state.chatbotRoot?.querySelectorAll('[data-chatbot-tab-content]') ?? null;
     }
 
     /* Preloader */
@@ -879,6 +883,13 @@ const App = (() => {
             });
         });
 
+        state.chatbotTabs?.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-chatbot-tab');
+                switchChatbotTab(target);
+            });
+        });
+
         filterChatbotFaqList('all');
         scrollChatbotToBottom();
     }
@@ -910,6 +921,18 @@ const App = (() => {
                 return;
             }
             item.hidden = item.getAttribute('data-category') !== target;
+        });
+    }
+
+    function switchChatbotTab(target) {
+        state.chatbotTabs?.forEach(tab => {
+            const isActive = tab.getAttribute('data-chatbot-tab') === target;
+            tab.classList.toggle('is-active', isActive);
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+        state.chatbotTabContents?.forEach(content => {
+            const isActive = content.getAttribute('data-chatbot-tab-content') === target;
+            content.hidden = !isActive;
         });
     }
 

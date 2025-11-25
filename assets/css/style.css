@@ -181,6 +181,40 @@ body.theme-shell.has-news-ticker {
     gap: 1rem;
 }
 
+.ap-chatbot__tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.ap-chatbot__tab {
+    border: none;
+    background: rgba(16, 19, 37, 0.08);
+    color: var(--color-slate-600);
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ap-chatbot__tab.is-active {
+    background: var(--color-primary-500);
+    color: #fff;
+}
+
+.ap-chatbot__tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.ap-chatbot__tab-content[hidden] {
+    display: none;
+}
+
 .ap-chatbot__eyebrow {
     letter-spacing: 0.2em;
     text-transform: uppercase;
