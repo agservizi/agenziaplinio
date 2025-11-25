@@ -676,11 +676,11 @@ const App = (() => {
                 if (feedback) {
                     feedback.textContent = data.message || '';
                 }
-                if (data.token) {
-                    const tokenField = form.querySelector('[name="ap_token"]');
+                if (data.csrf_token) {
+                    const tokenField = form.querySelector('[name="csrf_token"]');
                     if (tokenField) {
-                        tokenField.value = data.token;
-                        tokenField.defaultValue = data.token;
+                        tokenField.value = data.csrf_token;
+                        tokenField.defaultValue = data.csrf_token;
                     }
                 }
                 if (data.success) {

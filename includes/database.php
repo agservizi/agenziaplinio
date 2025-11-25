@@ -218,6 +218,21 @@ function ap_bootstrap_schema(PDO $pdo): void
         updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
+    $pdo->exec('CREATE TABLE IF NOT EXISTS security_logs (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        event_type VARCHAR(50) NOT NULL,
+        description TEXT NOT NULL,
+        user_id INT UNSIGNED NULL,
+        metadata JSON NULL,
+        ip_address VARCHAR(45) NOT NULL,
+        user_agent TEXT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+        INDEX idx_event_type (event_type),
+        INDEX idx_created_at (created_at),
+        INDEX idx_user_id (user_id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
     $pdo->exec('CREATE TABLE IF NOT EXISTS audit_logs (
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         event_type VARCHAR(50) NOT NULL,
@@ -266,6 +281,7 @@ function ap_bootstrap_schema(PDO $pdo): void
     ap_seed_products($pdo);
     ap_seed_security_logs($pdo);
     ap_seed_audit_logs($pdo);
+    ap_seed_audit_logs($pdo);
 }
 
 function ap_try_exec(PDO $pdo, string $sql): void
@@ -284,7 +300,12 @@ function ap_seed_admin(PDO $pdo): void
     if ($count > 0) {
         return;
     }
-    $password = password_hash('ChangeMe123!', PASSWORD_BCRYPT);
+    // Use secure Argon2ID hashing for admin password
+    $password = password_hash('ChangeMe123!', PASSWORD_ARGON2ID, [
+        'memory_cost' => 65536, // 64MB
+        'time_cost' => 4,
+        'threads' => 3,
+    ]);
     $insert = $pdo->prepare('INSERT INTO users (name, email, password_hash, role) VALUES (:name, :email, :password, :role)');
     $insert->execute([
         ':name' => 'Admin Plinio',

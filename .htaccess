@@ -1,15 +1,83 @@
-# Force HTTPS
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Apache Server Configuration File
+# Language: Apache Config
+# This file contains security and performance directives for Apache HTTP Server
 
 # Security Headers
 <IfModule mod_headers.c>
-    Header always set X-Frame-Options DENY
+    # Prevent clickjacking
+    Header always set X-Frame-Options SAMEORIGIN
+
+    # Prevent MIME type sniffing
     Header always set X-Content-Type-Options nosniff
+
+    # Referrer Policy
     Header always set Referrer-Policy strict-origin-when-cross-origin
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://unpkg.com https://js.klarna.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.klarna.com https://js.klarna.com;"
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+    # Permissions Policy
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # HSTS (HTTP Strict Transport Security) - only if HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+
+    # CSP (Content Security Policy)
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://js.klarna.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*; frame-src 'self' https://www.google.com https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# Hide server information
+ServerSignature Off
+ServerTokens Prod
+
+# Protect sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|env)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect .env files
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Block common exploits
+RewriteEngine On
+
+# Block script injection
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (<|%3C).*iframe.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (<|%3C).*object.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (<|%3C).*embed.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} \.\./\.\. [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(\[|\]|\(|\)|<|>|ê|"|;|\?|\*|=$).* [NC,OR]
+RewriteCond %{QUERY_STRING} \bunion\b.*\bselect\b [NC,OR]
+RewriteCond %{QUERY_STRING} \bscript\b [NC]
+RewriteRule ^.*$ - [F,L]
+
+# Block access to sensitive files
+RewriteRule ^\.env$ - [F,L]
+RewriteRule ^composer\.json$ - [F,L]
+RewriteRule ^composer\.lock$ - [F,L]
+RewriteRule ^package\.json$ - [F,L]
+RewriteRule ^package-lock\.json$ - [F,L]
+RewriteRule ^README\.md$ - [F,L]
+RewriteRule ^\.git - [F,L]
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# PHP security
+<IfModule mod_php.c>
+    php_flag display_errors off
+    php_flag display_startup_errors off
+    php_flag log_errors on
+    php_flag session.cookie_httponly on
+    php_flag session.cookie_secure on
+    php_flag session.use_only_cookies on
+    php_value session.cookie_samesite "Strict"
 </IfModule>
 
 # Compression
@@ -25,14 +93,17 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     AddOutputFilterByType DEFLATE application/x-javascript
 </IfModule>
 
-# Cache
+# Browser caching
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType image/png "access plus 1 month"
     ExpiresByType image/jpg "access plus 1 month"
     ExpiresByType image/jpeg "access plus 1 month"
     ExpiresByType image/gif "access plus 1 month"
-    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+    ExpiresDefault "access plus 2 days"
 </IfModule>

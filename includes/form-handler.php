@@ -7,32 +7,44 @@ require_once __DIR__ . '/email-template.php';
 function handleContactForm(): ?array
 {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST' || ($_POST['form_scope'] ?? '') !== 'contact') {
-        regenerate_form_token();
         return null;
     }
 
     $response = ['success' => false, 'message' => ''];
 
+    // Rate limiting - max 3 submissions per hour per IP
+    $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    if (!RateLimiter::check('contact_form_' . $client_ip, 3, 3600)) {
+        $response['message'] = 'Troppi tentativi. Riprova più tardi.';
+        ap_log_security_event('rate_limit_exceeded', 'Contact form rate limit exceeded', null, ['ip' => $client_ip]);
+        return finalize_response($response);
+    }
+
+    // Honeypot check
     if (!empty($_POST['company_website'])) {
         $response['message'] = 'Richiesta non valida.';
+        ap_log_security_event('honeypot_triggered', 'Contact form honeypot triggered', null, ['ip' => $client_ip]);
         return finalize_response($response);
     }
 
-    if (!hash_equals($_SESSION['ap_form_token'] ?? '', $_POST['ap_token'] ?? '')) {
-        $response['message'] = 'Token non valido, aggiorna la pagina.';
+    // CSRF validation
+    if (!ap_validate_csrf_token($_POST['csrf_token'] ?? '')) {
+        $response['message'] = 'Token di sicurezza non valido. Aggiorna la pagina.';
+        ap_log_security_event('csrf_validation_failed', 'Contact form CSRF validation failed', null, ['ip' => $client_ip]);
         return finalize_response($response);
     }
 
-    $name = trim($_POST['name'] ?? '');
-    $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
-    $phone = trim($_POST['phone'] ?? '');
-    $service = trim($_POST['service'] ?? '');
-    $company = trim($_POST['company'] ?? '');
-    $priority = trim($_POST['priority'] ?? 'standard');
-    $appointmentRequest = trim($_POST['appointment_request'] ?? 'contact');
-    $preferredDate = trim($_POST['preferred_date'] ?? '');
-    $preferredTime = trim($_POST['preferred_time'] ?? '');
-    $message = trim($_POST['message'] ?? '');
+    // Sanitize and validate inputs
+    $name = ap_sanitize_input($_POST['name'] ?? '', 'html');
+    $email = filter_var(ap_sanitize_input($_POST['email'] ?? '', 'email'), FILTER_VALIDATE_EMAIL);
+    $phone = ap_sanitize_input($_POST['phone'] ?? '', 'html');
+    $service = ap_sanitize_input($_POST['service'] ?? '', 'html');
+    $company = ap_sanitize_input($_POST['company'] ?? '', 'html');
+    $priority = ap_sanitize_input($_POST['priority'] ?? 'standard', 'html');
+    $appointmentRequest = ap_sanitize_input($_POST['appointment_request'] ?? 'contact', 'html');
+    $preferredDate = ap_sanitize_input($_POST['preferred_date'] ?? '', 'html');
+    $preferredTime = ap_sanitize_input($_POST['preferred_time'] ?? '', 'html');
+    $message = ap_sanitize_input($_POST['message'] ?? '', 'html');
 
     if (!$name || !$email || strlen($message) < 5) {
         $response['message'] = 'Compila tutti i campi obbligatori.';
@@ -96,12 +108,19 @@ function handleContactForm(): ?array
         $response['success'] = true;
         $response['message'] = 'Richiesta inviata correttamente · Ticket ' . $ticketCode;
         $response['ticket_code'] = $ticketCode;
+        ap_log_security_event('contact_form_success', 'Contact form submitted successfully', null, [
+            'ticket' => $ticketCode,
+            'email' => $email,
+            'ip' => $client_ip
+        ]);
     } else {
         $response['message'] = $sendResult['message'] ?? 'Errore durante l\'invio.';
+        ap_log_security_event('contact_form_error', 'Contact form submission failed', null, [
+            'error' => $sendResult['message'] ?? 'unknown',
+            'ip' => $client_ip
+        ]);
     }
 
-    regenerate_form_token();
-    $response['token'] = $_SESSION['ap_form_token'] ?? '';
     return finalize_response($response);
 }
 
@@ -239,7 +258,7 @@ function regenerate_form_token(): void
 
 function finalize_response(array $response): array
 {
-    $response['token'] = $_SESSION['ap_form_token'] ?? '';
+    $response['csrf_token'] = ap_generate_csrf_token();
     if (str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json')) {
         header('Content-Type: application/json');
         echo json_encode($response);

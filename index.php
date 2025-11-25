@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require __DIR__ . '/includes/security.php';
 require __DIR__ . '/includes/env.php';
 require __DIR__ . '/includes/database.php';
 require __DIR__ . '/includes/faqs.php';
@@ -79,18 +80,12 @@ function ap_exception_handler($exception) {
     exit;
 }
 
-// Set error and exception handlers
-set_error_handler('ap_error_handler');
-set_exception_handler('ap_exception_handler');
-
-ap_process_abandoned_carts();
-
 require __DIR__ . '/includes/form-handler.php';
 $formResponse = handleContactForm();
 
 require __DIR__ . '/includes/router.php';
 
-$formToken = $_SESSION['ap_form_token'] ?? bin2hex(random_bytes(16));
+$formToken = ap_generate_csrf_token();
 $formFeedback = $_SESSION['ap_form_feedback'] ?? null;
 unset($_SESSION['ap_form_feedback']);
 $flashMessages = $_SESSION['ap_flash'] ?? [];

@@ -463,7 +463,7 @@
             <p>Inviaci il perimetro del progetto: ti ricontattiamo con un piano operativo, checklist degli oneri e tempi di go-live.</p>
             <form method="post" data-contact-form novalidate>
                 <input type="hidden" name="form_scope" value="contact">
-                <input type="hidden" name="ap_token" value="<?php echo htmlspecialchars($formToken ?? '', ENT_QUOTES); ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($formToken ?? '', ENT_QUOTES); ?>">
                 <div class="honeypot">
                     <label for="company_website">Lascia vuoto</label>
                     <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
