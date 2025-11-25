@@ -15,18 +15,13 @@ function ap_mail_settings(): array
     return $settings;
 }
 
-function ap_mailer()
+function ap_get_order_payment_provider(int $orderId): string
 {
-    static $mailer = null;
-    if ($mailer === null) {
-        $resendKey = ap_env('RESEND_API_KEY');
-        if ($resendKey) {
-            $mailer = new ResendMailer($resendKey);
-        } else {
-            $mailer = new SimpleSmtpMailer(ap_mail_settings());
-        }
-    }
-    return $mailer;
+    $pdo = ap_db();
+    $stmt = $pdo->prepare('SELECT provider FROM payments WHERE order_id = ? LIMIT 1');
+    $stmt->execute([$orderId]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['provider'] ?? 'manual';
 }
 
 function ap_notify_order_received(int $orderId): void
@@ -41,8 +36,18 @@ function ap_notify_order_received(int $orderId): void
     if (!$customerEmail) {
         return;
     }
+    $provider = ap_get_order_payment_provider($orderId);
     $subject = sprintf('Conferma ordine #%d', $orderId);
-    $body = ap_render_order_email($order, $items, 'Grazie per il tuo ordine!');
+    $intro = 'Grazie per il tuo ordine!';
+    if ($provider === 'wire') {
+        $intro .= ' Per completare il pagamento, effettua un bonifico bancario alle seguenti coordinate:<br><br>' .
+            '<strong>Banca:</strong> [Nome Banca]<br>' .
+            '<strong>IBAN:</strong> [IBAN]<br>' .
+            '<strong>Intestatario:</strong> Agenzia Plinio<br>' .
+            '<strong>Causale:</strong> Ordine #' . $orderId . '<br><br>' .
+            'Una volta effettuato il bonifico, invia la ricevuta a <a href="mailto:pagamenti@agenziaplinio.it">pagamenti@agenziaplinio.it</a> per confermare il pagamento.';
+    }
+    $body = ap_render_order_email($order, $items, $intro);
     ap_mailer()->send([
         'from' => ap_mail_settings()['from'] ?? 'no-reply@agenziaplinio.it',
         'to' => $customerEmail,

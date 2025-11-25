@@ -1479,6 +1479,119 @@ function ap_render_klarna_messaging(?int $amountCents, ?string $placement = null
     return '<div ' . implode(' ', $chunks) . '></div>';
 }
 
+function ap_stripe_config(): array
+{
+    $appUrl = rtrim(ap_env('APP_URL', 'http://127.0.0.1:8000') ?? 'http://127.0.0.1:8000', '/');
+    return [
+        'publishable_key' => ap_env('STRIPE_PUBLISHABLE_KEY', ''),
+        'secret_key' => ap_env('STRIPE_SECRET_KEY', ''),
+        'success_url' => ap_env('STRIPE_CHECKOUT_SUCCESS_URL', $appUrl . '/?page=account&payment=success') ?? ($appUrl . '/?page=account&payment=success'),
+        'cancel_url' => ap_env('STRIPE_CHECKOUT_CANCEL_URL', $appUrl . '/?page=cart&payment=cancelled') ?? ($appUrl . '/?page=cart&payment=cancelled'),
+    ];
+}
+
+function ap_stripe_create_session(int $orderId, array $items, array $context): array
+{
+    if (!function_exists('curl_init')) {
+        throw new RuntimeException('Estensione cURL non disponibile sul server.');
+    }
+    $config = ap_stripe_config();
+    if (empty($config['secret_key'])) {
+        throw new RuntimeException('Chiave segreta Stripe mancante.');
+    }
+    $lineItems = ap_stripe_line_items($items, (int) ($context['shipping_cost_cents'] ?? 0), (int) ($context['discount_cents'] ?? 0));
+    $payload = array_filter([
+        'line_items' => $lineItems,
+        'mode' => 'payment',
+        'success_url' => $config['success_url'],
+        'cancel_url' => $config['cancel_url'],
+        'metadata' => [
+            'order_id' => (string) $orderId,
+        ],
+        'customer_email' => $context['customer_email'] ?? null,
+        'payment_method_types' => ['card'],
+        'billing_address_collection' => 'required',
+        'shipping_address_collection' => [
+            'allowed_countries' => ['IT'],
+        ],
+    ]);
+
+    $url = 'https://api.stripe.com/v1/checkout/sessions';
+    $ch = curl_init($url);
+    $body = http_build_query($payload);
+    if ($body === false) {
+        throw new RuntimeException('Impossibile serializzare i dati per Stripe.');
+    }
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Bearer ' . $config['secret_key'],
+            'Content-Type: application/x-www-form-urlencoded',
+        ],
+        CURLOPT_POSTFIELDS => $body,
+    ]);
+    $response = curl_exec($ch);
+    if ($response === false) {
+        $error = curl_error($ch);
+        curl_close($ch);
+        throw new RuntimeException('Errore di connessione verso Stripe: ' . $error);
+    }
+    $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    $decoded = json_decode($response, true);
+    if ($status >= 400 || !is_array($decoded)) {
+        throw new RuntimeException('Risposta Stripe non valida (HTTP ' . $status . ').');
+    }
+    if (empty($decoded['url'])) {
+        throw new RuntimeException('Stripe non ha restituito una sessione valida.');
+    }
+    $decoded['request'] = $payload;
+    return $decoded;
+}
+
+function ap_stripe_line_items(array $items, int $shippingCost, int $discountCents = 0): array
+{
+    $lines = [];
+    foreach ($items as $item) {
+        $lines[] = [
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => [
+                    'name' => substr($item['name'], 0, 255),
+                ],
+                'unit_amount' => (int) $item['price_cents'],
+            ],
+            'quantity' => (int) $item['quantity'],
+        ];
+    }
+    if ($shippingCost > 0) {
+        $lines[] = [
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => [
+                    'name' => 'Spedizione',
+                ],
+                'unit_amount' => $shippingCost,
+            ],
+            'quantity' => 1,
+        ];
+    }
+    if ($discountCents > 0) {
+        $lines[] = [
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => [
+                    'name' => 'Sconto applicato',
+                ],
+                'unit_amount' => -$discountCents,
+            ],
+            'quantity' => 1,
+        ];
+    }
+    return $lines;
+}
+
 function ap_fetch_announcements(array $options = []): array
 {
     $useCache = empty($options['disable_cache']);

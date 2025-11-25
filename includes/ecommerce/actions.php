@@ -514,6 +514,7 @@ function ap_action_checkout(): void
         }
     }
     $klarnaRedirect = null;
+    $stripeRedirect = null;
     if ($paymentMethod === 'klarna') {
         try {
             $session = ap_klarna_create_session($orderId, $items, array_merge($payload, [
@@ -543,6 +544,35 @@ function ap_action_checkout(): void
             ap_flash('Pagamento Klarna non disponibile: ' . $klarnaException->getMessage(), 'error');
             return;
         }
+    } elseif ($paymentMethod === 'card') {
+        try {
+            $session = ap_stripe_create_session($orderId, $items, array_merge($payload, [
+                'shipping_street' => $street,
+                'shipping_city' => $city,
+                'shipping_postal_code' => $postal,
+                'shipping_province' => $province,
+                'shipping_country' => $country,
+                'customer_email' => $user['email'] ?? null,
+            ]));
+            ap_record_payment($orderId, [
+                'provider' => 'stripe',
+                'status' => 'pending',
+                'payment_status' => 'pending',
+                'order_status' => 'pending',
+                'amount_cents' => $total,
+                'transaction_ref' => $session['id'] ?? null,
+                'meta' => [
+                    'stripe_session_id' => $session['id'] ?? null,
+                    'stripe_session_url' => $session['url'] ?? null,
+                    'stripe_response' => $session,
+                ],
+            ]);
+            $stripeRedirect = $session['url'] ?? null;
+        } catch (Throwable $stripeException) {
+            ap_cancel_order_and_restore_stock($orderId);
+            ap_flash('Pagamento Stripe non disponibile: ' . $stripeException->getMessage(), 'error');
+            return;
+        }
     } else {
         ap_simulate_payment($orderId, $paymentMethod, $total);
     }
@@ -554,6 +584,11 @@ function ap_action_checkout(): void
         ap_flash("Ordine #{$orderId} creato. Completa il pagamento su Klarna.", 'info');
         if ($klarnaRedirect) {
             ap_override_redirect($klarnaRedirect);
+        }
+    } elseif ($paymentMethod === 'card') {
+        ap_flash("Ordine #{$orderId} creato. Completa il pagamento su Stripe.", 'info');
+        if ($stripeRedirect) {
+            ap_override_redirect($stripeRedirect);
         }
     } else {
         ap_flash("Ordine #{$orderId} confermato. Ti aggiorneremo via email.", 'success');
