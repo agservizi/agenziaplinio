@@ -702,7 +702,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                             </div>
                             <div class="certification-content">
                                 <h5>Partner TIM</h5>
-                                <p>Partner Ufficiale Telecom Italia</p>
+                                <p>iliad</p>
                                 <small class="text-muted">Rivenditore autorizzato</small>
                             </div>
                         </div>
@@ -712,7 +712,17 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                             </div>
                             <div class="certification-content">
                                 <h5>Partner Vodafone</h5>
-                                <p>Partner Ufficiale Vodafone Italia</p>
+                                <p>windtre</p>
+                                <small class="text-muted">Rivenditore autorizzato</small>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <div class="certification-icon">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="certification-content">
+                                <h5>Partner Fastweb</h5>
+                                <p>Fastweb</p>
                                 <small class="text-muted">Rivenditore autorizzato</small>
                             </div>
                         </div>
@@ -792,7 +802,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                     </h2>
                     <div id="about-faq4" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
                         <div class="accordion-body">
-                            Siamo certificati come RAO (Registration Authority Officer) per la verifica dell'identità personale necessaria per SPID, firme digitali e servizi digitali. Inoltre siamo partner ufficiali di TIM e Vodafone, con autorizzazioni per la rivendita di servizi telefonici e digitali.
+                            Siamo certificati come RAO (Registration Authority Officer) per la verifica dell'identità personale necessaria per SPID, firme digitali e servizi digitali. Inoltre siamo partner ufficiali di TIM, Vodafone e Fastweb, con autorizzazioni per la rivendita di servizi telefonici e digitali.
                         </div>
                     </div>
                 </div>
