@@ -32,7 +32,7 @@ return [
         'home' => [
             'title' => 'Agenzia Plinio | Soluzioni multiservizi',
             'description' => 'Servizi di pagamento, digitali, telefonia e spedizioni in un unico hub moderno e affidabile.',
-            'sections' => ['hero', 'servizi', 'chi-siamo', 'vetrina', 'contatti']
+            'sections' => ['hero', 'servizi', 'testimonials', 'chi-siamo', 'vetrina', 'contatti']
         ],
         'servizi' => [
             'title' => 'Servizi | Agenzia Plinio',
@@ -98,6 +98,11 @@ return [
             'title' => 'Admin | Agenzia Plinio',
             'description' => 'Gestisci catalogo, ordini e clienti dallo spazio riservato allo staff.',
             'sections' => ['admin']
+        ],
+        '404' => [
+            'title' => '404 - Pagina non trovata | Agenzia Plinio',
+            'description' => 'La pagina richiesta non è disponibile.',
+            'sections' => ['404']
         ]
     ]
 ];

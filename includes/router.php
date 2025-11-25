@@ -12,7 +12,8 @@ if (!array_key_exists($pageKey, $pages)) {
         'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
         'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null
     ]);
-    $pageKey = 'home';
+    $pageKey = '404';
+    http_response_code(404);
 }
 
 if ($pageKey === 'admin') {
