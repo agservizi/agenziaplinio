@@ -4,38 +4,43 @@
  */
 ?>
 <style>
-/* Hero Section with Parallax Effect */
-.contact-hero {
+/* Parallax Sections */
+.parallax-section {
+    overflow: hidden;
+}
+
+.parallax-bg {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background-attachment: fixed;
     background-size: cover;
-    border-radius: 20px;
-    padding: 4rem 2rem;
-    text-align: center;
-    margin-bottom: 4rem;
+    background-position: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    overflow: hidden;
     color: white;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.contact-hero::before {
+.parallax-bg::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.4);
     z-index: 1;
 }
 
-.contact-hero h1, .contact-hero p {
+.parallax-bg .container {
     position: relative;
     z-index: 2;
+    text-align: center;
 }
 
-.contact-hero h1 {
+.parallax-bg h1 {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
@@ -43,7 +48,7 @@
     animation: fadeInUp 1s ease-out;
 }
 
-.contact-hero p {
+.parallax-bg p {
     font-size: 1.3rem;
     max-width: 700px;
     margin: 0 auto;
@@ -51,15 +56,37 @@
     animation: fadeInUp 1.2s ease-out;
 }
 
+/* Other Sections with Parallax Effect */
+.contact-details-full, .map-container-full, .contact-form-full {
+    position: relative;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.contact-details-full {
+    background-image: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(0,123,255,0.05)"/></svg>');
+}
+
+.map-container-full {
+    background-image: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="rgba(40,167,69,0.05)"/></svg>');
+}
+
+.contact-form-full {
+    background-image: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.9) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="rgba(255,193,7,0.05)"/></svg>');
+}
+
 /* Contact Details Section */
 .contact-details-full {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
     border: none;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     padding: 3rem;
     margin-bottom: 4rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
 }
 
 .contact-details-full:hover {
@@ -341,13 +368,16 @@
 }
 </style>
 
-<section class="section-padding bg-light">
-    <div class="container">
-        <!-- Hero Section -->
-        <div class="contact-hero">
-            <h1><i class="fas fa-envelope me-3"></i>Contatti</h1>
-            <p>Team operations attivo 7/7 per supporto, consulenze e attivazioni. Rispondiamo entro 1 ora.</p>
+<section class="section-padding bg-light parallax-section" style="padding-left: 0; padding-right: 0;">
+    <div class="container-fluid">
+        <!-- Hero Section with Parallax Effect -->
+        <div class="contact-hero parallax-bg">
+            <div class="container">
+                <h1><i class="fas fa-envelope me-3"></i>Contatti</h1>
+                <p>Team operations attivo 7/7 per supporto, consulenze e attivazioni. Rispondiamo entro 1 ora.</p>
+            </div>
         </div>
+    </div>
 
         <!-- Contact Details -->
         <div class="contact-details-full">
@@ -620,30 +650,47 @@
 </section>
 
 <script>
-// Appointment form toggle
-document.getElementById('appointment_request').addEventListener('change', function() {
-    const appointmentDates = document.querySelector('.appointment-dates');
-    if (this.value === 'appointment') {
-        appointmentDates.style.display = 'block';
-        document.getElementById('preferred_date').required = true;
-        document.getElementById('preferred_time').required = true;
-    } else {
-        appointmentDates.style.display = 'none';
-        document.getElementById('preferred_date').required = false;
-        document.getElementById('preferred_time').required = false;
-    }
+// Parallax Effect on Scroll
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.parallax-bg, .contact-details-full, .map-container-full, .contact-form-full');
+    
+    parallaxElements.forEach(function(element) {
+        const rate = scrolled * -0.5;
+        element.style.transform = 'translateY(' + rate + 'px)';
+    });
 });
 
-// Set minimum date to tomorrow
-document.getElementById('preferred_date').min = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-
-// Disable weekends in date picker
-document.getElementById('preferred_date').addEventListener('input', function() {
-    const selectedDate = new Date(this.value);
-    const dayOfWeek = selectedDate.getDay();
-    if (dayOfWeek === 0 || dayOfWeek === 6) { // Sunday = 0, Saturday = 6
-        alert('Gli appuntamenti sono disponibili solo dal lunedì al venerdì.');
-        this.value = '';
-    }
+// Smooth Scroll for Anchor Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
 });
+
+// Enhanced Form Validation
+const contactForm = document.querySelector('form[data-contact-form]');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        const requiredFields = contactForm.querySelectorAll('input[required], textarea[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.style.borderColor = '#dc3545';
+                isValid = false;
+            } else {
+                field.style.borderColor = '#28a745';
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert('Per favore, compila tutti i campi obbligatori.');
+        }
+    });
+}
 </script>
