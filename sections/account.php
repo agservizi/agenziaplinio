@@ -2,7 +2,7 @@
 $user = ap_auth_current_user();
 $currentUrl = '?page=account';
 ?>
-<section class="account-section section-padding" style="padding-top: 12rem;">
+<section class="account-section section-padding" style="padding-top: 8rem;">
     <div class="container-xxl">
         <div class="section-heading text-center mb-5">
             <p class="eyebrow mb-2">Area clienti</p>
