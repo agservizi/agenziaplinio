@@ -110,9 +110,20 @@ if (is_file($servicesDataPath)) {
                 <span>Carrello</span>
                 <span class="cart-pill__count"><?php echo (int) ($cartCount ?? 0); ?></span>
             </button>
+            <button
+                class="nav-search-btn topbar-search-btn"
+                type="button"
+                aria-label="Cerca nello shop"
+                aria-expanded="false"
+                data-topbar-search-toggle
+            >
+                <span class="visually-hidden">Apri ricerca prodotti</span>
+                <img src="assets/img/icon-search.png" alt="" aria-hidden="true" width="20" height="20">
+            </button>
             <?php if (!empty($currentUser)): ?>
                 <a class="ap-btn ap-btn--ghost account-link" href="?page=<?php echo ap_auth_is_admin() ? 'admin' : 'account'; ?>">
-                    <?php echo htmlspecialchars($currentUser['name'], ENT_QUOTES); ?>
+                    <span class="profile-icon">👤</span>
+                    <span class="profile-text"><?php echo htmlspecialchars($currentUser['name'], ENT_QUOTES); ?></span>
                 </a>
             <?php else: ?>
                 <button type="button" class="ap-btn ap-btn--ghost account-link" data-modal-open="login">Accedi</button>

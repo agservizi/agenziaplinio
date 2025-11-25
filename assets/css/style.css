@@ -3401,3 +3401,42 @@ main#page-content[data-page="cart"] .cart-section .container-xxl {
 .cookie-policy {
     padding-top: 120px;
 }
+
+.topbar-search-btn {
+    display: none;
+}
+
+.profile-text {
+    display: inline;
+}
+
+@media (max-width: 992px) {
+    .nav-search-trigger {
+        display: none;
+    }
+
+    .topbar-search-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        transition: background 0.2s ease;
+    }
+
+    .topbar-search-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .profile-text {
+        display: none;
+    }
+
+    .profile-icon {
+        display: inline;
+    }
+}
