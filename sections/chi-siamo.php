@@ -789,7 +789,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
         <!-- Partner Modals -->
         <!-- DropPoint Modal -->
         <div class="modal fade" id="modal-droppoint" tabindex="-1" aria-labelledby="modal-droppoint-label" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modal-droppoint-label">
@@ -798,7 +798,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="lead">Servizio di ritiro e consegna pacchi presso punti di raccolta convenzionati.</p>
+                        <p class="lead">DropPoint offre questi servizi ma per il cittadino. <a href="https://drop-point.it/" target="_blank" class="text-primary">Scopri di più su drop-point.it</a></p>
                         <div class="row">
                             <div class="col-md-6">
                                 <h6>Servizi Offeriti:</h6>
