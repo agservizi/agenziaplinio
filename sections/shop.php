@@ -22,6 +22,8 @@ $maxPriceInput = isset($_GET['max_price']) && $_GET['max_price'] !== '' ? (float
 $availabilityParam = isset($_GET['availability']) ? (string) $_GET['availability'] : '';
 $sortParam = isset($_GET['sort']) ? (string) $_GET['sort'] : 'newest';
 $categoryParam = isset($_GET['category']) ? (string) $_GET['category'] : '';
+$pageParam = isset($_GET['p']) && (int) $_GET['p'] > 0 ? (int) $_GET['p'] : 1;
+$perPage = 12; // Products per page
 
 // Build filters array
 $filters = [];
@@ -39,6 +41,8 @@ if ($availabilityParam === 'in_stock') {
 }
 $sortOptions = ['newest', 'price_asc', 'price_desc', 'alpha', 'stock'];
 $filters['sort'] = in_array($sortParam, $sortOptions, true) ? $sortParam : 'newest';
+$filters['limit'] = $perPage;
+$filters['offset'] = ($pageParam - 1) * $perPage;
 
 // Fetch filtered products
 $products = ap_fetch_products($filters);
@@ -46,8 +50,18 @@ if ($categoryParam !== '' && isset($categoryOptions[$categoryParam])) {
     $products = array_values(array_filter($products, static fn ($product) => ap_product_category_key($product) === $categoryParam));
 }
 
+// Get total count for pagination
+$totalFilters = $filters;
+unset($totalFilters['limit'], $totalFilters['offset']);
+$allFilteredProducts = ap_fetch_products($totalFilters);
+if ($categoryParam !== '' && isset($categoryOptions[$categoryParam])) {
+    $allFilteredProducts = array_values(array_filter($allFilteredProducts, static fn ($product) => ap_product_category_key($product) === $categoryParam));
+}
+$totalProducts = count($allFilteredProducts);
+$totalPages = (int) ceil($totalProducts / $perPage);
+
 // Shop metrics
-$metrics = ap_shop_metrics($products);
+$metrics = ap_shop_metrics($allFilteredProducts);
 
 // Active filters for display
 $activeFilters = array_filter([
@@ -100,10 +114,97 @@ $activeFilters = array_filter([
                             <div class="col-6">
                                 <input type="number" class="form-control" id="shop-min-price" name="min_price" placeholder="Min" min="0" step="1" value="<?php echo $minPriceInput !== null ? htmlspecialchars((string) $minPriceInput, ENT_QUOTES) : ''; ?>">
                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                             <div class="col-6">
                                 <input type="number" class="form-control" id="shop-max-price" name="max_price" placeholder="Max" min="0" step="1" value="<?php echo $maxPriceInput !== null ? htmlspecialchars((string) $maxPriceInput, ENT_QUOTES) : ''; ?>">
                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                     </fieldset>
 
                     <!-- Availability -->
@@ -154,6 +255,35 @@ $activeFilters = array_filter([
                                 <span class="badge bg-primary-subtle text-primary"><?php echo htmlspecialchars(ucfirst(str_replace('_', ' ', $key)) . ': ' . $value, ENT_QUOTES); ?></span>
                             <?php endforeach; ?>
                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
 
@@ -166,19 +296,193 @@ $activeFilters = array_filter([
                                 <div class="stat-value h4 mb-1"><?php echo (int) $metrics['total']; ?></div>
                                 <div class="stat-label small text-muted">Prodotti</div>
                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         <div class="col-12">
                             <div class="stat-card text-center p-3 bg-light rounded">
                                 <div class="stat-value h4 mb-1"><?php echo (int) $metrics['available']; ?></div>
                                 <div class="stat-label small text-muted">Disponibili</div>
                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         <div class="col-12">
                             <div class="stat-card text-center p-3 bg-light rounded">
                                 <div class="stat-value h4 mb-1"><?php echo ap_price_format((int) $metrics['average_price']); ?></div>
                                 <div class="stat-label small text-muted">Prezzo medio</div>
                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                     </div>
                 </div>
             </aside>
@@ -193,6 +497,35 @@ $activeFilters = array_filter([
                                 <path d="M5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm1.138-1.496a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
                             </svg>
                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         <h3 class="mb-2">Nessun prodotto trovato</h3>
                         <p class="text-muted mb-4">Prova a modificare i filtri o torna più tardi.</p>
                         <a href="?page=shop" class="btn btn-primary">Rimuovi filtri</a>
@@ -205,6 +538,35 @@ $activeFilters = array_filter([
                             <div class="products-sort d-none d-md-block">
                                 <!-- Sort could be duplicated here if needed -->
                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                         </header>
 
                         <div class="row g-4">
@@ -238,8 +600,66 @@ $activeFilters = array_filter([
                                                             <span class="badge bg-<?php echo htmlspecialchars($badge['variant'], ENT_QUOTES); ?>-subtle text-<?php echo htmlspecialchars($badge['variant'], ENT_QUOTES); ?>"><?php echo htmlspecialchars($badge['label'], ENT_QUOTES); ?></span>
                                                         <?php endforeach; ?>
                                                     </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                                                 <?php endif; ?>
                                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
 
                                             <!-- Title -->
                                             <h3 class="product-title h6 mb-2">
@@ -265,12 +685,70 @@ $activeFilters = array_filter([
                                                     <small class="text-muted">SKU: <?php echo htmlspecialchars($product['sku'], ENT_QUOTES); ?></small>
                                                 <?php endif; ?>
                                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
 
                                             <!-- Klarna -->
                                             <?php if (function_exists('ap_klarna_messaging_enabled') && ap_klarna_messaging_enabled()): ?>
                                                 <div class="klarna-messaging mb-3">
                                                     <?php echo ap_render_klarna_messaging((int) $product['price_cents'], ap_klarna_messaging_placement('product')); ?>
                                                 </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                                             <?php endif; ?>
 
                                             <!-- Actions -->
@@ -291,10 +769,97 @@ $activeFilters = array_filter([
                                                             <label class="visually-hidden" for="qty-<?php echo (int) $product['id']; ?>">Quantità</label>
                                                             <input type="number" id="qty-<?php echo (int) $product['id']; ?>" name="quantity" min="1" max="<?php echo (int) $product['stock']; ?>" value="1" class="form-control form-control-sm" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>
                                                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                                                         <div class="col-4">
                                                             <small class="text-muted d-block">Disp: <?php echo (int) $product['stock']; ?></small>
                                                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                                                     </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                                                     <button class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center gap-2" type="submit" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>
                                                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                                             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1 1a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
@@ -303,11 +868,127 @@ $activeFilters = array_filter([
                                                     </button>
                                                 </form>
                                             </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                                     </article>
                                 </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
+                        <!-- Pagination -->
+                        <?php if ($totalPages > 1): ?>
+                            <nav class="mt-5" aria-label="Navigazione prodotti">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    $queryParams = $_GET;
+                                    unset($queryParams['p']); // Remove page param for base URL
+                                    $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']));
+                                    $prevPage = $pageParam - 1;
+                                    $nextPage = $pageParam + 1;
+                                    ?>
+                                    <li class="page-item <?php echo $pageParam <= 1 ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $prevPage; ?>" aria-label="Precedente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php for ($i = max(1, $pageParam - 2); $i <= min($totalPages, $pageParam + 2); $i++): ?>
+                                        <li class="page-item <?php echo $i === $pageParam ? 'active' : ''; ?>">
+                                            <a class="page-link" href="<?php echo $baseUrl . '&p=' . $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="page-item <?php echo $pageParam >= $totalPages ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="<?php echo $baseUrl . '&p=' . $nextPage; ?>" aria-label="Successiva">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
             </main>
