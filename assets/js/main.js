@@ -958,8 +958,8 @@ const App = (() => {
         }
         messages.appendChild(wrapper);
         if (role === 'bot') {
-            // Scroll to the top of the new bot message
-            messages.scrollTop = wrapper.offsetTop;
+            // Scroll smoothly to the top of the new bot message
+            messages.scrollTo({ top: wrapper.offsetTop, behavior: 'smooth' });
         } else {
             scrollChatbotToBottom();
         }
