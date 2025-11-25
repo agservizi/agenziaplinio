@@ -949,7 +949,7 @@ const App = (() => {
         const wrapper = document.createElement('div');
         wrapper.className = `ap-chatbot__message ap-chatbot__message--${role}`;
         const body = document.createElement('p');
-        body.textContent = text;
+        body.innerHTML = text;
         wrapper.appendChild(body);
         if (meta?.category) {
             const small = document.createElement('small');
@@ -1125,7 +1125,7 @@ const App = (() => {
             // Flusso PIN/PUK Iliad - triggers specifici
             {
                 triggers: ['pin', 'puk', 'bloccata', 'non ricordo', 'sim chiede', 'inserito tre volte', 'iliad'],
-                response: 'Capisco, nessun problema: ti aiuto a sbloccare la tua SIM Iliad passo dopo passo. La SIM è di Iliad, giusto? Hai inserito il PIN errato per tre volte? Hai ancora la confezione della SIM o l\'area personale Iliad accessibile? Ecco cosa succede con la SIM Iliad: Il PIN predefinito è 1234. Se inserisci il PIN errato per tre volte, la SIM si blocca e ti verrà richiesto il PUK. Il PUK lo puoi trovare nel supporto plastico della SIM o nell\'Area Personale Iliad. Se PIN errato ma SIM non bloccata: Prova ad inserire 1234 come PIN iniziale se non lo hai mai cambiato. Se risulta corretto, ti consiglio di cambiarlo subito per sicurezza. Se SIM bloccata (3 tentativi PIN): La SIM è bloccata e serve il PUK. Puoi recuperarlo: • Consulta il supporto plastico della SIM (dietro trovi PIN e PUK) • Oppure accedi all\'Area Personale Iliad → I miei dati personali → Il mio codice PUK. Hai bisogno che ti invii il link all\'Area Personale o che ti spieghi come accedervi? Se non hai supporto plastico né area accessibile: In questo caso possiamo richiedere un duplicato SIM con lo stesso numero. Ti interessa che organizziamo questo servizio per te? Come vuoi procedere? Recuperare il PUK e sbloccare la SIM o Richiedere un duplicato SIM? Fammi sapere quale opzione preferisci.',
+                response: 'Capisco, nessun problema: ti aiuto a sbloccare la tua SIM Iliad passo dopo passo.<br><br>La SIM è di Iliad, giusto? Hai inserito il PIN errato per tre volte? Hai ancora la confezione della SIM o l\'area personale Iliad accessibile?<br><br>Ecco cosa succede con la SIM Iliad:<br>Il PIN predefinito è 1234.<br>Se inserisci il PIN errato per tre volte, la SIM si blocca e ti verrà richiesto il PUK.<br>Il PUK lo puoi trovare nel supporto plastico della SIM o nell\'Area Personale Iliad.<br><br>Se PIN errato ma SIM non bloccata:<br>Prova ad inserire 1234 come PIN iniziale se non lo hai mai cambiato.<br>Se risulta corretto, ti consiglio di cambiarlo subito per sicurezza.<br><br>Se SIM bloccata (3 tentativi PIN):<br>La SIM è bloccata e serve il PUK.<br>Puoi recuperarlo:<br><ul><li>Consulta il supporto plastico della SIM (dietro trovi PIN e PUK)</li><li>Oppure accedi all\'Area Personale Iliad → I miei dati personali → Il mio codice PUK.</li></ul><br>Hai bisogno che ti invii il link all\'Area Personale o che ti spieghi come accedervi?<br><br>Se non hai supporto plastico né area accessibile:<br>In questo caso possiamo richiedere un duplicato SIM con lo stesso numero.<br>Ti interessa che organizziamo questo servizio per te?<br><br>Come vuoi procedere?<br>Recuperare il PUK e sbloccare la SIM o Richiedere un duplicato SIM?<br>Fammi sapere quale opzione preferisci.',
                 exact: false
             },
             // Attivazioni operatori - triggers generali
@@ -1178,32 +1178,32 @@ const App = (() => {
             // Flussi avanzati
             {
                 triggers: ['sim bloccata', 'sbagliato pin', 'chiede puk', 'sim non funziona'],
-                response: 'Tranquillo, si risolve tutto. Se la SIM chiede il PUK significa che sono stati inseriti dei PIN errati. Vediamo insieme come sbloccarla. Di che operatore è la SIM? (WindTre, Iliad, Fastweb) Hai la confezione della SIM o la scheda plastica originale? Hai provato a vedere se il codice PUK è stampato sul supporto? Se hai il supporto originale, dietro trovi il codice PUK. Inserendo il PUK la SIM si sblocca e puoi scegliere un nuovo PIN. Se non hai il supporto, posso richiedere noi il duplicato della SIM. Porta un documento d\'identità e il numero da recuperare: il duplicato si attiva in pochi minuti. Vuoi provare ora a recuperare il PUK o preferisci fare direttamente un duplicato?',
+                response: 'Tranquillo, si risolve tutto. Se la SIM chiede il PUK significa che sono stati inseriti dei PIN errati.<br><br>Vediamo insieme come sbloccarla.<br>Di che operatore è la SIM? (WindTre, Iliad, Fastweb)<br>Hai la confezione della SIM o la scheda plastica originale?<br>Hai provato a vedere se il codice PUK è stampato sul supporto?<br><br>Se hai il supporto originale, dietro trovi il codice PUK.<br>Inserendo il PUK la SIM si sblocca e puoi scegliere un nuovo PIN.<br><br>Se non hai il supporto, posso richiedere noi il duplicato della SIM.<br>Porta un documento d\'identità e il numero da recuperare: il duplicato si attiva in pochi minuti.<br><br>Vuoi provare ora a recuperare il PUK o preferisci fare direttamente un duplicato?',
                 exact: false
             },
             {
                 triggers: ['pagamento ko', 'pagopa non accettato', 'errore pagamento', 'bollettino andato ko'],
-                response: 'Capita ogni tanto, nessun problema: verifichiamo cosa è successo e ti aiuto a completare il pagamento. Che tipo di bollettino stavi pagando? (F24, pagoPA, MAV, RAV, bollettino semplice) Hai ricevuto un messaggio di errore specifico? Hai una foto del bollettino o del QR code? Era un pagamento fatto in sede o online? Cause più comuni: QR code non leggibile, importo non riconosciuto, servizio momentaneamente non disponibile, dati mancanti. Se mi invii la foto del bollettino, posso dirti subito cosa non va e ripetiamo il pagamento correttamente. Vuoi inviarmi ora la foto del bollettino o preferisci passare in sede per farlo insieme?',
+                response: 'Capita ogni tanto, nessun problema: verifichiamo cosa è successo e ti aiuto a completare il pagamento.<br><br>Che tipo di bollettino stavi pagando? (F24, pagoPA, MAV, RAV, bollettino semplice)<br>Hai ricevuto un messaggio di errore specifico?<br>Hai una foto del bollettino o del QR code?<br>Era un pagamento fatto in sede o online?<br><br>Cause più comuni:<br>• QR code non leggibile<br>• Importo non riconosciuto<br>• Servizio momentaneamente non disponibile<br>• Dati mancanti<br><br>Se mi invii la foto del bollettino, posso dirti subito cosa non va e ripetiamo il pagamento correttamente.<br><br>Vuoi inviarmi ora la foto del bollettino o preferisci passare in sede per farlo insieme?',
                 exact: false
             },
             {
                 triggers: ['spid non funziona', 'non arriva codice', 'non riesco accedere'],
-                response: 'Vediamo subito cosa c\'è che non va con il tuo SPID. Ricevi l\'errore prima o dopo l\'inserimento delle credenziali? Ti arriva SMS o email? Ricordi la password? Se è un problema di password, possiamo fare un reset. Se non arrivano i codici, potrebbe essere un blocco temporaneo o numero errato. Se vuoi, posso controllare con te e capire se serve una nuova attivazione. Vuoi provare ora il recupero o preferisci passare in sede e lo sistemiamo insieme?',
+                response: 'Vediamo subito cosa c\'è che non va con il tuo SPID.<br><br>Ricevi l\'errore prima o dopo l\'inserimento delle credenziali?<br>Ti arriva SMS o email?<br>Ricordi la password?<br><br>Se è un problema di password, possiamo fare un reset.<br>Se non arrivano i codici, potrebbe essere un blocco temporaneo o numero errato.<br><br>Se vuoi, posso controllare con te e capire se serve una nuova attivazione.<br><br>Vuoi provare ora il recupero o preferisci passare in sede e lo sistemiamo insieme?',
                 exact: false
             },
             {
                 triggers: ['pec non entra', 'non riceve mail', 'credenziali non valide'],
-                response: 'Nessun problema, facciamo un controllo rapido. Di che provider è la PEC? L\'errore riguarda password o accesso al server? Hai cambiato dispositivo recentemente? Spesso basta aggiornare i parametri IMAP/SMTP. Se la password è scaduta, la resettiamo. Se la casella è piena, la liberiamo o aumentiamo lo spazio. Vuoi inviarmi screenshot dell\'errore così ti guido passo dopo passo?',
+                response: 'Nessun problema, facciamo un controllo rapido.<br><br>Di che provider è la PEC?<br>L\'errore riguarda password o accesso al server?<br>Hai cambiato dispositivo recentemente?<br><br>Spesso basta aggiornare i parametri IMAP/SMTP.<br>Se la password è scaduta, la resettiamo.<br>Se la casella è piena, la liberiamo o aumentiamo lo spazio.<br><br>Vuoi inviarmi screenshot dell\'errore così ti guido passo dopo passo?',
                 exact: false
             },
             {
                 triggers: ['firma digitale non funziona', 'non riconosce token', 'non si apre software'],
-                response: 'Succede spesso, vediamo insieme come risolverlo. Usi firma remota, smart card o token USB? Windows, Mac o smartphone? Hai già provato a reinstallare il software? Se è token, potrebbe essere il driver. Se è firma remota, può essere scaduta. Se il software non parte, lo reinstalliamo. Vuoi che ti preparo il link ai driver/software corretti per il tuo dispositivo?',
+                response: 'Succede spesso, vediamo insieme come risolverlo.<br><br>Usi firma remota, smart card o token USB?<br>Windows, Mac o smartphone?<br>Hai già provato a reinstallare il software?<br><br>Se è token, potrebbe essere il driver.<br>Se è firma remota, può essere scaduta.<br>Se il software non parte, lo reinstalliamo.<br><br>Vuoi che ti preparo il link ai driver/software corretti per il tuo dispositivo?',
                 exact: false
             },
             {
                 triggers: ['vergogna', 'non funziona niente', 'stufo', 'non mi state aiutando'],
-                response: 'Capisco perfettamente il tuo disagio, e mi dispiace sinceramente per la situazione. Ci tengo a risolverti il problema nel modo più rapido possibile. Mi dai solo un attimo per aiutarti al meglio? Puoi dirmi esattamente cosa non sta funzionando? Da quando si presenta il problema? Hai ricevuto un messaggio o un errore preciso? Sono qui per risolverlo con te, passo dopo passo. Una volta capito il punto, troviamo la soluzione più veloce. Ti seguo io: sistemiamo tutto insieme. Puoi mandarmi ora un dettaglio o una foto dell\'errore?',
+                response: 'Capisco perfettamente il tuo disagio, e mi dispiace sinceramente per la situazione.<br>Ci tengo a risolverti il problema nel modo più rapido possibile.<br><br>Mi dai solo un attimo per aiutarti al meglio?<br>Puoi dirmi esattamente cosa non sta funzionando?<br>Da quando si presenta il problema?<br>Hai ricevuto un messaggio o un errore preciso?<br><br>Sono qui per risolverlo con te, passo dopo passo.<br>Una volta capito il punto, troviamo la soluzione più veloce.<br>Ti seguo io: sistemiamo tutto insieme.<br><br>Puoi mandarmi ora un dettaglio o una foto dell\'errore?',
                 exact: false
             },
             {
