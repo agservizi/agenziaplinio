@@ -115,6 +115,7 @@ if (is_file($servicesDataPath)) {
                 type="button"
                 aria-label="Cerca nello shop"
                 aria-expanded="false"
+                aria-controls="topbar-search-panel"
                 data-topbar-search-toggle
             >
                 <span class="visually-hidden">Apri ricerca prodotti</span>
