@@ -2784,6 +2784,35 @@ body.nav-open {
     box-shadow: var(--shadow-card);
 }
 
+.footer-legal .legal-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-legal .legal-links a {
+    color: var(--color-slate-600);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+}
+
+.footer-legal .legal-links a:hover {
+    color: var(--color-primary-500);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-legal .legal-links {
+        gap: 0.75rem;
+    }
+    
+    .footer-legal .legal-links a {
+        font-size: 0.8rem;
+    }
+}
+
 /* Reveal Animations */
 [data-reveal] {
     opacity: 0;

@@ -25,7 +25,14 @@
             </div>
         </div>
         <div class="footer-bottom mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <p class="mb-2 mb-md-0">&copy; <?php echo date('Y'); ?> AG SERVIZI VIA PLINIO 72. Tutti i diritti riservati.</p>
+            <div class="footer-legal mb-2 mb-md-0">
+                <p class="mb-1">&copy; <?php echo date('Y'); ?> AG SERVIZI VIA PLINIO 72. Tutti i diritti riservati.</p>
+                <div class="legal-links">
+                    <a href="?page=privacy" class="text-muted me-3">Privacy Policy</a>
+                    <a href="?page=privacy#cookies" class="text-muted me-3">Cookie Policy</a>
+                    <a href="mailto:privacy@agenziaplinio.it" class="text-muted">Contatti Privacy</a>
+                </div>
+            </div>
             <div class="social-links d-flex gap-3">
                 <a href="https://www.linkedin.com/company/agenzia-plinio" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-pill">in</a>
                 <a href="https://www.facebook.com/agserviziplinio.it" target="_blank" rel="noopener" aria-label="Facebook" class="social-pill">f</a>

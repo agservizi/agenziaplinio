@@ -53,7 +53,7 @@ $pageKeywords = 'privacy policy, GDPR, trattamento dati, Agenzia Plinio';
                             </div>
 
                             <div class="mb-5">
-                                <h2 class="h3 fw-bold text-primary mb-3">5. Cookies</h2>
+                                <h2 class="h3 fw-bold text-primary mb-3" id="cookies">5. Cookies</h2>
                                 <p>Utilizziamo cookies tecnici essenziali per il funzionamento del sito. Cookies analitici (Google Analytics) solo con il tuo consenso.</p>
                                 <p>Puoi gestire le preferenze cookies in qualsiasi momento attraverso il banner presente sul sito.</p>
                             </div>
