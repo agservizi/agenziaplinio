@@ -2172,6 +2172,14 @@ body.has-chatbot #back-to-top {
         background: var(--color-primary-600) !important;
     }
 
+    .cart-pill .cart-text {
+        display: none;
+    }
+
+    .cart-pill .cart-icon {
+        display: inline-block;
+    }
+
     .nav-link--toggle {
         width: 100%;
         justify-content: space-between;

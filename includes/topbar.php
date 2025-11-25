@@ -107,7 +107,8 @@ if (is_file($servicesDataPath)) {
                 aria-controls="cart-sidebar"
                 aria-expanded="false"
             >
-                <span>Carrello</span>
+                <span class="cart-text">Carrello</span>
+                <img src="assets/img/icon-cart.png" alt="" width="20" height="20" class="cart-icon" aria-hidden="true">
                 <span class="cart-pill__count"><?php echo (int) ($cartCount ?? 0); ?></span>
             </button>
             <button
