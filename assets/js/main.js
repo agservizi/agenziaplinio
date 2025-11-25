@@ -988,216 +988,264 @@ const App = (() => {
         const normalized = normalizeText(question);
         if (!normalized) return null;
 
-        // Saluti
-        if (normalized.includes('ciao') || normalized.includes('salve') || normalized.includes('buongiorno') || normalized.includes('buonasera') || normalized === 'saluto' || normalized === 'ehila' || normalized.includes('buon giorno') || normalized.includes('buona sera')) {
-            return 'Ciao! Sono Plinio, il chatbot di AG SERVIZI VIA PLINIO 72. Come posso aiutarti oggi?';
-        }
-
-        // Ringraziamenti
-        if (normalized.includes('grazie') || normalized.includes('thank') || normalized === 'ok' || normalized === 'perfetto' || normalized.includes('apprezzo') || normalized.includes('molto gentile')) {
-            return 'Prego! È un piacere aiutarti. Se hai altre domande, non esitare a chiedere.';
-        }
-
-        // Arrivederci
-        if (normalized.includes('arrivederci') || normalized.includes('ciao') && normalized.includes('addio') || normalized.includes('bye') || normalized === 'a presto' || normalized.includes('alla prossima') || normalized.includes('ci vediamo')) {
-            return 'Arrivederci! Speriamo di rivederti presto. Se hai bisogno, siamo sempre qui.';
-        }
-
-        // Come stai
-        if (normalized.includes('come stai') || normalized.includes('come va') || normalized.includes('tutto bene') || normalized.includes('come te la passi')) {
-            return 'Sto benissimo, grazie! Sono sempre pronto ad assistere i clienti di AG SERVIZI. Cosa posso fare per te oggi?';
-        }
-
-        // Chi sei / Cosa sei
-        if (normalized.includes('chi sei') || normalized.includes('cosa sei') || normalized.includes('sei un bot') || normalized.includes('sei umano') || normalized.includes('sei artificiale')) {
-            return 'Sono Plinio, l\'assistente virtuale intelligente di AG SERVIZI VIA PLINIO 72. Sono qui per rispondere alle tue domande sui nostri servizi multiservizi: pagamenti, ricariche, attivazioni digitali e telecomunicazioni. Posso aiutarti con bollettini, F24, SPID, PEC e molto altro!';
-        }
-
-        // Aiuto
-        if (normalized.includes('aiuto') || normalized.includes('help') || normalized.includes('assistenza') || normalized.includes('supporto')) {
-            return 'Certo! Posso aiutarti con informazioni sui nostri servizi, rispondere a domande frequenti, guidarti negli acquisti o fornirti contatti. Cosa ti serve esattamente?';
-        }
-
-        // Non capisco / Ripeti
-        if (normalized.includes('non capisco') || normalized.includes('non ho capito') || normalized.includes('ripeti') || normalized.includes('puoi ripetere') || normalized.includes('più chiaro')) {
-            return 'Mi scusi se non sono stato chiaro. Posso riformulare la risposta o puoi farmi una domanda più specifica? Sono qui per aiutarti al meglio.';
-        }
-
-        // Informazioni aziendali
-        if (normalized.includes('dove siete') || normalized.includes('indirizzo') || normalized.includes('ubicazione') || normalized.includes('sede')) {
-            return 'Siamo in Via Plinio Il Vecchio, 72 – Castellammare di Stabia (NA). Se vuoi ti dico anche gli orari o come raggiungerci. Ti servono gli orari di oggi? Vuoi sapere la distanza da dove ti trovi?';
-        }
-
-        if (normalized.includes('telefono') || normalized.includes('numero') || normalized.includes('chiamare') || normalized.includes('contatto telefonico')) {
-            return 'Puoi contattarci al nostro numero di telefono. Inoltre, puoi scrivere via email o utilizzare il modulo di contatto sul sito. Quale preferisci?';
-        }
-
-        if (normalized.includes('email') || normalized.includes('posta') || normalized.includes('scrivere')) {
-            return 'La nostra email principale è info@agservizi.it. Rispondiamo solitamente entro 24 ore. Puoi anche utilizzare il modulo di contatto sul sito web.';
-        }
-
-        if (normalized.includes('orari') || normalized.includes('aperto') || normalized.includes('chiuso') || normalized.includes('quando')) {
-            return 'Siamo in Via Plinio Il Vecchio, 72 – Castellammare di Stabia (NA). Se vuoi ti dico anche gli orari o come raggiungerci. Ti servono gli orari di oggi? Vuoi sapere la distanza da dove ti trovi?';
-        }
-
-        // Servizi
-        if (normalized.includes('cosa fate') || normalized.includes('servizi') || normalized.includes('offerte') || normalized.includes('attività')) {
-            return 'AG SERVIZI VIA PLINIO 72 è la tua agenzia multiservizi di fiducia! Offriamo: pagamenti bollettini e F24, ricariche telefoniche, attivazioni SPID/PEC/firme digitali, spedizioni pacchi, punto vendita WindTre/Fastweb/Iliad. Tutto in un unico sportello! Quale servizio ti interessa di più?';
-        }
-
-        if (normalized.includes('prezzi') || normalized.includes('costo') || normalized.includes('quanto costa') || normalized.includes('tariffe')) {
-            return 'I nostri prezzi variano a seconda del servizio richiesto. Ti consiglio di contattarci direttamente per un preventivo personalizzato. Possiamo fornirti un\'offerta su misura. Vuoi che ti aiuti con un preventivo specifico?';
-        }
-
-        // Ecommerce / Ordini
-        if (normalized.includes('ordine') || normalized.includes('ordini') || normalized.includes('acquisto') || normalized.includes('comprare') || normalized.includes('spedizione')) {
-            if (isLoggedIn) {
-                return 'Puoi vedere tutti i tuoi ordini, compreso lo stato e le spedizioni, nella sezione Account del sito. Se hai un ordine specifico di cui vuoi parlare, dimmi il numero!';
-            } else {
-                return 'Per vedere i tuoi ordini, devi accedere al tuo account. Se non hai ancora un account, puoi registrarti facilmente. Una volta loggato, potrai monitorare tutti i tuoi acquisti.';
+        // Array di risposte predefinite con triggers e punteggi
+        const responses = [
+            {
+                triggers: ['ciao', 'salve', 'buongiorno', 'buonasera', 'saluto', 'ehila', 'buon giorno', 'buona sera'],
+                response: 'Ciao! Sono Plinio, il chatbot di AG SERVIZI VIA PLINIO 72. Come posso aiutarti oggi?',
+                exact: true
+            },
+            {
+                triggers: ['grazie', 'thank', 'ok', 'perfetto', 'apprezzo', 'molto gentile'],
+                response: 'Prego! È un piacere aiutarti. Se hai altre domande, non esitare a chiedere.',
+                exact: false
+            },
+            {
+                triggers: ['arrivederci', 'ciao', 'bye', 'a presto', 'alla prossima', 'ci vediamo'],
+                response: 'Arrivederci! Speriamo di rivederti presto. Se hai bisogno, siamo sempre qui.',
+                exact: false
+            },
+            {
+                triggers: ['come stai', 'come va', 'tutto bene', 'come te la passi'],
+                response: 'Sto benissimo, grazie! Sono sempre pronto ad assistere i clienti di AG SERVIZI. Cosa posso fare per te oggi?',
+                exact: false
+            },
+            {
+                triggers: ['chi sei', 'cosa sei', 'sei un bot', 'sei umano', 'sei artificiale'],
+                response: 'Sono Plinio, l\'assistente virtuale intelligente di AG SERVIZI VIA PLINIO 72. Sono qui per rispondere alle tue domande sui nostri servizi multiservizi: pagamenti, ricariche, attivazioni digitali e telecomunicazioni. Posso aiutarti con bollettini, F24, SPID, PEC e molto altro!',
+                exact: false
+            },
+            {
+                triggers: ['aiuto', 'help', 'assistenza', 'supporto'],
+                response: 'Certo! Posso aiutarti con informazioni sui nostri servizi, rispondere a domande frequenti, guidarti negli acquisti o fornirti contatti. Cosa ti serve esattamente?',
+                exact: false
+            },
+            {
+                triggers: ['non capisco', 'non ho capito', 'ripeti', 'puoi ripetere', 'più chiaro'],
+                response: 'Mi scusi se non sono stato chiaro. Posso riformulare la risposta o puoi farmi una domanda più specifica? Sono qui per aiutarti al meglio.',
+                exact: false
+            },
+            {
+                triggers: ['dove siete', 'indirizzo', 'ubicazione', 'sede'],
+                response: 'Siamo in Via Plinio Il Vecchio, 72 – Castellammare di Stabia (NA). Se vuoi ti dico anche gli orari o come raggiungerci. Ti servono gli orari di oggi? Vuoi sapere la distanza da dove ti trovi?',
+                exact: false
+            },
+            {
+                triggers: ['telefono', 'numero', 'chiamare', 'contatto telefonico'],
+                response: 'Puoi contattarci al nostro numero di telefono. Inoltre, puoi scrivere via email o utilizzare il modulo di contatto sul sito. Quale preferisci?',
+                exact: false
+            },
+            {
+                triggers: ['email', 'posta', 'scrivere'],
+                response: 'La nostra email principale è info@agservizi.it. Rispondiamo solitamente entro 24 ore. Puoi anche utilizzare il modulo di contatto sul sito web.',
+                exact: false
+            },
+            {
+                triggers: ['orari', 'aperto', 'chiuso', 'quando'],
+                response: 'Siamo in Via Plinio Il Vecchio, 72 – Castellammare di Stabia (NA). Se vuoi ti dico anche gli orari o come raggiungerci. Ti servono gli orari di oggi? Vuoi sapere la distanza da dove ti trovi?',
+                exact: false
+            },
+            {
+                triggers: ['cosa fate', 'servizi', 'offerte', 'attività'],
+                response: 'AG SERVIZI VIA PLINIO 72 è la tua agenzia multiservizi di fiducia! Offriamo: pagamenti bollettini e F24, ricariche telefoniche, attivazioni SPID/PEC/firme digitali, spedizioni pacchi, punto vendita WindTre/Fastweb/Iliad. Tutto in un unico sportello! Quale servizio ti interessa di più?',
+                exact: false
+            },
+            {
+                triggers: ['prezzi', 'costo', 'quanto costa', 'tariffe'],
+                response: 'I nostri prezzi variano a seconda del servizio richiesto. Ti consiglio di contattarci direttamente per un preventivo personalizzato. Possiamo fornirti un\'offerta su misura. Vuoi che ti aiuti con un preventivo specifico?',
+                exact: false
+            },
+            // Ecommerce / Ordini - dipende da isLoggedIn
+            {
+                triggers: ['ordine', 'ordini', 'acquisto', 'comprare', 'spedizione'],
+                response: isLoggedIn ? 'Puoi vedere tutti i tuoi ordini, compreso lo stato e le spedizioni, nella sezione Account del sito. Se hai un ordine specifico di cui vuoi parlare, dimmi il numero!' : 'Per vedere i tuoi ordini, devi accedere al tuo account. Se non hai ancora un account, puoi registrarti facilmente. Una volta loggato, potrai monitorare tutti i tuoi acquisti.',
+                exact: false
+            },
+            {
+                triggers: ['stato ordine', 'dove ordine', 'quando arriva'],
+                response: isLoggedIn ? 'Per controllare lo stato del tuo ordine, vai nella sezione Account > I miei ordini. Lì troverai tutte le informazioni sulle spedizioni e le date di consegna previste.' : 'Per verificare lo stato di un ordine, devi essere loggato. Accedi al tuo account e vai nella sezione "I miei ordini" per vedere tutti i dettagli.',
+                exact: false
+            },
+            {
+                triggers: ['reso', 'restituire', 'cambio'],
+                response: isLoggedIn ? 'Per gestire un reso o cambio, contatta il nostro supporto clienti. Puoi anche iniziare la procedura dalla sezione Account > I miei ordini. Ti guideremo passo dopo passo.' : 'Per richieste di reso o cambio, devi essere loggato. Accedi al tuo account e contatta il supporto per assistenza personalizzata.',
+                exact: false
+            },
+            {
+                triggers: ['pagamento', 'pagare', 'metodi'],
+                response: 'Accettiamo pagamenti con carta di credito, PayPal, bonifico bancario e Klarna. Tutti i pagamenti sono sicuri e protetti.',
+                exact: false
+            },
+            // Servizi specifici
+            {
+                triggers: ['bollettino', 'bollettini', 'pagamento bollettini'],
+                response: 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?',
+                exact: false
+            },
+            {
+                triggers: ['f24', 'modello f24'],
+                response: 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?',
+                exact: false
+            },
+            {
+                triggers: ['pagopa', 'pago pa', 'pagamenti elettronici'],
+                response: 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?',
+                exact: false
+            },
+            {
+                triggers: ['mav', 'rav'],
+                response: 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?',
+                exact: false
+            },
+            {
+                triggers: ['ricarica', 'telefonica', 'cellulare'],
+                response: 'Sì! Ricarichiamo tutti gli operatori: Iliad, WindTre, Fastweb, Vodafone, TIM e molti altri. Che importo ti serve? Per quale operatore? Devi ricaricare anche servizi digitali (Google Play, PSN, Netflix, ecc.)? Puoi passare in sede oppure inviarmi il numero da ricaricare e l\'importo.',
+                exact: false
+            },
+            {
+                triggers: ['spid', 'identità digitale', 'attivazione spid'],
+                response: 'Nessun problema! Attiviamo lo SPID in pochi minuti, assistendoti passo passo. Hai la carta d\'identità valida? Hai la tessera sanitaria? Preferisci farlo in sede o vuoi sapere prima come funziona? Quando vuoi, passa in agenzia: lo attiviamo noi e in 10 minuti è pronto.',
+                exact: false
+            },
+            {
+                triggers: ['pec', 'posta elettronica', 'certificata'],
+                response: 'Attiviamo PEC professionali e personali con vari provider. Ci penso io. Serve per uso privato o aziendale? Vuoi scegliere tu il nome PEC o ti va bene un suggerimento? Hai già un documento valido con te? Prepariamo tutto e te la consegniamo attiva in pochi minuti. Vuoi iniziare?',
+                exact: false
+            },
+            {
+                triggers: ['firma digitale', 'firme digitali', 'firma elettronica'],
+                response: 'La attiviamo noi, sia in formato smart card sia remoto. Preferisci una firma digitale con token USB, smart card o firma remota? Ti serve per presentare documenti, pratiche edilizie o altro? Passa in agenzia, in 5 minuti la attiviamo e la consegniamo.',
+                exact: false
+            },
+            {
+                triggers: ['spedizioni', 'pacchi', 'corrispondenza'],
+                response: 'Perfetto! Spediamo pacchi e buste in Italia e all\'estero con consegna rapida. Il pacco dove deve andare? Che peso e dimensioni ha? Ti serve anche il ritiro a domicilio? Mandami peso, misure e destinazione e ti preparo il preventivo.',
+                exact: false
+            },
+            // Flusso PIN/PUK Iliad - triggers specifici
+            {
+                triggers: ['pin', 'puk', 'bloccata', 'non ricordo', 'sim chiede', 'inserito tre volte', 'iliad'],
+                response: 'Capisco, nessun problema: ti aiuto a sbloccare la tua SIM Iliad passo dopo passo. La SIM è di Iliad, giusto? Hai inserito il PIN errato per tre volte? Hai ancora la confezione della SIM o l\'area personale Iliad accessibile? Ecco cosa succede con la SIM Iliad: Il PIN predefinito è 1234. Se inserisci il PIN errato per tre volte, la SIM si blocca e ti verrà richiesto il PUK. Il PUK lo puoi trovare nel supporto plastico della SIM o nell\'Area Personale Iliad. Se PIN errato ma SIM non bloccata: Prova ad inserire 1234 come PIN iniziale se non lo hai mai cambiato. Se risulta corretto, ti consiglio di cambiarlo subito per sicurezza. Se SIM bloccata (3 tentativi PIN): La SIM è bloccata e serve il PUK. Puoi recuperarlo: • Consulta il supporto plastico della SIM (dietro trovi PIN e PUK) • Oppure accedi all\'Area Personale Iliad → I miei dati personali → Il mio codice PUK. Hai bisogno che ti invii il link all\'Area Personale o che ti spieghi come accedervi? Se non hai supporto plastico né area accessibile: In questo caso possiamo richiedere un duplicato SIM con lo stesso numero. Ti interessa che organizziamo questo servizio per te? Come vuoi procedere? Recuperare il PUK e sbloccare la SIM o Richiedere un duplicato SIM? Fammi sapere quale opzione preferisci.',
+                exact: false
+            },
+            // Attivazioni operatori - triggers generali
+            {
+                triggers: ['windtre', 'wind', 'tre'],
+                response: 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?',
+                exact: false
+            },
+            {
+                triggers: ['fastweb', 'fibra', 'adsl'],
+                response: 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?',
+                exact: false
+            },
+            {
+                triggers: ['iliad'],
+                response: 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?',
+                exact: false
+            },
+            {
+                triggers: ['attivazioni', 'promozioni', 'offerte'],
+                response: 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?',
+                exact: false
+            },
+            {
+                triggers: ['assistenza', 'aiuto', 'supporto'],
+                response: 'Hai bisogno di assistenza? I nostri operatori esperti ti aiutano con tutti i servizi: pagamenti, ricariche, attivazioni digitali e telecomunicazioni. Non esitare a chiedere!',
+                exact: false
+            },
+            // Risposte combinate
+            {
+                triggers: ['pagamento', 'bollettino', 'utenze'],
+                response: 'Per pagamenti bollettini e utenze, siamo rapidi ed efficienti! Porta i tuoi documenti in agenzia e li eseguiamo mentre aspetti. Servizio cortese e professionale!',
+                exact: false
+            },
+            {
+                triggers: ['ricarica', 'telefono', 'tim', 'vodafone', 'windtre'],
+                response: 'Ricariche per TIM, Vodafone, WindTre e Iliad? Abbiamo tutte le tagliandi disponibili. Scegli l\'operatore e l\'importo, paghi e ricarichi istantaneamente!',
+                exact: false
+            },
+            {
+                triggers: ['posta', 'comunicazioni', 'ufficiali'],
+                response: 'Per PEC e firme digitali, offriamo soluzioni complete per privati e aziende. Attivazione guidata, assistenza continua e prezzi competitivi. Contattaci per iniziare!',
+                exact: false
+            },
+            {
+                triggers: ['internet', 'telefono', 'linea'],
+                response: 'Problemi con internet o telefono? Ti aiutiamo con attivazioni Fastweb, WindTre e Iliad. Confronto offerte, portabilità e assistenza tecnica inclusa!',
+                exact: false
+            },
+            // Flussi avanzati
+            {
+                triggers: ['sim bloccata', 'sbagliato pin', 'chiede puk', 'sim non funziona'],
+                response: 'Tranquillo, si risolve tutto. Se la SIM chiede il PUK significa che sono stati inseriti dei PIN errati. Vediamo insieme come sbloccarla. Di che operatore è la SIM? (WindTre, Iliad, Fastweb) Hai la confezione della SIM o la scheda plastica originale? Hai provato a vedere se il codice PUK è stampato sul supporto? Se hai il supporto originale, dietro trovi il codice PUK. Inserendo il PUK la SIM si sblocca e puoi scegliere un nuovo PIN. Se non hai il supporto, posso richiedere noi il duplicato della SIM. Porta un documento d\'identità e il numero da recuperare: il duplicato si attiva in pochi minuti. Vuoi provare ora a recuperare il PUK o preferisci fare direttamente un duplicato?',
+                exact: false
+            },
+            {
+                triggers: ['pagamento ko', 'pagopa non accettato', 'errore pagamento', 'bollettino andato ko'],
+                response: 'Capita ogni tanto, nessun problema: verifichiamo cosa è successo e ti aiuto a completare il pagamento. Che tipo di bollettino stavi pagando? (F24, pagoPA, MAV, RAV, bollettino semplice) Hai ricevuto un messaggio di errore specifico? Hai una foto del bollettino o del QR code? Era un pagamento fatto in sede o online? Cause più comuni: QR code non leggibile, importo non riconosciuto, servizio momentaneamente non disponibile, dati mancanti. Se mi invii la foto del bollettino, posso dirti subito cosa non va e ripetiamo il pagamento correttamente. Vuoi inviarmi ora la foto del bollettino o preferisci passare in sede per farlo insieme?',
+                exact: false
+            },
+            {
+                triggers: ['spid non funziona', 'non arriva codice', 'non riesco accedere'],
+                response: 'Vediamo subito cosa c\'è che non va con il tuo SPID. Ricevi l\'errore prima o dopo l\'inserimento delle credenziali? Ti arriva SMS o email? Ricordi la password? Se è un problema di password, possiamo fare un reset. Se non arrivano i codici, potrebbe essere un blocco temporaneo o numero errato. Se vuoi, posso controllare con te e capire se serve una nuova attivazione. Vuoi provare ora il recupero o preferisci passare in sede e lo sistemiamo insieme?',
+                exact: false
+            },
+            {
+                triggers: ['pec non entra', 'non riceve mail', 'credenziali non valide'],
+                response: 'Nessun problema, facciamo un controllo rapido. Di che provider è la PEC? L\'errore riguarda password o accesso al server? Hai cambiato dispositivo recentemente? Spesso basta aggiornare i parametri IMAP/SMTP. Se la password è scaduta, la resettiamo. Se la casella è piena, la liberiamo o aumentiamo lo spazio. Vuoi inviarmi screenshot dell\'errore così ti guido passo dopo passo?',
+                exact: false
+            },
+            {
+                triggers: ['firma digitale non funziona', 'non riconosce token', 'non si apre software'],
+                response: 'Succede spesso, vediamo insieme come risolverlo. Usi firma remota, smart card o token USB? Windows, Mac o smartphone? Hai già provato a reinstallare il software? Se è token, potrebbe essere il driver. Se è firma remota, può essere scaduta. Se il software non parte, lo reinstalliamo. Vuoi che ti preparo il link ai driver/software corretti per il tuo dispositivo?',
+                exact: false
+            },
+            {
+                triggers: ['vergogna', 'non funziona niente', 'stufo', 'non mi state aiutando'],
+                response: 'Capisco perfettamente il tuo disagio, e mi dispiace sinceramente per la situazione. Ci tengo a risolverti il problema nel modo più rapido possibile. Mi dai solo un attimo per aiutarti al meglio? Puoi dirmi esattamente cosa non sta funzionando? Da quando si presenta il problema? Hai ricevuto un messaggio o un errore preciso? Sono qui per risolverlo con te, passo dopo passo. Una volta capito il punto, troviamo la soluzione più veloce. Ti seguo io: sistemiamo tutto insieme. Puoi mandarmi ora un dettaglio o una foto dell\'errore?',
+                exact: false
+            },
+            {
+                triggers: ['copertura', 'fibra arriva', 'verifica fibra'],
+                response: 'Posso verificarlo in un attimo per Fastweb, WindTre e Iliad. Qual è l\'indirizzo completo (via, numero civico, città)? Il palazzo è già servito o non lo sai? Controllo e ti dico subito le offerte disponibili.',
+                exact: false
+            },
+            {
+                triggers: ['parlare con operatore', 'operatore umano', 'persona', 'uomo', 'contatto diretto'],
+                response: 'Capisco che preferisci parlare con una persona. Puoi lasciare un messaggio nel modulo di contatto del sito o venire direttamente in agenzia in Via Plinio il Vecchio 72, Castellammare di Stabia. Ti aspettiamo!',
+                exact: false
             }
-        }
+        ];
 
-        if (normalized.includes('stato ordine') || normalized.includes('dove ordine') || normalized.includes('quando arriva')) {
-            if (isLoggedIn) {
-                return 'Per controllare lo stato del tuo ordine, vai nella sezione Account > I miei ordini. Lì troverai tutte le informazioni sulle spedizioni e le date di consegna previste.';
+        // Calcola punteggio per ogni risposta
+        let bestResponse = null;
+        let bestScore = 0;
+        responses.forEach(resp => {
+            let score = 0;
+            if (resp.exact) {
+                // Per risposte esatte, controlla se la domanda è esattamente uno dei triggers
+                if (resp.triggers.includes(normalized)) score = 100;
             } else {
-                return 'Per verificare lo stato di un ordine, devi essere loggato. Accedi al tuo account e vai nella sezione "I miei ordini" per vedere tutti i dettagli.';
+                // Conta quanti triggers sono presenti nella domanda
+                resp.triggers.forEach(trigger => {
+                    if (normalized.includes(trigger)) score += 10;
+                });
+                // Bonus se più triggers
+                if (score > 10) score += resp.triggers.length * 2;
             }
-        }
-
-        if (normalized.includes('reso') || normalized.includes('restituire') || normalized.includes('cambio')) {
-            if (isLoggedIn) {
-                return 'Per gestire un reso o cambio, contatta il nostro supporto clienti. Puoi anche iniziare la procedura dalla sezione Account > I miei ordini. Ti guideremo passo dopo passo.';
-            } else {
-                return 'Per richieste di reso o cambio, devi essere loggato. Accedi al tuo account e contatta il supporto per assistenza personalizzata.';
+            if (score > bestScore) {
+                bestScore = score;
+                bestResponse = resp.response;
             }
+        });
+
+        // Soglia minima per rispondere
+        if (bestScore >= 10) {
+            return bestResponse;
         }
 
-        if (normalized.includes('pagamento') || normalized.includes('pagare') || normalized.includes('metodi')) {
-            return 'Accettiamo pagamenti con carta di credito, PayPal, bonifico bancario e Klarna. Tutti i pagamenti sono sicuri e protetti.';
-        }
-
-        // Servizi specifici dell'agenzia multiservizi
-        if (normalized.includes('bollettino') || normalized.includes('bollettini') || normalized.includes('pagamento bollettini')) {
-            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
-        }
-
-        if (normalized.includes('f24') || normalized.includes('f24') || normalized.includes('modello f24')) {
-            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
-        }
-
-        if (normalized.includes('pagopa') || normalized.includes('pago pa') || normalized.includes('pagamenti elettronici')) {
-            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
-        }
-
-        if (normalized.includes('mav') || normalized.includes('rav') || normalized.includes('mav rav')) {
-            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
-        }
-
-        if (normalized.includes('ricarica') || normalized.includes('telefonica') || normalized.includes('cellulare')) {
-            return 'Sì! Ricarichiamo tutti gli operatori: Iliad, WindTre, Fastweb, Vodafone, TIM e molti altri. Che importo ti serve? Per quale operatore? Devi ricaricare anche servizi digitali (Google Play, PSN, Netflix, ecc.)? Puoi passare in sede oppure inviarmi il numero da ricaricare e l\'importo.';
-        }
-
-        if (normalized.includes('spid') || normalized.includes('identità digitale') || normalized.includes('attivazione spid')) {
-            return 'Nessun problema! Attiviamo lo SPID in pochi minuti, assistendoti passo passo. Hai la carta d\'identità valida? Hai la tessera sanitaria? Preferisci farlo in sede o vuoi sapere prima come funziona? Quando vuoi, passa in agenzia: lo attiviamo noi e in 10 minuti è pronto.';
-        }
-
-        if (normalized.includes('pec') || normalized.includes('posta elettronica') || normalized.includes('certificata')) {
-            return 'Attiviamo PEC professionali e personali con vari provider. Ci penso io. Serve per uso privato o aziendale? Vuoi scegliere tu il nome PEC o ti va bene un suggerimento? Hai già un documento valido con te? Prepariamo tutto e te la consegniamo attiva in pochi minuti. Vuoi iniziare?';
-        }
-
-        if (normalized.includes('firma digitale') || normalized.includes('firme digitali') || normalized.includes('firma elettronica')) {
-            return 'La attiviamo noi, sia in formato smart card sia remoto. Preferisci una firma digitale con token USB, smart card o firma remota? Ti serve per presentare documenti, pratiche edilizie o altro? Passa in agenzia, in 5 minuti la attiviamo e la consegniamo.';
-        }
-
-        if (normalized.includes('spedizioni') || normalized.includes('pacchi') || normalized.includes('corrispondenza')) {
-            return 'Perfetto! Spediamo pacchi e buste in Italia e all\'estero con consegna rapida. Il pacco dove deve andare? Che peso e dimensioni ha? Ti serve anche il ritiro a domicilio? Mandami peso, misure e destinazione e ti preparo il preventivo.';
-        }
-
-        // Flusso PIN/PUK Iliad
-        if ((normalized.includes('pin') || normalized.includes('puk') || normalized.includes('bloccata') || normalized.includes('non ricordo') || normalized.includes('sim chiede') || normalized.includes('inserito tre volte')) && normalized.includes('iliad')) {
-            return 'Capisco, nessun problema: ti aiuto a sbloccare la tua SIM Iliad passo dopo passo. La SIM è di Iliad, giusto? Hai inserito il PIN errato per tre volte? Hai ancora la confezione della SIM o l\'area personale Iliad accessibile? Ecco cosa succede con la SIM Iliad: Il PIN predefinito è 1234. Se inserisci il PIN errato per tre volte, la SIM si blocca e ti verrà richiesto il PUK. Il PUK lo puoi trovare nel supporto plastico della SIM o nell\'Area Personale Iliad. Se PIN errato ma SIM non bloccata: Prova ad inserire 1234 come PIN iniziale se non lo hai mai cambiato. Se risulta corretto, ti consiglio di cambiarlo subito per sicurezza. Se SIM bloccata (3 tentativi PIN): La SIM è bloccata e serve il PUK. Puoi recuperarlo: • Consulta il supporto plastico della SIM (dietro trovi PIN e PUK) • Oppure accedi all\'Area Personale Iliad → I miei dati personali → Il mio codice PUK. Hai bisogno che ti invii il link all\'Area Personale o che ti spieghi come accedervi? Se non hai supporto plastico né area accessibile: In questo caso possiamo richiedere un duplicato SIM con lo stesso numero. Ti interessa che organizziamo questo servizio per te? Come vuoi procedere? Recuperare il PUK e sbloccare la SIM o Richiedere un duplicato SIM? Fammi sapere quale opzione preferisci.';
-        }
-
-        if (normalized.includes('windtre') || normalized.includes('wind') || normalized.includes('tre')) {
-            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
-        }
-
-        if (normalized.includes('fastweb') || normalized.includes('fibra') || normalized.includes('adsl')) {
-            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
-        }
-
-        if (normalized.includes('iliad') || normalized.includes('iliad')) {
-            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
-        }
-
-        if (normalized.includes('attivazioni') || normalized.includes('promozioni') || normalized.includes('offerte')) {
-            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
-        }
-
-        if (normalized.includes('assistenza') || normalized.includes('aiuto') || normalized.includes('supporto')) {
-            return 'Hai bisogno di assistenza? I nostri operatori esperti ti aiutano con tutti i servizi: pagamenti, ricariche, attivazioni digitali e telecomunicazioni. Non esitare a chiedere!';
-        }
-
-        // Risposte combinate per servizi specifici
-        if ((normalized.includes('pagamento') || normalized.includes('pagare')) && (normalized.includes('bollettino') || normalized.includes('utenze'))) {
-            return 'Per pagamenti bollettini e utenze, siamo rapidi ed efficienti! Porta i tuoi documenti in agenzia e li eseguiamo mentre aspetti. Servizio cortese e professionale!';
-        }
-
-        if ((normalized.includes('ricarica') || normalized.includes('telefono')) && (normalized.includes('tim') || normalized.includes('vodafone') || normalized.includes('windtre'))) {
-            return 'Ricariche per TIM, Vodafone, WindTre e Iliad? Abbiamo tutte le tagliandi disponibili. Scegli l\'operatore e l\'importo, paghi e ricarichi istantaneamente!';
-        }
-
-        if (normalized.includes('posta') || normalized.includes('comunicazioni') || normalized.includes('ufficiali')) {
-            return 'Per PEC e firme digitali, offriamo soluzioni complete per privati e aziende. Attivazione guidata, assistenza continua e prezzi competitivi. Contattaci per iniziare!';
-        }
-
-        if (normalized.includes('internet') || normalized.includes('telefono') || normalized.includes('linea')) {
-            return 'Problemi con internet o telefono? Ti aiutiamo con attivazioni Fastweb, WindTre e Iliad. Confronto offerte, portabilità e assistenza tecnica inclusa!';
-        }
-
-        // Flusso SIM bloccate (PUK, PIN errato)
-        if (normalized.includes('sim bloccata') || normalized.includes('sbagliato pin') || normalized.includes('chiede puk') || normalized.includes('sim non funziona')) {
-            return 'Tranquillo, si risolve tutto. Se la SIM chiede il PUK significa che sono stati inseriti dei PIN errati. Vediamo insieme come sbloccarla. Di che operatore è la SIM? (WindTre, Iliad, Fastweb) Hai la confezione della SIM o la scheda plastica originale? Hai provato a vedere se il codice PUK è stampato sul supporto? Se hai il supporto originale, dietro trovi il codice PUK. Inserendo il PUK la SIM si sblocca e puoi scegliere un nuovo PIN. Se non hai il supporto, posso richiedere noi il duplicato della SIM. Porta un documento d\'identità e il numero da recuperare: il duplicato si attiva in pochi minuti. Vuoi provare ora a recuperare il PUK o preferisci fare direttamente un duplicato?';
-        }
-
-        // Flusso pagamento bollette andati KO
-        if (normalized.includes('pagamento ko') || normalized.includes('pagopa non accettato') || normalized.includes('errore pagamento') || normalized.includes('bollettino andato ko')) {
-            return 'Capita ogni tanto, nessun problema: verifichiamo cosa è successo e ti aiuto a completare il pagamento. Che tipo di bollettino stavi pagando? (F24, pagoPA, MAV, RAV, bollettino semplice) Hai ricevuto un messaggio di errore specifico? Hai una foto del bollettino o del QR code? Era un pagamento fatto in sede o online? Cause più comuni: QR code non leggibile, importo non riconosciuto, servizio momentaneamente non disponibile, dati mancanti. Se mi invii la foto del bollettino, posso dirti subito cosa non va e ripetiamo il pagamento correttamente. Vuoi inviarmi ora la foto del bollettino o preferisci passare in sede per farlo insieme?';
-        }
-
-        // Flusso problemi SPID
-        if (normalized.includes('spid non funziona') || normalized.includes('non arriva codice') || normalized.includes('non riesco accedere')) {
-            return 'Vediamo subito cosa c\'è che non va con il tuo SPID. Ricevi l\'errore prima o dopo l\'inserimento delle credenziali? Ti arriva SMS o email? Ricordi la password? Se è un problema di password, possiamo fare un reset. Se non arrivano i codici, potrebbe essere un blocco temporaneo o numero errato. Se vuoi, posso controllare con te e capire se serve una nuova attivazione. Vuoi provare ora il recupero o preferisci passare in sede e lo sistemiamo insieme?';
-        }
-
-        // Flusso problemi PEC
-        if (normalized.includes('pec non entra') || normalized.includes('non riceve mail') || normalized.includes('credenziali non valide')) {
-            return 'Nessun problema, facciamo un controllo rapido. Di che provider è la PEC? L\'errore riguarda password o accesso al server? Hai cambiato dispositivo recentemente? Spesso basta aggiornare i parametri IMAP/SMTP. Se la password è scaduta, la resettiamo. Se la casella è piena, la liberiamo o aumentiamo lo spazio. Vuoi inviarmi screenshot dell\'errore così ti guido passo dopo passo?';
-        }
-
-        // Flusso problemi Firma Digitale
-        if (normalized.includes('firma digitale non funziona') || normalized.includes('non riconosce token') || normalized.includes('non si apre software')) {
-            return 'Succede spesso, vediamo insieme come risolverlo. Usi firma remota, smart card o token USB? Windows, Mac o smartphone? Hai già provato a reinstallare il software? Se è token, potrebbe essere il driver. Se è firma remota, può essere scaduta. Se il software non parte, lo reinstalliamo. Vuoi che ti preparo il link ai driver/software corretti per il tuo dispositivo?';
-        }
-
-        // Flusso utente arrabbiato – de-escalation professionale
-        if (normalized.includes('vergogna') || normalized.includes('non funziona niente') || normalized.includes('stufo') || normalized.includes('non mi state aiutando')) {
-            return 'Capisco perfettamente il tuo disagio, e mi dispiace sinceramente per la situazione. Ci tengo a risolverti il problema nel modo più rapido possibile. Mi dai solo un attimo per aiutarti al meglio? Puoi dirmi esattamente cosa non sta funzionando? Da quando si presenta il problema? Hai ricevuto un messaggio o un errore preciso? Sono qui per risolverlo con te, passo dopo passo. Una volta capito il punto, troviamo la soluzione più veloce. Ti seguo io: sistemiamo tutto insieme. Puoi mandarmi ora un dettaglio o una foto dell\'errore?';
-        }
-
-        // Parla con operatore
-        if (normalized.includes('copertura') || normalized.includes('fibra arriva') || normalized.includes('verifica fibra')) {
-            return 'Posso verificarlo in un attimo per Fastweb, WindTre e Iliad. Qual è l\'indirizzo completo (via, numero civico, città)? Il palazzo è già servito o non lo sai? Controllo e ti dico subito le offerte disponibili.';
-        }
-
-        // Parla con operatore
-        if (normalized.includes('parlare con operatore') || normalized.includes('operatore umano') || normalized.includes('persona') || normalized.includes('uomo') || normalized.includes('contatto diretto')) {
-            return 'Capisco che preferisci parlare con una persona. Puoi lasciare un messaggio nel modulo di contatto del sito o venire direttamente in agenzia in Via Plinio il Vecchio 72, Castellammare di Stabia. Ti aspettiamo!';
-        }
-
-        // Domande vaghe o generiche
+        // Domande vaghe
         if (normalized.length < 5 || normalized.split(' ').length < 2) {
             return 'La tua domanda sembra un po\' vaga. Puoi essere più specifico? Ad esempio, dimmi su quale servizio o prodotto hai bisogno di informazioni.';
         }
