@@ -902,11 +902,16 @@ const App = (() => {
         const delay = 450 + Math.random() * 400;
         setTimeout(() => {
             hideChatbotTyping(typing);
-            const match = findBestFaq(question);
-            if (match) {
-                appendChatbotMessage(match.answer, 'bot', { category: match.category });
+            const predefined = getPredefinedResponse(question);
+            if (predefined) {
+                appendChatbotMessage(predefined, 'bot');
             } else {
-                appendChatbotMessage('Non ho trovato una risposta precisa, ma il nostro team può aiutarti via modulo di contatto o telefono.', 'bot');
+                const match = findBestFaq(question);
+                if (match) {
+                    appendChatbotMessage(match.answer, 'bot', { category: match.category });
+                } else {
+                    appendChatbotMessage('Non ho trovato una risposta precisa, ma il nostro team può aiutarti via modulo di contatto o telefono.', 'bot');
+                }
             }
         }, delay);
     }
@@ -975,6 +980,48 @@ const App = (() => {
         const messages = state.chatbotMessages;
         if (!messages) return;
         messages.scrollTop = messages.scrollHeight;
+    }
+
+    function getPredefinedResponse(question) {
+        const normalized = normalizeText(question);
+        if (!normalized) return null;
+
+        // Saluti
+        if (normalized.includes('ciao') || normalized.includes('salve') || normalized.includes('buongiorno') || normalized.includes('buonasera') || normalized === 'saluto' || normalized === 'ehila') {
+            return 'Ciao! Sono Plinio, il chatbot di AG SERVIZI VIA PLINIO 72. Come posso aiutarti oggi?';
+        }
+
+        // Ringraziamenti
+        if (normalized.includes('grazie') || normalized.includes('thank') || normalized === 'ok' || normalized === 'perfetto') {
+            return 'Prego! Se hai altre domande, sono qui per aiutarti.';
+        }
+
+        // Arrivederci
+        if (normalized.includes('arrivederci') || normalized.includes('ciao') && normalized.includes('addio') || normalized.includes('bye') || normalized === 'a presto') {
+            return 'Arrivederci! Torna presto se hai bisogno di aiuto.';
+        }
+
+        // Come stai
+        if (normalized.includes('come stai') || normalized.includes('come va') || normalized.includes('tutto bene')) {
+            return 'Sto bene, grazie! Sono qui per rispondere alle tue domande su AG SERVIZI. Cosa posso fare per te?';
+        }
+
+        // Chi sei
+        if (normalized.includes('chi sei') || normalized.includes('cosa sei') || normalized.includes('sei un bot')) {
+            return 'Sono Plinio, l\'assistente virtuale di AG SERVIZI VIA PLINIO 72. Posso aiutarti con informazioni sui nostri servizi, rispondere a domande frequenti e guidarti nel nostro sito.';
+        }
+
+        // Aiuto
+        if (normalized.includes('aiuto') || normalized.includes('help')) {
+            return 'Certo! Puoi chiedermi qualsiasi cosa sui nostri servizi, oppure sfoglia le FAQ nel tab dedicato. Come posso assisterti?';
+        }
+
+        // Non capisco
+        if (normalized.includes('non capisco') || normalized.includes('non ho capito') || normalized.includes('ripeti')) {
+            return 'Mi scusi se non sono stato chiaro. Puoi riformulare la tua domanda o guardare le FAQ per risposte più dettagliate.';
+        }
+
+        return null;
     }
 
     function findBestFaq(question) {
