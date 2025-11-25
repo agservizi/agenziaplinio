@@ -732,55 +732,548 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                     <div class="partners-showcase">
                         <h5 class="mb-3">I Nostri Partner</h5>
                         <div class="partner-logos">
-                            <div class="partner-logo">
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-droppoint">
                                 <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
                                 <span>DropPoint</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-namirial">
                                 <i class="fas fa-signature fa-2x text-info"></i>
                                 <span>Namirial</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-aruba-business">
                                 <i class="fas fa-server fa-2x text-success"></i>
                                 <span>Aruba Business</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-iliad">
                                 <i class="fas fa-mobile-alt fa-2x text-warning"></i>
                                 <span>Iliad</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-windtre">
                                 <i class="fas fa-sim-card fa-2x text-danger"></i>
                                 <span>Windtre</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-fastweb">
                                 <i class="fas fa-wifi fa-2x text-info"></i>
                                 <span>Fastweb</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-a2a-energia">
                                 <i class="fas fa-bolt fa-2x text-warning"></i>
                                 <span>A2A Energia</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-enel-energia">
                                 <i class="fas fa-lightbulb fa-2x text-success"></i>
                                 <span>Enel Energia</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-brt">
                                 <i class="fas fa-truck fa-2x text-primary"></i>
                                 <span>Brt</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-inpost">
                                 <i class="fas fa-box fa-2x text-secondary"></i>
                                 <span>Inpost</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-posteitaliane">
                                 <i class="fab fa-telegram-plane fa-2x text-info"></i>
                                 <span>PosteItaliane</span>
-                            </div>
-                            <div class="partner-logo">
+                            </button>
+                            <button class="partner-logo btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#modal-fedex">
                                 <i class="fas fa-plane fa-2x text-primary"></i>
                                 <span>Fedex</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Partner Modals -->
+        <!-- DropPoint Modal -->
+        <div class="modal fade" id="modal-droppoint" tabindex="-1" aria-labelledby="modal-droppoint-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-droppoint-label">
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>DropPoint
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Servizio di ritiro e consegna pacchi presso punti di raccolta convenzionati.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offeriti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Ritiro pacchi a domicilio</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Consegna presso locker automatici</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Tracking in tempo reale</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Orari flessibili di ritiro</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Convenienza</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Flessibilità oraria</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Sicurezza garantita</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Copertura nazionale</li>
+                                </ul>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Namirial Modal -->
+        <div class="modal fade" id="modal-namirial" tabindex="-1" aria-labelledby="modal-namirial-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-namirial-label">
+                            <i class="fas fa-signature text-info me-2"></i>Namirial
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Leader europeo nelle soluzioni di firma digitale e identità elettronica.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Firma digitale qualificata</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Firma digitale remota</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Certificati digitali</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Validazione documenti</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Conformità legale</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Sicurezza massima</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Facilità d'uso</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Supporto completo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aruba Business Modal -->
+        <div class="modal fade" id="modal-aruba-business" tabindex="-1" aria-labelledby="modal-aruba-business-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-aruba-business-label">
+                            <i class="fas fa-server text-success me-2"></i>Aruba Business
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Soluzioni cloud e hosting enterprise per aziende di ogni dimensione.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Cloud hosting</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Email business</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Certificati SSL</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Backup e disaster recovery</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Reliability 99.9%</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Sicurezza certificata</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Supporto 24/7</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Scalabilità</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Iliad Modal -->
+        <div class="modal fade" id="modal-iliad" tabindex="-1" aria-labelledby="modal-iliad-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-iliad-label">
+                            <i class="fas fa-mobile-alt text-warning me-2"></i>Iliad
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Operatore telefonico italiano che offre servizi mobili senza costi nascosti.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Telefonia mobile</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Internet mobile</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Offerte convergenti</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>SIM prepagate e abbonamento</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Trasparenza totale</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Nessun costo nascosto</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Rete 4G/5G</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Assistenza diretta</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Windtre Modal -->
+        <div class="modal fade" id="modal-windtre" tabindex="-1" aria-labelledby="modal-windtre-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-windtre-label">
+                            <i class="fas fa-sim-card text-danger me-2"></i>Windtre
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Operatore integrato che offre servizi mobili e fissi con copertura nazionale estesa.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Telefonia mobile</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Internet fisso</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Telefonia fissa</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Soluzioni business</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Copertura capillare</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Servizi integrati</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Velocità elevate</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Assistenza dedicata</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fastweb Modal -->
+        <div class="modal fade" id="modal-fastweb" tabindex="-1" aria-labelledby="modal-fastweb-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-fastweb-label">
+                            <i class="fas fa-wifi text-info me-2"></i>Fastweb
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Provider di telecomunicazioni che offre connessioni internet ad alta velocità e soluzioni smart home.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Fibra ottica</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>ADSL</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Telefonia fissa</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Soluzioni smart home</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Velocità fino a 10 Gbps</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Stabilità di connessione</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Domotica integrata</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Assistenza tecnica</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A2A Energia Modal -->
+        <div class="modal fade" id="modal-a2a-energia" tabindex="-1" aria-labelledby="modal-a2a-energia-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-a2a-energia-label">
+                            <i class="fas fa-bolt text-warning me-2"></i>A2A Energia
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Fornitore di energia elettrica e gas con soluzioni sostenibili per famiglie e imprese.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Energia elettrica</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Gas naturale</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Energia rinnovabile</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Servizi di efficienza energetica</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Energia verde</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Tariffe competitive</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Assistenza clienti</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Sostenibilità</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enel Energia Modal -->
+        <div class="modal fade" id="modal-enel-energia" tabindex="-1" aria-labelledby="modal-enel-energia-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-enel-energia-label">
+                            <i class="fas fa-lightbulb text-success me-2"></i>Enel Energia
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Principale fornitore di energia elettrica in Italia con soluzioni innovative per il risparmio energetico.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Energia elettrica</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Gas naturale</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Soluzioni fotovoltaiche</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Servizi di mobilità elettrica</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Innovazione tecnologica</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Efficienza energetica</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>App di controllo</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Servizio clienti 24/7</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brt Modal -->
+        <div class="modal fade" id="modal-brt" tabindex="-1" aria-labelledby="modal-brt-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-brt-label">
+                            <i class="fas fa-truck text-primary me-2"></i>Brt
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Servizio di corriere espresso leader in Italia per consegne rapide e affidabili.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Consegne espresso</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Servizi internazionali</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Tracking pacchi</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Soluzioni e-commerce</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Rapidità di consegna</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Rete capillare</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Affidabilità</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Assicurazione merci</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inpost Modal -->
+        <div class="modal fade" id="modal-inpost" tabindex="-1" aria-labelledby="modal-inpost-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-inpost-label">
+                            <i class="fas fa-box text-secondary me-2"></i>Inpost
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Rete di locker automatici per il ritiro e la spedizione di pacchi in modo sicuro e conveniente.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Locker automatici</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Ritiro 24/7</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Spedizioni</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Tracking digitale</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Accessibilità 24/7</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Sicurezza massima</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Convenienza</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Eco-sostenibilità</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PosteItaliane Modal -->
+        <div class="modal fade" id="modal-posteitaliane" tabindex="-1" aria-labelledby="modal-posteitaliane-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-posteitaliane-label">
+                            <i class="fab fa-telegram-plane text-info me-2"></i>PosteItaliane
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Servizi postali e finanziari italiani con una rete capillare su tutto il territorio nazionale.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Servizi postali</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>PostePay</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Assicurazioni</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Servizi finanziari</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Copertura universale</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Affidabilità storica</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Servizi integrati</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Accessibilità</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fedex Modal -->
+        <div class="modal fade" id="modal-fedex" tabindex="-1" aria-labelledby="modal-fedex-label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-fedex-label">
+                            <i class="fas fa-plane text-primary me-2"></i>Fedex
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">Leader mondiale nelle spedizioni express con consegna affidabile in oltre 220 paesi.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Servizi Offerti:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Spedizioni express</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Consegne internazionali</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Logistica integrata</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Soluzioni e-commerce</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Vantaggi:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-star text-warning me-2"></i>Consegna garantita</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Copertura globale</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Tracking avanzato</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Servizio premium</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <a href="?page=contatti" class="btn btn-primary">Richiedi Informazioni</a>
                     </div>
                 </div>
             </div>
@@ -1144,6 +1637,35 @@ document.addEventListener('DOMContentLoaded', function() {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
+        }
+
+        .partner-logo {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 80px;
+            justify-content: center;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .partner-logo i {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .partner-logo span {
+            font-size: 0.85rem;
+            font-weight: 500;
         }
     `;
     document.head.appendChild(style);
