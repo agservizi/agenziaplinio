@@ -1115,6 +1115,11 @@ const App = (() => {
             return 'Perfetto! Spediamo pacchi e buste in Italia e all\'estero con consegna rapida. Il pacco dove deve andare? Che peso e dimensioni ha? Ti serve anche il ritiro a domicilio? Mandami peso, misure e destinazione e ti preparo il preventivo.';
         }
 
+        // Flusso PIN/PUK Iliad
+        if ((normalized.includes('pin') || normalized.includes('puk') || normalized.includes('bloccata') || normalized.includes('non ricordo') || normalized.includes('sim chiede') || normalized.includes('inserito tre volte')) && normalized.includes('iliad')) {
+            return 'Capisco, nessun problema: ti aiuto a sbloccare la tua SIM Iliad passo dopo passo. La SIM è di Iliad, giusto? Hai inserito il PIN errato per tre volte? Hai ancora la confezione della SIM o l\'area personale Iliad accessibile? Ecco cosa succede con la SIM Iliad: Il PIN predefinito è 1234. Se inserisci il PIN errato per tre volte, la SIM si blocca e ti verrà richiesto il PUK. Il PUK lo puoi trovare nel supporto plastico della SIM o nell\'Area Personale Iliad. Se PIN errato ma SIM non bloccata: Prova ad inserire 1234 come PIN iniziale se non lo hai mai cambiato. Se risulta corretto, ti consiglio di cambiarlo subito per sicurezza. Se SIM bloccata (3 tentativi PIN): La SIM è bloccata e serve il PUK. Puoi recuperarlo: • Consulta il supporto plastico della SIM (dietro trovi PIN e PUK) • Oppure accedi all\'Area Personale Iliad → I miei dati personali → Il mio codice PUK. Hai bisogno che ti invii il link all\'Area Personale o che ti spieghi come accedervi? Se non hai supporto plastico né area accessibile: In questo caso possiamo richiedere un duplicato SIM con lo stesso numero. Ti interessa che organizziamo questo servizio per te? Come vuoi procedere? Recuperare il PUK e sbloccare la SIM o Richiedere un duplicato SIM? Fammi sapere quale opzione preferisci.';
+        }
+
         if (normalized.includes('windtre') || normalized.includes('wind') || normalized.includes('tre')) {
             return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
         }
@@ -1175,11 +1180,6 @@ const App = (() => {
         // Flusso problemi Firma Digitale
         if (normalized.includes('firma digitale non funziona') || normalized.includes('non riconosce token') || normalized.includes('non si apre software')) {
             return 'Succede spesso, vediamo insieme come risolverlo. Usi firma remota, smart card o token USB? Windows, Mac o smartphone? Hai già provato a reinstallare il software? Se è token, potrebbe essere il driver. Se è firma remota, può essere scaduta. Se il software non parte, lo reinstalliamo. Vuoi che ti preparo il link ai driver/software corretti per il tuo dispositivo?';
-        }
-
-        // Flusso PIN/PUK Iliad
-        if ((normalized.includes('pin') || normalized.includes('puk') || normalized.includes('bloccata') || normalized.includes('non ricordo') || normalized.includes('sim chiede') || normalized.includes('inserito tre volte')) && normalized.includes('iliad')) {
-            return 'Capisco, nessun problema: ti aiuto a sbloccare la tua SIM Iliad passo dopo passo. La SIM è di Iliad, giusto? Hai inserito il PIN errato per tre volte? Hai ancora la confezione della SIM o l\'area personale Iliad accessibile? Ecco cosa succede con la SIM Iliad: Il PIN predefinito è 1234. Se inserisci il PIN errato per tre volte, la SIM si blocca e ti verrà richiesto il PUK. Il PUK lo puoi trovare nel supporto plastico della SIM o nell\'Area Personale Iliad. Se PIN errato ma SIM non bloccata: Prova ad inserire 1234 come PIN iniziale se non lo hai mai cambiato. Se risulta corretto, ti consiglio di cambiarlo subito per sicurezza. Se SIM bloccata (3 tentativi PIN): La SIM è bloccata e serve il PUK. Puoi recuperarlo: • Consulta il supporto plastico della SIM (dietro trovi PIN e PUK) • Oppure accedi all\'Area Personale Iliad → I miei dati personali → Il mio codice PUK. Hai bisogno che ti invii il link all\'Area Personale o che ti spieghi come accedervi? Se non hai supporto plastico né area accessibile: In questo caso possiamo richiedere un duplicato SIM con lo stesso numero. Ti interessa che organizziamo questo servizio per te? Come vuoi procedere? Recuperare il PUK e sbloccare la SIM o Richiedere un duplicato SIM? Fammi sapere quale opzione preferisci.';
         }
 
         // Flusso utente arrabbiato – de-escalation professionale
