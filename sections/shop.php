@@ -228,7 +228,7 @@ $activeFilters = array_filter([
                                         </figure>
 
                                         <!-- Product Body -->
-                                        <div class="card-body p-0">
+                                        <div class="card-body p-3">
                                             <!-- Badges -->
                                             <div class="d-flex justify-content-between align-items-start mb-2">
                                                 <span class="badge bg-dark"><?php echo htmlspecialchars($categoryLabel, ENT_QUOTES); ?></span>
