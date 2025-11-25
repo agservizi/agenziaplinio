@@ -51,7 +51,7 @@ $activeFilters = array_filter([
             <h2 class="mb-3">Servizi pronti all'acquisto</h2>
             <p class="lead text-muted">Completa l'ordine in autonomia: attiviamo SIM, PEC, spedizioni e servizi digitali in poche ore.</p>
         </div>
-        <div class="row gy-4">
+        <div class="row gy-4" style="min-height: 100vh;">
             <div class="col-lg-3 position-sticky" style="top: 80px;">
                 <div class="ap-card p-4 h-100" style="background-color: #fff; border-right: 1px solid #e4e7ec; padding: 1.5rem 1rem; height: calc(100vh - 80px);">
                     <h5 class="mb-3">Filtri</h5>
