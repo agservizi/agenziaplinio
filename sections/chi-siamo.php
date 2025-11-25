@@ -320,140 +320,6 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
     color: #495057;
 }
 
-/* Impact Section */
-.impact-section {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 12px;
-    padding: 3rem;
-    margin-bottom: 3rem;
-}
-
-.impact-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    height: 100%;
-    transition: transform 0.2s ease;
-}
-
-.impact-card:hover {
-    transform: translateY(-5px);
-}
-
-.impact-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #17a2b8, #138496);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    color: white;
-    font-size: 1.5rem;
-}
-
-.impact-card h4 {
-    color: #17a2b8;
-    margin-bottom: 1rem;
-}
-
-/* Vision Section */
-.vision-section {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    border-radius: 12px;
-    padding: 3rem;
-    margin-bottom: 3rem;
-    color: white;
-}
-
-.vision-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.vision-goals {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.goal-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
-.goal-year {
-    background: rgba(255,255,255,0.2);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-    margin-top: 0.25rem;
-}
-
-.goal-content h5 {
-    margin-bottom: 0.5rem;
-    color: white;
-}
-
-/* Gallery Section */
-.gallery-section {
-    margin-bottom: 3rem;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.gallery-item {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-}
-
-.gallery-item:hover {
-    transform: translateY(-5px);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    display: block;
-}
-
-.gallery-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    color: white;
-    padding: 2rem 1.5rem 1.5rem;
-    transform: translateY(100%);
-    transition: transform 0.2s ease;
-}
-
-.gallery-item:hover .gallery-overlay {
-    transform: translateY(0);
-}
-
-.gallery-overlay h5 {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .timeline {
@@ -464,18 +330,8 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
         left: -17px;
     }
 
-    .values-section,
-    .impact-section,
-    .vision-section {
+    .values-section {
         padding: 2rem 1rem;
-    }
-
-    .gallery-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .vision-goals {
-        grid-template-columns: 1fr;
     }
 }
 
@@ -898,107 +754,6 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
             </div>
         </div>
 
-        <!-- Impatto nella Comunità -->
-        <div class="impact-section">
-            <h2 class="text-center mb-5">Il Nostro Impegno per la Comunità</h2>
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="impact-card">
-                        <div class="impact-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h4>Formazione Digitale</h4>
-                        <p>Organizziamo corsi gratuiti di alfabetizzazione digitale per anziani e cittadini, aiutando oltre 500 persone all'anno a familiarizzare con i servizi online.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="impact-card">
-                        <div class="impact-icon">
-                            <i class="fas fa-hand-holding-heart"></i>
-                        </div>
-                        <h4>Supporto alle PMI</h4>
-                        <p>Offriamo consulenze gratuite alle piccole imprese locali per la digitalizzazione, contribuendo alla crescita economica del territorio.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="impact-card">
-                        <div class="impact-icon">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <h4>Sostenibilità</h4>
-                        <p>Promuoviamo pratiche sostenibili riducendo l'uso di carta e incoraggiando i pagamenti digitali, contribuendo alla riduzione dell'impatto ambientale.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Vision Futura -->
-        <div class="vision-section">
-            <div class="vision-content">
-                <h2 class="text-center mb-4">La Nostra Vision</h2>
-                <p class="lead text-center mb-5">Essere il punto di riferimento digitale per cittadini e imprese della nostra regione, facilitando l'accesso ai servizi attraverso innovazione tecnologica e servizio personalizzato.</p>
-
-                <div class="vision-goals">
-                    <div class="goal-item">
-                        <div class="goal-year">2025</div>
-                        <div class="goal-content">
-                            <h5>Espansione Digitale</h5>
-                            <p>Introduzione di nuovi servizi digitali e app mobile proprietaria per una gestione semplificata delle pratiche.</p>
-                        </div>
-                    </div>
-                    <div class="goal-item">
-                        <div class="goal-year">2026</div>
-                        <div class="goal-content">
-                            <h5>Centro di Innovazione</h5>
-                            <p>Creazione di un hub tecnologico locale che supporti startup e imprese nell'adozione di tecnologie digitali avanzate.</p>
-                        </div>
-                    </div>
-                    <div class="goal-item">
-                        <div class="goal-year">2027</div>
-                        <div class="goal-content">
-                            <h5>Eccellenza nel Servizio</h5>
-                            <p>Raggiungimento del 100% di soddisfazione clienti attraverso processi ottimizzati e formazione continua del team.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Galleria Fotografica -->
-        <div class="gallery-section">
-            <h2 class="text-center mb-5">La Nostra Realtà</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5VfficioBQcmluY2lwYWxlPC90ZXh0Pgo8L3N2Zz4=" alt="Ufficio Principale">
-                    <div class="gallery-overlay">
-                        <h5>Ufficio Principale</h5>
-                        <p>La nostra sede accogliente in Via Plinio il Vecchio</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5Db25zdWxlbnphPC90ZXh0Pgo8L3N2Zz4=" alt="Consulenza">
-                    <div class="gallery-overlay">
-                        <h5>Consulenza Personalizzata</h5>
-                        <p>Il nostro team al lavoro per i clienti</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5Gb3JtYXppb25lPC90ZXh0Pgo8L3N2Zz4=" alt="Formazione">
-                    <div class="gallery-overlay">
-                        <h5>Formazione Digitale</h5>
-                        <p>Corsi e workshop per la comunità</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjQzRDNEM0IiBmb250LXNpemU9IjE2Ij5UZXJuYXRpdm8mbHQvdGV4dD4KPC9zdmc+" alt="Tecnativo">
-                    <div class="gallery-overlay">
-                        <h5>Tecnologia Avanzata</h5>
-                        <p>Strumenti digitali per servizi efficienti</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- FAQ Chi Siamo -->
         <div class="about-panel-full">
             <h2 class="text-center mb-5">Domande Frequenti su di Noi</h2>
@@ -1042,24 +797,24 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#about-faq4">
-                            Come contribuite alla comunità locale?
+                            Quali certificazioni possedete?
                         </button>
                     </h2>
                     <div id="about-faq4" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
                         <div class="accordion-body">
-                            Oltre ai nostri servizi commerciali, organizziamo corsi gratuiti di alfabetizzazione digitale, forniamo consulenze gratuite alle PMI locali e promuoviamo pratiche sostenibili. Crediamo che il successo aziendale debba andare di pari passo con il benessere della comunità.
+                            Siamo certificati ISO 27001 per la sicurezza delle informazioni e abbiamo il Privacy Officer qualificato GDPR. Inoltre siamo partner ufficiali di TIM e Vodafone, con autorizzazioni per la rivendita di servizi telefonici e digitali.
                         </div>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#about-faq5">
-                            Quali sono i vostri obiettivi futuri?
+                            Come garantire la sicurezza dei dati?
                         </button>
                     </h2>
                     <div id="about-faq5" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
                         <div class="accordion-body">
-                            Nei prossimi anni puntiamo a diventare un vero e proprio hub di innovazione digitale per il territorio, sviluppando app proprietarie e servizi avanzati. Il nostro obiettivo è raggiungere il 100% di soddisfazione clienti attraverso processi sempre più efficienti.
+                            La sicurezza è la nostra priorità assoluta. Tutti i nostri processi sono certificati ISO 27001, utilizziamo crittografia end-to-end e monitoriamo costantemente i sistemi. I dati dei clienti sono protetti con i più alti standard di sicurezza informatica.
                         </div>
                     </div>
                 </div>
