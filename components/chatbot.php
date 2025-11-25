@@ -17,13 +17,6 @@ $isLoggedIn = !empty(ap_auth_current_user());
             <small>Chatta con Plinio</small>
         </span>
     </button>
-    <button class="ap-chatbot__toggle" type="button" data-chatbot-toggle aria-expanded="false" aria-controls="ap-chatbot-panel">
-        <span class="ap-chatbot__toggle-icon" aria-hidden="true">?</span>
-        <span class="ap-chatbot__toggle-copy">
-            <strong>Serve aiuto?</strong>
-            <small>Chatta con Plinio</small>
-        </span>
-    </button>
     <section id="ap-chatbot-panel" class="ap-chatbot__panel" aria-hidden="true" aria-live="polite">
         <header class="ap-chatbot__header">
             <div>
