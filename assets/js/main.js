@@ -1025,7 +1025,7 @@ const App = (() => {
 
         // Informazioni aziendali
         if (normalized.includes('dove siete') || normalized.includes('indirizzo') || normalized.includes('ubicazione') || normalized.includes('sede')) {
-            return 'Siamo situati in VIA PLINIO 72. Puoi trovarci facilmente nel centro di Roma. Se hai bisogno di indicazioni, posso aiutarti con le direzioni.';
+            return 'Siamo in Via Plinio Il Vecchio, 72 – Castellammare di Stabia (NA). Se vuoi ti dico anche gli orari o come raggiungerci. Ti servono gli orari di oggi? Vuoi sapere la distanza da dove ti trovi?';
         }
 
         if (normalized.includes('telefono') || normalized.includes('numero') || normalized.includes('chiamare') || normalized.includes('contatto telefonico')) {
@@ -1037,7 +1037,7 @@ const App = (() => {
         }
 
         if (normalized.includes('orari') || normalized.includes('aperto') || normalized.includes('chiuso') || normalized.includes('quando')) {
-            return 'I nostri orari di apertura sono dal lunedì al venerdì dalle 9:00 alle 18:00. Il sabato siamo aperti fino alle 13:00. La domenica siamo chiusi.';
+            return 'Siamo in Via Plinio Il Vecchio, 72 – Castellammare di Stabia (NA). Se vuoi ti dico anche gli orari o come raggiungerci. Ti servono gli orari di oggi? Vuoi sapere la distanza da dove ti trovi?';
         }
 
         // Servizi
@@ -1080,55 +1080,55 @@ const App = (() => {
 
         // Servizi specifici dell'agenzia multiservizi
         if (normalized.includes('bollettino') || normalized.includes('bollettini') || normalized.includes('pagamento bollettini')) {
-            return 'Paghi bollettini postali, utenze, multe e tanto altro? Siamo il tuo sportello di fiducia! Porta i tuoi bollettini in agenzia e li paghiamo per te in pochi minuti. Hai un bollettino da pagare ora?';
+            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
         }
 
         if (normalized.includes('f24') || normalized.includes('f24') || normalized.includes('modello f24')) {
-            return 'Hai bisogno di pagare F24 per tasse, contributi o rimborsi? Gestiamo pagamenti F24 per privati e aziende. Porta il tuo modello compilato e ci pensiamo noi!';
+            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
         }
 
         if (normalized.includes('pagopa') || normalized.includes('pago pa') || normalized.includes('pagamenti elettronici')) {
-            return 'Utilizzi pagoPA per i tuoi pagamenti? Ti aiutiamo con tutti i pagamenti elettronici verso la Pubblica Amministrazione. Veloce, sicuro e senza code!';
+            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
         }
 
         if (normalized.includes('mav') || normalized.includes('rav') || normalized.includes('mav rav')) {
-            return 'Pagamenti MAV e RAV per tributi comunali, regionali o statali? Accettiamo tutti i tipi di MAV e RAV. Porta il tuo avviso di pagamento e lo eseguiamo immediatamente.';
+            return 'Certo! Effettuiamo pagamenti di bollettini, F24, pagoPA, MAV e RAV in pochi minuti. Ti aiuto subito. Che tipo di pagamento devi fare? Hai già il documento o il codice da pagare? Porta il bollettino in sede oppure invialo in foto, e ti diciamo subito l\'importo. Vuoi lasciarmi una foto?';
         }
 
         if (normalized.includes('ricarica') || normalized.includes('telefonica') || normalized.includes('cellulare')) {
-            return 'Hai bisogno di ricariche telefoniche? Vendiamo ricariche per tutti gli operatori: TIM, Vodafone, WindTre, Iliad. Scegli l\'importo che preferisci!';
+            return 'Sì! Ricarichiamo tutti gli operatori: Iliad, WindTre, Fastweb, Vodafone, TIM e molti altri. Che importo ti serve? Per quale operatore? Devi ricaricare anche servizi digitali (Google Play, PSN, Netflix, ecc.)? Puoi passare in sede oppure inviarmi il numero da ricaricare e l\'importo.';
         }
 
         if (normalized.includes('spid') || normalized.includes('identità digitale') || normalized.includes('attivazione spid')) {
-            return 'Attivi SPID per accedere ai servizi online della PA? Ti guidiamo passo dopo passo nell\'attivazione dell\'identità digitale. Richiedi un appuntamento! Vuoi sapere i documenti necessari per attivare SPID?';
+            return 'Nessun problema! Attiviamo lo SPID in pochi minuti, assistendoti passo passo. Hai la carta d\'identità valida? Hai la tessera sanitaria? Preferisci farlo in sede o vuoi sapere prima come funziona? Quando vuoi, passa in agenzia: lo attiviamo noi e in 10 minuti è pronto.';
         }
 
         if (normalized.includes('pec') || normalized.includes('posta elettronica') || normalized.includes('certificata')) {
-            return 'Hai bisogno di una PEC per comunicazioni ufficiali? Attiviamo caselle di posta elettronica certificata per privati e aziende. Scegli il piano che fa per te!';
+            return 'Attiviamo PEC professionali e personali con vari provider. Ci penso io. Serve per uso privato o aziendale? Vuoi scegliere tu il nome PEC o ti va bene un suggerimento? Hai già un documento valido con te? Prepariamo tutto e te la consegniamo attiva in pochi minuti. Vuoi iniziare?';
         }
 
         if (normalized.includes('firma digitale') || normalized.includes('firme digitali') || normalized.includes('firma elettronica')) {
-            return 'Cerchi firme digitali per documenti ufficiali? Offriamo attivazioni di firme elettroniche qualificate. Sicure e legali per tutti i tuoi documenti!';
+            return 'La attiviamo noi, sia in formato smart card sia remoto. Preferisci una firma digitale con token USB, smart card o firma remota? Ti serve per presentare documenti, pratiche edilizie o altro? Passa in agenzia, in 5 minuti la attiviamo e la consegniamo.';
         }
 
         if (normalized.includes('spedizioni') || normalized.includes('pacchi') || normalized.includes('corrispondenza')) {
-            return 'Spedisci pacchi o corrispondenza? Gestiamo spedizioni nazionali e internazionali con corrieri affidabili. Confezionamento incluso e tracking in tempo reale!';
+            return 'Perfetto! Spediamo pacchi e buste in Italia e all\'estero con consegna rapida. Il pacco dove deve andare? Che peso e dimensioni ha? Ti serve anche il ritiro a domicilio? Mandami peso, misure e destinazione e ti preparo il preventivo.';
         }
 
         if (normalized.includes('windtre') || normalized.includes('wind') || normalized.includes('tre')) {
-            return 'Sei cliente WindTre o vuoi diventarlo? Siamo punto vendita ufficiale! Attiviamo nuove linee, vendiamo dispositivi e gestiamo tutte le tue esigenze WindTre. Vuoi verificare la copertura nella tua zona?';
+            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
         }
 
         if (normalized.includes('fastweb') || normalized.includes('fibra') || normalized.includes('adsl')) {
-            return 'Cerchi connessioni Fastweb? Siamo rivenditore autorizzato! Attiviamo linee fibra, ADSL e offerte internet. Trova la soluzione perfetta per te! Vuoi verificare la copertura fibra nel tuo indirizzo?';
+            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
         }
 
         if (normalized.includes('iliad') || normalized.includes('iliad')) {
-            return 'Vuoi Iliad per le sue offerte convenienti? Siamo rivenditore ufficiale! Attiviamo SIM Iliad, gestiamo portabilità e ti aiutiamo con tutte le promozioni.';
+            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
         }
 
         if (normalized.includes('attivazioni') || normalized.includes('promozioni') || normalized.includes('offerte')) {
-            return 'Interessato alle nostre attivazioni e promozioni? Chiedici delle offerte speciali per SPID, PEC, firme digitali e servizi di telecomunicazione. Risparmia con noi!';
+            return 'AG Servizi Via Plinio 72 è punto vendita ufficiale WindTre, Fastweb e Iliad. Ti aiuto subito a trovare l\'offerta migliore. Ti interessa mobile, fisso o fibra? Vuoi mantenere il numero o farne uno nuovo? Se vuoi fibra, posso verificare subito la copertura: qual è il tuo indirizzo? Posso prepararti la pratica o un appuntamento in sede. Come preferisci?';
         }
 
         if (normalized.includes('assistenza') || normalized.includes('aiuto') || normalized.includes('supporto')) {
@@ -1150,6 +1150,11 @@ const App = (() => {
 
         if (normalized.includes('internet') || normalized.includes('telefono') || normalized.includes('linea')) {
             return 'Problemi con internet o telefono? Ti aiutiamo con attivazioni Fastweb, WindTre e Iliad. Confronto offerte, portabilità e assistenza tecnica inclusa!';
+        }
+
+        // Verifica copertura fibra
+        if (normalized.includes('copertura') || normalized.includes('fibra arriva') || normalized.includes('verifica fibra')) {
+            return 'Posso verificarlo in un attimo per Fastweb, WindTre e Iliad. Qual è l\'indirizzo completo (via, numero civico, città)? Il palazzo è già servito o non lo sai? Controllo e ti dico subito le offerte disponibili.';
         }
 
         // Parla con operatore
