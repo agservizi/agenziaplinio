@@ -14,10 +14,10 @@ if (!$cookieConsent):
             </p>
         </div>
         <div class="cookie-banner__buttons">
-            <button type="button" class="cookie-banner__button cookie-banner__button--reject" onclick="CookieBanner.reject()">
+            <button type="button" class="ap-btn ap-btn--ghost" onclick="CookieBanner.reject()">
                 Rifiuta
             </button>
-            <button type="button" class="cookie-banner__button cookie-banner__button--accept" onclick="CookieBanner.accept()">
+            <button type="button" class="ap-btn ap-btn--primary" onclick="CookieBanner.accept()">
                 Accetta
             </button>
         </div>
