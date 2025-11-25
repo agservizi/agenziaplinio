@@ -401,7 +401,7 @@
                             <ul class="list-unstyled">
                                 <li><strong>Bus urbano:</strong> Linee EAV da Napoli (Porta Nolana)</li>
                                 <li><strong>Treno:</strong> Stazione Castellammare di Stabia (linea Circumvesuviana)</li>
-                                <li><strong>Ferries:</strong> Da Sorrento e Massa Lubrense</li>
+                                <li><strong>Aliscafi/Traghetti:</strong> Dal porto commerciale di Castellammare di Stabia per collegamenti diretti alle isole (Capri, Ischia, Procida) o a Napoli/Salerno. Non ci sono traghetti diretti da Sorrento o Massa Lubrense.</li>
                             </ul>
                         </div>
 
