@@ -53,7 +53,7 @@ $activeFilters = array_filter([
         </div>
         <div class="row gy-4">
             <div class="col-lg-3 position-sticky" style="top: 20px;">
-                <div class="ap-card p-4 h-100" data-reveal>
+                <div class="ap-card p-4 h-100" style="background-color: var(--color-slate-50);" data-reveal>
                     <h5 class="mb-3">Filtri</h5>
                     <form class="row g-3 align-items-end" method="get">
                         <input type="hidden" name="page" value="shop">
