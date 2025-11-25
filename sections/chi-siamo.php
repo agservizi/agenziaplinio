@@ -733,20 +733,52 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                         <h5 class="mb-3">I Nostri Partner</h5>
                         <div class="partner-logos">
                             <div class="partner-logo">
-                                <i class="fab fa-telegram-plane fa-2x text-primary"></i>
-                                <span>Poste Italiane</span>
+                                <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                                <span>DropPoint</span>
                             </div>
                             <div class="partner-logo">
-                                <i class="fas fa-envelope fa-2x text-info"></i>
-                                <span>PEC Aruba</span>
+                                <i class="fas fa-signature fa-2x text-info"></i>
+                                <span>Namirial</span>
                             </div>
                             <div class="partner-logo">
-                                <i class="fas fa-credit-card fa-2x text-success"></i>
-                                <span>Satispay</span>
+                                <i class="fas fa-server fa-2x text-success"></i>
+                                <span>Aruba Business</span>
                             </div>
                             <div class="partner-logo">
-                                <i class="fas fa-truck fa-2x text-warning"></i>
-                                <span>Bartolini</span>
+                                <i class="fas fa-mobile-alt fa-2x text-warning"></i>
+                                <span>Iliad</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-sim-card fa-2x text-danger"></i>
+                                <span>Windtre</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-wifi fa-2x text-info"></i>
+                                <span>Fastweb</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-bolt fa-2x text-warning"></i>
+                                <span>A2A Energia</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-lightbulb fa-2x text-success"></i>
+                                <span>Enel Energia</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-truck fa-2x text-primary"></i>
+                                <span>Brt</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-box fa-2x text-secondary"></i>
+                                <span>Inpost</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fab fa-telegram-plane fa-2x text-info"></i>
+                                <span>PosteItaliane</span>
+                            </div>
+                            <div class="partner-logo">
+                                <i class="fas fa-plane fa-2x text-primary"></i>
+                                <span>Fedex</span>
                             </div>
                         </div>
                     </div>
