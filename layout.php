@@ -57,7 +57,7 @@ if (!empty($chatbotFaqs)) {
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.1">
 </head>
 <body class="<?php echo implode(' ', $bodyClasses); ?>">
     <?php include __DIR__ . '/components/preloader.php'; ?>
@@ -127,7 +127,7 @@ if (!empty($chatbotFaqs)) {
             data-client-id="<?php echo htmlspecialchars(ap_klarna_onsite_client_id(), ENT_QUOTES); ?>"
         ></script>
     <?php endif; ?>
-    <script src="assets/js/main.js" type="module"></script>
+    <script src="assets/js/main.js?v=1.1" type="module"></script>
     <?php include __DIR__ . '/includes/ga.php'; ?>
 
     <?php include __DIR__ . '/components/cookie-banner.php'; ?>

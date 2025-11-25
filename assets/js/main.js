@@ -1032,8 +1032,8 @@ const CookieBanner = (() => {
         banner = document.querySelector('.cookie-banner');
         if (!banner) return;
 
-        acceptBtn = banner.querySelector('.cookie-banner__button--accept');
-        rejectBtn = banner.querySelector('.cookie-banner__button--reject');
+        acceptBtn = banner.querySelector('.ap-btn--primary');
+        rejectBtn = banner.querySelector('.ap-btn--ghost');
 
         if (!getCookieConsent()) {
             showBanner();
