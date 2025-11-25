@@ -1217,8 +1217,8 @@ const App = (() => {
                 exact: false
             },
             {
-                triggers: ['shop', 'acquisti', 'comprare online', 'guidare acquisti', 'negozio online'],
-                response: 'Certo! Ti guido negli acquisti dal nostro shop online.<br><br>Per fare acquisti:<br>1. Vai alla sezione "Shop" del sito<br>2. Scegli la categoria di prodotto che ti interessa<br>3. Aggiungi gli articoli al carrello<br>4. Procedi al checkout e scegli il metodo di pagamento (carta, PayPal, Klarna)<br><br>Offriamo spedizioni rapide in Italia e all\'estero.<br>Hai bisogno di aiuto con un prodotto specifico o una categoria?',
+                triggers: ['shop', 'acquisti', 'comprare online', 'guidare acquisti', 'negozio online', 'fare acquisti'],
+                response: 'Perfetto! Ti aiuto a fare acquisti direttamente dal nostro shop.<br><br>Dimmi che tipo di prodotto ti interessa:<br>• Ricariche telefoniche<br>• Accessori per cellulari<br>• Prodotti digitali (Google Play, Netflix, ecc.)<br>• Servizi online (PEC, SPID, firme digitali)<br><br>Oppure specifica il prodotto esatto che vuoi acquistare. Una volta scelto, te lo aggiungo al carrello e ti guido al pagamento!',
                 exact: false
             },
         ];
