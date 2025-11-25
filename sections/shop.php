@@ -51,9 +51,9 @@ $activeFilters = array_filter([
             <h2 class="mb-3">Servizi pronti all'acquisto</h2>
             <p class="lead text-muted">Completa l'ordine in autonomia: attiviamo SIM, PEC, spedizioni e servizi digitali in poche ore.</p>
         </div>
-        <div class="row gy-4" style="min-height: 100vh;">
-            <div class="col-lg-3 position-sticky" style="top: 80px;">
-                <div class="ap-card p-4 h-100" style="background-color: #fff; border-right: 1px solid #e4e7ec; padding: 1.5rem 1rem; height: calc(100vh - 80px);">
+        <div class="shop-layout" style="display: flex; min-height: 100vh;">
+            <aside class="shop-sidebar" style="width: 220px; background: #fff; border-right: 1px solid #e4e7ec; padding: 1.5rem 1rem; position: sticky; top: 80px; height: calc(100vh - 80px);">
+                <div class="ap-card p-4 h-100">
                     <h5 class="mb-3">Filtri</h5>
                     <form class="row g-3 align-items-end" method="get">
                         <input type="hidden" name="page" value="shop">
@@ -140,8 +140,8 @@ $activeFilters = array_filter([
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-9">
+            </aside>
+            <main class="shop-main" style="flex: 1; padding: 0 2rem;">
                 <?php if (empty($products)): ?>
                     <div class="empty-state text-center p-5 h-100 d-flex flex-column justify-content-center" data-reveal>
                         <p class="mb-1">Nessun prodotto disponibile al momento.</p>
@@ -213,7 +213,7 @@ $activeFilters = array_filter([
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
-            </div>
+            </main>
         </div>
     </div>
 </section>
