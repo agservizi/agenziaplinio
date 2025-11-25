@@ -2968,7 +2968,7 @@ body.nav-open {
     }
 
     main#page-content[data-page="account"] {
-        padding-top: calc(var(--topbar-height, 120px) - var(--header-gap, 0px));
+        padding-top: calc(var(--topbar-height, 180px) - var(--header-gap, 0px));
     }
 }
 
