@@ -1042,11 +1042,11 @@ const App = (() => {
 
         // Servizi
         if (normalized.includes('cosa fate') || normalized.includes('servizi') || normalized.includes('offerte') || normalized.includes('attività')) {
-            return 'AG SERVIZI VIA PLINIO 72 è la tua agenzia multiservizi di fiducia! Offriamo: pagamenti bollettini e F24, ricariche telefoniche, attivazioni SPID/PEC/firme digitali, spedizioni pacchi, punto vendita WindTre/Fastweb/Iliad. Tutto in un unico sportello!';
+            return 'AG SERVIZI VIA PLINIO 72 è la tua agenzia multiservizi di fiducia! Offriamo: pagamenti bollettini e F24, ricariche telefoniche, attivazioni SPID/PEC/firme digitali, spedizioni pacchi, punto vendita WindTre/Fastweb/Iliad. Tutto in un unico sportello! Quale servizio ti interessa di più?';
         }
 
         if (normalized.includes('prezzi') || normalized.includes('costo') || normalized.includes('quanto costa') || normalized.includes('tariffe')) {
-            return 'I nostri prezzi variano a seconda del servizio richiesto. Ti consiglio di contattarci direttamente per un preventivo personalizzato. Possiamo fornirti un\'offerta su misura.';
+            return 'I nostri prezzi variano a seconda del servizio richiesto. Ti consiglio di contattarci direttamente per un preventivo personalizzato. Possiamo fornirti un\'offerta su misura. Vuoi che ti aiuti con un preventivo specifico?';
         }
 
         // Ecommerce / Ordini
@@ -1080,7 +1080,7 @@ const App = (() => {
 
         // Servizi specifici dell'agenzia multiservizi
         if (normalized.includes('bollettino') || normalized.includes('bollettini') || normalized.includes('pagamento bollettini')) {
-            return 'Paghi bollettini postali, utenze, multe e tanto altro? Siamo il tuo sportello di fiducia! Porta i tuoi bollettini in agenzia e li paghiamo per te in pochi minuti.';
+            return 'Paghi bollettini postali, utenze, multe e tanto altro? Siamo il tuo sportello di fiducia! Porta i tuoi bollettini in agenzia e li paghiamo per te in pochi minuti. Hai un bollettino da pagare ora?';
         }
 
         if (normalized.includes('f24') || normalized.includes('f24') || normalized.includes('modello f24')) {
@@ -1100,7 +1100,7 @@ const App = (() => {
         }
 
         if (normalized.includes('spid') || normalized.includes('identità digitale') || normalized.includes('attivazione spid')) {
-            return 'Attivi SPID per accedere ai servizi online della PA? Ti guidiamo passo dopo passo nell\'attivazione dell\'identità digitale. Richiedi un appuntamento!';
+            return 'Attivi SPID per accedere ai servizi online della PA? Ti guidiamo passo dopo passo nell\'attivazione dell\'identità digitale. Richiedi un appuntamento! Vuoi sapere i documenti necessari per attivare SPID?';
         }
 
         if (normalized.includes('pec') || normalized.includes('posta elettronica') || normalized.includes('certificata')) {
@@ -1116,11 +1116,11 @@ const App = (() => {
         }
 
         if (normalized.includes('windtre') || normalized.includes('wind') || normalized.includes('tre')) {
-            return 'Sei cliente WindTre o vuoi diventarlo? Siamo punto vendita ufficiale! Attiviamo nuove linee, vendiamo dispositivi e gestiamo tutte le tue esigenze WindTre.';
+            return 'Sei cliente WindTre o vuoi diventarlo? Siamo punto vendita ufficiale! Attiviamo nuove linee, vendiamo dispositivi e gestiamo tutte le tue esigenze WindTre. Vuoi verificare la copertura nella tua zona?';
         }
 
         if (normalized.includes('fastweb') || normalized.includes('fibra') || normalized.includes('adsl')) {
-            return 'Cerchi connessioni Fastweb? Siamo rivenditore autorizzato! Attiviamo linee fibra, ADSL e offerte internet. Trova la soluzione perfetta per te!';
+            return 'Cerchi connessioni Fastweb? Siamo rivenditore autorizzato! Attiviamo linee fibra, ADSL e offerte internet. Trova la soluzione perfetta per te! Vuoi verificare la copertura fibra nel tuo indirizzo?';
         }
 
         if (normalized.includes('iliad') || normalized.includes('iliad')) {
@@ -1150,6 +1150,11 @@ const App = (() => {
 
         if (normalized.includes('internet') || normalized.includes('telefono') || normalized.includes('linea')) {
             return 'Problemi con internet o telefono? Ti aiutiamo con attivazioni Fastweb, WindTre e Iliad. Confronto offerte, portabilità e assistenza tecnica inclusa!';
+        }
+
+        // Parla con operatore
+        if (normalized.includes('parlare con operatore') || normalized.includes('operatore umano') || normalized.includes('persona') || normalized.includes('uomo') || normalized.includes('contatto diretto')) {
+            return 'Capisco che preferisci parlare con una persona. Puoi lasciare un messaggio nel modulo di contatto del sito o venire direttamente in agenzia in Via Plinio il Vecchio 72, Castellammare di Stabia. Ti aspettiamo!';
         }
 
         // Domande vaghe o generiche
