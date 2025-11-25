@@ -31,7 +31,13 @@ $sidebarRedirect = $_SERVER['REQUEST_URI'] ?? '?page=shop';
                         <li class="cart-sidebar__item">
                             <div class="cart-sidebar__item-info">
                                 <strong><?php echo htmlspecialchars($item['name'], ENT_QUOTES); ?></strong>
-                                <span>Qtà <?php echo (int) $item['quantity']; ?> &middot; <?php echo ap_price_format((int) $item['price_cents']); ?></span>
+                                <form method="post" class="cart-sidebar__quantity-form">
+                                    <input type="hidden" name="ap_action" value="update_cart">
+                                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($sidebarRedirect, ENT_QUOTES); ?>">
+                                    <label class="visually-hidden" for="qty-<?php echo (int) $item['product_id']; ?>">Quantità per <?php echo htmlspecialchars($item['name'], ENT_QUOTES); ?></label>
+                                    <input type="number" id="qty-<?php echo (int) $item['product_id']; ?>" name="items[<?php echo (int) $item['product_id']; ?>]" value="<?php echo (int) $item['quantity']; ?>" min="0" max="<?php echo (int) $item['stock']; ?>" class="cart-sidebar__quantity-input">
+                                    <span>&middot; <?php echo ap_price_format((int) $item['price_cents']); ?></span>
+                                </form>
                             </div>
                             <div class="cart-sidebar__item-actions">
                                 <span class="cart-sidebar__item-price"><?php echo ap_price_format((int) $item['subtotal_cents']); ?></span>
@@ -66,9 +72,23 @@ $sidebarRedirect = $_SERVER['REQUEST_URI'] ?? '?page=shop';
                     <strong><?php echo ap_price_format((int) $cartTotal); ?></strong>
                 </div>
             </div>
-            <a class="cart-sidebar__cta" href="?page=cart">
-                Vai al carrello
-            </a>
+            <div class="cart-sidebar__actions">
+                <form method="post" class="cart-sidebar__update-form">
+                    <input type="hidden" name="ap_action" value="update_cart">
+                    <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($sidebarRedirect, ENT_QUOTES); ?>">
+                    <button type="submit" class="cart-sidebar__update-button">Aggiorna carrello</button>
+                </form>
+                <div class="cart-sidebar__secondary-actions">
+                    <form method="post" class="cart-sidebar__clear-form">
+                        <input type="hidden" name="ap_action" value="clear_cart">
+                        <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($sidebarRedirect, ENT_QUOTES); ?>">
+                        <button type="submit" class="cart-sidebar__clear-button" onclick="return confirm('Sei sicuro di voler svuotare il carrello?')">Svuota carrello</button>
+                    </form>
+                    <a class="cart-sidebar__cta" href="?page=cart">
+                        Vai al carrello
+                    </a>
+                </div>
+            </div>
         </section>
         <section class="cart-sidebar__section">
             <p class="cart-sidebar__eyebrow">Serve aiuto?</p>
