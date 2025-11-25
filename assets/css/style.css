@@ -2165,6 +2165,7 @@ body.has-chatbot #back-to-top {
         background: rgba(45, 107, 255, 0.08) !important;
         color: var(--color-primary-600) !important;
         box-shadow: none !important;
+        border-radius: 50% !important;
     }
 
     .nav-toggle .bar {
