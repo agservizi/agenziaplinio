@@ -1046,8 +1046,8 @@ const App = (() => {
                 exact: false
             },
             {
-                triggers: ['cosa fate', 'servizi', 'offerte', 'attività'],
-                response: 'AG SERVIZI VIA PLINIO 72 è la tua agenzia multiservizi di fiducia! Offriamo: pagamenti bollettini e F24, ricariche telefoniche, attivazioni SPID/PEC/firme digitali, spedizioni pacchi, punto vendita WindTre/Fastweb/Iliad. Tutto in un unico sportello! Quale servizio ti interessa di più?',
+                triggers: ['cosa fate', 'servizi', 'offerte', 'attività', 'quali servizi'],
+                response: 'Offriamo una vasta gamma di servizi multiservizi:<br><br>• Pagamenti bollettini e F24<br>• Ricariche telefoniche per tutti gli operatori<br>• Attivazioni SPID, PEC e firme digitali<br>• Spedizioni pacchi e corrispondenza<br>• Punto vendita ufficiale WindTre, Fastweb e Iliad<br><br>Tutto in un unico sportello! Quale servizio ti interessa di più?',
                 exact: false
             },
             {
