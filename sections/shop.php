@@ -61,22 +61,22 @@ $activeFilters = array_filter([
                             <label class="form-label" for="shop-search">Ricerca proattiva</label>
                             <input type="text" class="form-control" id="shop-search" name="q" placeholder="Sim, PEC, corriere..." value="<?php echo htmlspecialchars($searchTerm, ENT_QUOTES); ?>">
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <label class="form-label" for="shop-min-price">Min €</label>
                             <input type="number" min="0" step="1" class="form-control" id="shop-min-price" name="min_price" value="<?php echo $minPriceInput !== null ? htmlspecialchars((string) $minPriceInput, ENT_QUOTES) : ''; ?>">
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <label class="form-label" for="shop-max-price">Max €</label>
                             <input type="number" min="0" step="1" class="form-control" id="shop-max-price" name="max_price" value="<?php echo $maxPriceInput !== null ? htmlspecialchars((string) $maxPriceInput, ENT_QUOTES) : ''; ?>">
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <label class="form-label" for="shop-availability">Disponibilità</label>
                             <select id="shop-availability" name="availability" class="form-select">
                                 <option value="">Tutti</option>
                                 <option value="in_stock" <?php echo $availabilityParam === 'in_stock' ? 'selected' : ''; ?>>Solo disponibili</option>
                             </select>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <label class="form-label" for="shop-category">Categoria dinamica</label>
                             <select id="shop-category" name="category" class="form-select">
                                 <option value="">Tutte</option>
@@ -95,10 +95,10 @@ $activeFilters = array_filter([
                                 <option value="stock" <?php echo $sortParam === 'stock' ? 'selected' : ''; ?>>Stock</option>
                             </select>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <button class="ap-btn ap-btn--primary w-100" type="submit">Filtra</button>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <a href="?page=shop" class="btn btn-link w-100">Reset</a>
                         </div>
                     </form>
