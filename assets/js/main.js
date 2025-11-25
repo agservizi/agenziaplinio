@@ -902,11 +902,33 @@ const App = (() => {
         appendChatbotMessage(question, 'user');
         const typing = showChatbotTyping();
         const delay = 450 + Math.random() * 400;
-        setTimeout(() => {
+        setTimeout(async () => {
             hideChatbotTyping(typing);
             const predefined = getPredefinedResponse(question, state.chatbotIsLoggedIn);
             if (predefined) {
-                appendChatbotMessage(predefined, 'bot');
+                appendChatbotMessage(predefined.response, 'bot');
+                if (predefined.action === 'add_to_cart' && predefined.product_id) {
+                    try {
+                        const response = await fetch('/api/cart-add.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ product_id: predefined.product_id, quantity: predefined.quantity || 1 })
+                        });
+                        const data = await response.json();
+                        if (data.success) {
+                            // Update cart count if possible
+                            const cartCountEl = document.querySelector('[data-cart-count]');
+                            if (cartCountEl) {
+                                cartCountEl.textContent = data.cart_count;
+                            }
+                            appendChatbotMessage(`✅ Aggiunto al carrello! Totale articoli: ${data.cart_count}. <a href="?page=cart" target="_blank">Vai al carrello</a> per pagare.`, 'bot');
+                        } else {
+                            appendChatbotMessage('❌ Errore nell\'aggiungere al carrello: ' + (data.error || 'Errore sconosciuto'), 'bot');
+                        }
+                    } catch (error) {
+                        appendChatbotMessage('❌ Errore di connessione nell\'aggiungere al carrello.', 'bot');
+                    }
+                }
             } else {
                 const match = findBestFaq(question);
                 if (match) {
@@ -1241,7 +1263,7 @@ const App = (() => {
             }
             if (score > bestScore) {
                 bestScore = score;
-                bestResponse = resp.response;
+                bestResponse = resp;
             }
         });
 
@@ -1252,7 +1274,7 @@ const App = (() => {
 
         // Domande vaghe
         if (normalized.length < 5 || normalized.split(' ').length < 2) {
-            return 'La tua domanda sembra un po\' vaga. Puoi essere più specifico? Ad esempio, dimmi su quale servizio o prodotto hai bisogno di informazioni.';
+            return { response: 'La tua domanda sembra un po\' vaga. Puoi essere più specifico? Ad esempio, dimmi su quale servizio o prodotto hai bisogno di informazioni.' };
         }
 
         return null;
