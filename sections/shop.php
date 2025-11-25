@@ -275,7 +275,13 @@ $activeFilters = array_filter([
 
                                             <!-- Actions -->
                                             <div class="product-actions">
-                                                <a href="<?php echo htmlspecialchars($productUrl, ENT_QUOTES); ?>" class="btn btn-outline-primary btn-sm mb-2 d-block">Scopri di più</a>
+                                                <a href="<?php echo htmlspecialchars($productUrl, ENT_QUOTES); ?>" class="btn btn-outline-primary btn-sm mb-2 d-block d-flex align-items-center justify-content-center gap-2">
+                                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                        <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5V5.5a.5.5 0 0 1 .271-.445z"/>
+                                                    </svg>
+                                                    Scopri di più
+                                                </a>
                                                 <form method="post" class="add-to-cart-form">
                                                     <input type="hidden" name="ap_action" value="add_to_cart">
                                                     <input type="hidden" name="product_id" value="<?php echo (int) $product['id']; ?>">
@@ -289,7 +295,10 @@ $activeFilters = array_filter([
                                                             <small class="text-muted d-block">Disp: <?php echo (int) $product['stock']; ?></small>
                                                         </div>
                                                     </div>
-                                                    <button class="btn btn-primary btn-sm w-100" type="submit" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>
+                                                    <button class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center gap-2" type="submit" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>
+                                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1 1a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+                                                        </svg>
                                                         <?php echo (int) $product['stock'] === 0 ? 'Esaurito' : 'Aggiungi al carrello'; ?>
                                                     </button>
                                                 </form>
