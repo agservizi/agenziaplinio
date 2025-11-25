@@ -128,5 +128,6 @@ if (!empty($chatbotFaqs)) {
         ></script>
     <?php endif; ?>
     <script src="assets/js/main.js" type="module"></script>
+    <?php include __DIR__ . '/includes/ga.php'; ?>
 </body>
 </html>
