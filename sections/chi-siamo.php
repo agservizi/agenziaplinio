@@ -817,7 +817,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                                     <li><i class="fas fa-star text-warning me-2"></i>Costi più bassi del mercato</li>
                                     <li><i class="fas fa-star text-warning me-2"></i>Nessun costo di attivazione</li>
                                     <li><i class="fas fa-star text-warning me-2"></i>Commissioni più alte</li>
-                                    <li><i class="fas fa-star text-warning me-2"></i>Un solo POS per tutto</li>
+                                    <li><i class="fas fa-star text-warning me-2"></i>Un unico punto di accesso per tutti i servizi</li>
                                 </ul>
                             </div>
                         </div>
