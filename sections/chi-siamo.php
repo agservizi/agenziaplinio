@@ -702,7 +702,8 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                             </div>
                             <div class="certification-content">
                                 <h5>iliad</h5>
-                                <p>Rivenditore autorizzato</p>
+                                <p>Rivenditore autorizzato per servizi di telefonia mobile, internet e offerte convergenti senza costi nascosti.</p>
+                                <small class="text-muted">Operatore telefonico italiano leader in trasparenza</small>
                             </div>
                         </div>
                         <div class="certification-item">
@@ -711,7 +712,8 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                             </div>
                             <div class="certification-content">
                                 <h5>windtre</h5>
-                                <p>Rivenditore autorizzato</p>
+                                <p>Rivenditore autorizzato per servizi di telefonia mobile, internet fisso e mobile, con copertura nazionale estesa.</p>
+                                <small class="text-muted">Operatore integrato per soluzioni complete</small>
                             </div>
                         </div>
                         <div class="certification-item">
@@ -720,7 +722,8 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                             </div>
                             <div class="certification-content">
                                 <h5>Fastweb</h5>
-                                <p>Rivenditore autorizzato</p>
+                                <p>Rivenditore autorizzato per servizi di connessione internet ad alta velocità, telefonia fissa e soluzioni smart home.</p>
+                                <small class="text-muted">Provider di telecomunicazioni per famiglie e imprese</small>
                             </div>
                         </div>
                     </div>
@@ -799,7 +802,7 @@ $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
                     </h2>
                     <div id="about-faq4" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
                         <div class="accordion-body">
-                            Siamo certificati come RAO (Registration Authority Officer) per la verifica dell'identità personale necessaria per SPID, firme digitali e servizi digitali. Inoltre siamo rivenditori autorizzati di iliad, windtre e Fastweb, con autorizzazioni per la rivendita di servizi telefonici e digitali.
+                            Siamo certificati come RAO (Registration Authority Officer) per la verifica dell'identità personale necessaria per SPID, firme digitali e servizi digitali. Inoltre siamo rivenditori autorizzati di iliad (telefonia mobile senza costi nascosti), windtre (servizi integrati mobile e fisso) e Fastweb (connessioni internet ad alta velocità e smart home), garantendo ai nostri clienti le migliori soluzioni di telecomunicazione.
                         </div>
                     </div>
                 </div>
