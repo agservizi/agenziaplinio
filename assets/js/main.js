@@ -987,38 +987,99 @@ const App = (() => {
         if (!normalized) return null;
 
         // Saluti
-        if (normalized.includes('ciao') || normalized.includes('salve') || normalized.includes('buongiorno') || normalized.includes('buonasera') || normalized === 'saluto' || normalized === 'ehila') {
+        if (normalized.includes('ciao') || normalized.includes('salve') || normalized.includes('buongiorno') || normalized.includes('buonasera') || normalized === 'saluto' || normalized === 'ehila' || normalized.includes('buon giorno') || normalized.includes('buona sera')) {
             return 'Ciao! Sono Plinio, il chatbot di AG SERVIZI VIA PLINIO 72. Come posso aiutarti oggi?';
         }
 
         // Ringraziamenti
-        if (normalized.includes('grazie') || normalized.includes('thank') || normalized === 'ok' || normalized === 'perfetto') {
-            return 'Prego! Se hai altre domande, sono qui per aiutarti.';
+        if (normalized.includes('grazie') || normalized.includes('thank') || normalized === 'ok' || normalized === 'perfetto' || normalized.includes('apprezzo') || normalized.includes('molto gentile')) {
+            return 'Prego! È un piacere aiutarti. Se hai altre domande, non esitare a chiedere.';
         }
 
         // Arrivederci
-        if (normalized.includes('arrivederci') || normalized.includes('ciao') && normalized.includes('addio') || normalized.includes('bye') || normalized === 'a presto') {
-            return 'Arrivederci! Torna presto se hai bisogno di aiuto.';
+        if (normalized.includes('arrivederci') || normalized.includes('ciao') && normalized.includes('addio') || normalized.includes('bye') || normalized === 'a presto' || normalized.includes('alla prossima') || normalized.includes('ci vediamo')) {
+            return 'Arrivederci! Speriamo di rivederti presto. Se hai bisogno, siamo sempre qui.';
         }
 
         // Come stai
-        if (normalized.includes('come stai') || normalized.includes('come va') || normalized.includes('tutto bene')) {
-            return 'Sto bene, grazie! Sono qui per rispondere alle tue domande su AG SERVIZI. Cosa posso fare per te?';
+        if (normalized.includes('come stai') || normalized.includes('come va') || normalized.includes('tutto bene') || normalized.includes('come te la passi')) {
+            return 'Sto benissimo, grazie! Sono sempre pronto ad assistere i clienti di AG SERVIZI. Cosa posso fare per te oggi?';
         }
 
-        // Chi sei
-        if (normalized.includes('chi sei') || normalized.includes('cosa sei') || normalized.includes('sei un bot')) {
-            return 'Sono Plinio, l\'assistente virtuale di AG SERVIZI VIA PLINIO 72. Posso aiutarti con informazioni sui nostri servizi, rispondere a domande frequenti e guidarti nel nostro sito.';
+        // Chi sei / Cosa sei
+        if (normalized.includes('chi sei') || normalized.includes('cosa sei') || normalized.includes('sei un bot') || normalized.includes('sei umano') || normalized.includes('sei artificiale')) {
+            return 'Sono Plinio, l\'assistente virtuale intelligente di AG SERVIZI VIA PLINIO 72. Sono qui per rispondere alle tue domande sui nostri servizi, aiutarti con ordini e fornirti informazioni utili.';
         }
 
         // Aiuto
-        if (normalized.includes('aiuto') || normalized.includes('help')) {
-            return 'Certo! Puoi chiedermi qualsiasi cosa sui nostri servizi, oppure sfoglia le FAQ nel tab dedicato. Come posso assisterti?';
+        if (normalized.includes('aiuto') || normalized.includes('help') || normalized.includes('assistenza') || normalized.includes('supporto')) {
+            return 'Certo! Posso aiutarti con informazioni sui nostri servizi, rispondere a domande frequenti, guidarti negli acquisti o fornirti contatti. Cosa ti serve esattamente?';
         }
 
-        // Non capisco
-        if (normalized.includes('non capisco') || normalized.includes('non ho capito') || normalized.includes('ripeti')) {
-            return 'Mi scusi se non sono stato chiaro. Puoi riformulare la tua domanda o guardare le FAQ per risposte più dettagliate.';
+        // Non capisco / Ripeti
+        if (normalized.includes('non capisco') || normalized.includes('non ho capito') || normalized.includes('ripeti') || normalized.includes('puoi ripetere') || normalized.includes('più chiaro')) {
+            return 'Mi scusi se non sono stato chiaro. Posso riformulare la risposta o puoi farmi una domanda più specifica? Sono qui per aiutarti al meglio.';
+        }
+
+        // Informazioni aziendali
+        if (normalized.includes('dove siete') || normalized.includes('indirizzo') || normalized.includes('ubicazione') || normalized.includes('sede')) {
+            return 'Siamo situati in VIA PLINIO 72. Puoi trovarci facilmente nel centro di Roma. Se hai bisogno di indicazioni, posso aiutarti con le direzioni.';
+        }
+
+        if (normalized.includes('telefono') || normalized.includes('numero') || normalized.includes('chiamare') || normalized.includes('contatto telefonico')) {
+            return 'Puoi contattarci al nostro numero di telefono. Inoltre, puoi scrivere via email o utilizzare il modulo di contatto sul sito. Quale preferisci?';
+        }
+
+        if (normalized.includes('email') || normalized.includes('posta') || normalized.includes('scrivere')) {
+            return 'La nostra email principale è info@agservizi.it. Rispondiamo solitamente entro 24 ore. Puoi anche utilizzare il modulo di contatto sul sito web.';
+        }
+
+        if (normalized.includes('orari') || normalized.includes('aperto') || normalized.includes('chiuso') || normalized.includes('quando')) {
+            return 'I nostri orari di apertura sono dal lunedì al venerdì dalle 9:00 alle 18:00. Il sabato siamo aperti fino alle 13:00. La domenica siamo chiusi.';
+        }
+
+        // Servizi
+        if (normalized.includes('cosa fate') || normalized.includes('servizi') || normalized.includes('offerte') || normalized.includes('attività')) {
+            return 'AG SERVIZI offre una vasta gamma di servizi nel settore immobiliare e amministrativo. Puoi esplorare i nostri servizi nella sezione dedicata del sito o chiedermi specificamente su un argomento.';
+        }
+
+        if (normalized.includes('prezzi') || normalized.includes('costo') || normalized.includes('quanto costa') || normalized.includes('tariffe')) {
+            return 'I nostri prezzi variano a seconda del servizio richiesto. Ti consiglio di contattarci direttamente per un preventivo personalizzato. Possiamo fornirti un\'offerta su misura.';
+        }
+
+        // Ecommerce / Ordini
+        if (normalized.includes('ordine') || normalized.includes('acquisto') || normalized.includes('comprare') || normalized.includes('spedizione')) {
+            return 'Per ordini e acquisti, puoi utilizzare il nostro shop online. Offriamo spedizioni rapide e sicure. Se hai domande specifiche su un prodotto, dimmi pure!';
+        }
+
+        if (normalized.includes('pagamento') || normalized.includes('pagare') || normalized.includes('metodi')) {
+            return 'Accettiamo pagamenti con carta di credito, PayPal, bonifico bancario e Klarna. Tutti i pagamenti sono sicuri e protetti.';
+        }
+
+        // Conversazione generale
+        if (normalized.includes('sì') || normalized === 'si' || normalized.includes('certo') || normalized.includes('va bene')) {
+            return 'Ottimo! Sono felice di aiutarti. Cosa posso fare per te ora?';
+        }
+
+        if (normalized.includes('no') || normalized.includes('non') && normalized.includes('grazie')) {
+            return 'Va bene, non c\'è problema. Se cambi idea o hai altre domande, sono qui.';
+        }
+
+        if (normalized.includes('forse') || normalized.includes('non so') || normalized.includes('incerto')) {
+            return 'Capisco la tua indecisione. Posso fornirti più informazioni per aiutarti a decidere?';
+        }
+
+        if (normalized.includes('problema') || normalized.includes('difficoltà') || normalized.includes('non funziona')) {
+            return 'Mi dispiace sentire che hai un problema. Posso aiutarti a risolverlo o preferisci contattare il nostro supporto tecnico?';
+        }
+
+        if (normalized.includes('complimenti') || normalized.includes('bravo') || normalized.includes('ottimo')) {
+            return 'Grazie mille! Cerchiamo sempre di offrire il meglio ai nostri clienti. Come posso aiutarti ulteriormente?';
+        }
+
+        // Domande vaghe o generiche
+        if (normalized.length < 5 || normalized.split(' ').length < 2) {
+            return 'La tua domanda sembra un po\' vaga. Puoi essere più specifico? Ad esempio, dimmi su quale servizio o prodotto hai bisogno di informazioni.';
         }
 
         return null;
