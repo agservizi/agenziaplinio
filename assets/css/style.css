@@ -1983,7 +1983,7 @@ body.cart-sidebar-open {
     background: #fff;
     box-shadow: var(--shadow-card);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
 }
@@ -1999,11 +1999,27 @@ body.cart-sidebar-open {
     margin-top: 0.5rem;
 }
 
-.toast__progress span {
-    display: block;
-    height: 100%;
-    background: currentColor;
-    animation: toastProgress linear forwards;
+.toast__close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.toast__close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
 }
 
 @keyframes toastProgress {

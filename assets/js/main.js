@@ -740,6 +740,7 @@ const App = (() => {
 
         const closeBtn = document.createElement('button');
         closeBtn.type = 'button';
+        closeBtn.className = 'toast__close';
         closeBtn.setAttribute('aria-label', 'Chiudi');
         closeBtn.textContent = '×';
 
