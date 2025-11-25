@@ -407,6 +407,17 @@ body.theme-shell.has-news-ticker {
         right: 1rem;
     }
 
+    .ap-chatbot__toggle {
+        padding: 0.65rem;
+        border-radius: 50%;
+        width: 54px;
+        height: 54px;
+    }
+
+    .ap-chatbot__toggle-copy {
+        display: none;
+    }
+
     .ap-chatbot__panel {
         width: min(430px, calc(100vw - 1.5rem));
         max-height: calc(100vh - 4rem);
