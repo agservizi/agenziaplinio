@@ -650,15 +650,132 @@
 </section>
 
 <script>
-// Parallax Effect on Scroll
+// Typing Effect for Hero Title
+function typeWriter(element, text, speed) {
+    let i = 0;
+    element.innerHTML = '';
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+
+// Initialize Effects on Load
+document.addEventListener('DOMContentLoaded', function() {
+    // Typing effect for hero title
+    const heroTitle = document.querySelector('.parallax-bg h1');
+    if (heroTitle) {
+        const originalText = heroTitle.innerHTML;
+        heroTitle.innerHTML = '';
+        setTimeout(() => typeWriter(heroTitle, originalText.replace('<i class="fas fa-envelope me-3"></i>', ''), 100), 500);
+    }
+
+    // Create floating particles
+    createParticles();
+
+    // Scroll reveal animations
+    initScrollReveal();
+
+    // Ripple effect for buttons
+    initRippleEffect();
+});
+
+// Create Floating Particles
+function createParticles() {
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'particle-container';
+    particleContainer.style.position = 'fixed';
+    particleContainer.style.top = '0';
+    particleContainer.style.left = '0';
+    particleContainer.style.width = '100%';
+    particleContainer.style.height = '100%';
+    particleContainer.style.pointerEvents = 'none';
+    particleContainer.style.zIndex = '0';
+    document.body.appendChild(particleContainer);
+
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.position = 'absolute';
+        particle.style.width = Math.random() * 4 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.background = 'rgba(255,255,255,0.1)';
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animation = 'float ' + (Math.random() * 10 + 10) + 's linear infinite';
+        particleContainer.appendChild(particle);
+    }
+}
+
+// Scroll Reveal Animation
+function initScrollReveal() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.contact-details-full, .directions-item, .map-container-full, .contact-form-full').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+}
+
+// Ripple Effect for Buttons
+function initRippleEffect() {
+    document.querySelectorAll('.ap-btn, .btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255,255,255,0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.left = (e.offsetX - 10) + 'px';
+            ripple.style.top = (e.offsetY - 10) + 'px';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+}
+
+// Parallax Effect on Scroll (Enhanced)
 window.addEventListener('scroll', function() {
     const scrolled = window.pageYOffset;
     const parallaxElements = document.querySelectorAll('.parallax-bg, .contact-details-full, .map-container-full, .contact-form-full');
     
-    parallaxElements.forEach(function(element) {
-        const rate = scrolled * -0.5;
+    parallaxElements.forEach(function(element, index) {
+        const rate = scrolled * (-0.5 - index * 0.1);
         element.style.transform = 'translateY(' + rate + 'px)';
     });
+
+    // Dynamic background position for more parallax
+    const hero = document.querySelector('.parallax-bg');
+    if (hero) {
+        hero.style.backgroundPosition = 'center ' + (scrolled * 0.5) + 'px';
+    }
 });
 
 // Smooth Scroll for Anchor Links
@@ -671,7 +788,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Enhanced Form Validation
+// Enhanced Form Validation with Visual Feedback
 const contactForm = document.querySelector('form[data-contact-form]');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
@@ -681,16 +798,168 @@ if (contactForm) {
         requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 field.style.borderColor = '#dc3545';
+                field.style.boxShadow = '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
                 isValid = false;
             } else {
                 field.style.borderColor = '#28a745';
+                field.style.boxShadow = '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
             }
         });
         
         if (!isValid) {
             e.preventDefault();
-            alert('Per favore, compila tutti i campi obbligatori.');
+            const feedback = document.querySelector('.form-feedback');
+            if (feedback) {
+                feedback.innerHTML = '<div class="alert alert-danger">Per favore, compila tutti i campi obbligatori.</div>';
+            }
+        }
+    });
+
+    // Real-time validation
+    contactForm.addEventListener('input', function(e) {
+        if (e.target.hasAttribute('required')) {
+            if (e.target.value.trim()) {
+                e.target.style.borderColor = '#28a745';
+                e.target.style.boxShadow = '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
+            } else {
+                e.target.style.borderColor = '#dc3545';
+                e.target.style.boxShadow = '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
+            }
         }
     });
 }
+
+// Appointment form toggle with animation
+document.getElementById('appointment_request')?.addEventListener('change', function() {
+    const appointmentDates = document.querySelector('.appointment-dates');
+    if (this.value === 'appointment') {
+        appointmentDates.style.display = 'block';
+        appointmentDates.style.opacity = '0';
+        appointmentDates.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            appointmentDates.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            appointmentDates.style.opacity = '1';
+            appointmentDates.style.transform = 'translateY(0)';
+        }, 10);
+        document.getElementById('preferred_date').required = true;
+        document.getElementById('preferred_time').required = true;
+    } else {
+        appointmentDates.style.opacity = '0';
+        appointmentDates.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            appointmentDates.style.display = 'none';
+        }, 300);
+        document.getElementById('preferred_date').required = false;
+        document.getElementById('preferred_time').required = false;
+    }
+});
+
+// Set minimum date to tomorrow
+document.getElementById('preferred_date').min = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+// Disable weekends in date picker with animation
+document.getElementById('preferred_date').addEventListener('input', function() {
+    const selectedDate = new Date(this.value);
+    const dayOfWeek = selectedDate.getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) { // Sunday = 0, Saturday = 6
+        this.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+            alert('Gli appuntamenti sono disponibili solo dal lunedì al venerdì.');
+            this.value = '';
+            this.style.animation = '';
+        }, 500);
+    }
+});
 </script>
+
+<style>
+/* Additional Effects Styles */
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.particle-container .particle {
+    animation: float 15s linear infinite;
+}
+
+.ripple-effect {
+    pointer-events: none;
+}
+
+/* Enhanced Button Hover */
+.ap-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.ap-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ap-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Loading Animation for Form Submit */
+.ap-btn[data-loading] {
+    pointer-events: none;
+    position: relative;
+}
+
+.ap-btn[data-loading]::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Glow Effect on Focus */
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-color: #007bff;
+    animation: glow 0.3s ease-in-out;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25); }
+    50% { box-shadow: 0 0 0 0.3rem rgba(0, 123, 255, 0.4); }
+    100% { box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+}
+</style>
