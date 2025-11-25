@@ -2966,6 +2966,10 @@ body.nav-open {
     .section-padding {
         padding: 4rem 0;
     }
+
+    main#page-content[data-page="account"] {
+        padding-top: calc(var(--topbar-height, 60px) - var(--header-gap, 0px));
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
