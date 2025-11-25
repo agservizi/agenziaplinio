@@ -1017,4 +1017,106 @@ const App = (() => {
     return { init };
 })();
 
-document.addEventListener('DOMContentLoaded', App.init);
+// Cookie Banner Management
+const CookieBanner = (() => {
+    const COOKIE_NAME = 'ap_cookie_consent';
+    const COOKIE_VALUE_ACCEPT = 'accepted';
+    const COOKIE_VALUE_REJECT = 'rejected';
+    const COOKIE_EXPIRY_DAYS = 365;
+
+    let banner = null;
+    let acceptBtn = null;
+    let rejectBtn = null;
+
+    function init() {
+        banner = document.querySelector('.cookie-banner');
+        if (!banner) return;
+
+        acceptBtn = banner.querySelector('.cookie-banner__button--accept');
+        rejectBtn = banner.querySelector('.cookie-banner__button--reject');
+
+        if (!getCookieConsent()) {
+            showBanner();
+        }
+
+        bindEvents();
+    }
+
+    function bindEvents() {
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', handleAccept);
+        }
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', handleReject);
+        }
+    }
+
+    function showBanner() {
+        if (banner) {
+            banner.classList.add('show');
+        }
+    }
+
+    function hideBanner() {
+        if (banner) {
+            banner.classList.remove('show');
+        }
+    }
+
+    function handleAccept() {
+        setCookieConsent(COOKIE_VALUE_ACCEPT);
+        hideBanner();
+        // Enable GA if accepted
+        if (window.gtag) {
+            gtag('consent', 'update', {
+                'analytics_storage': 'granted'
+            });
+        }
+    }
+
+    function handleReject() {
+        setCookieConsent(COOKIE_VALUE_REJECT);
+        hideBanner();
+        // Disable GA if rejected
+        if (window.gtag) {
+            gtag('consent', 'update', {
+                'analytics_storage': 'denied'
+            });
+        }
+    }
+
+    function setCookieConsent(value) {
+        const expiryDate = new Date();
+        expiryDate.setTime(expiryDate.getTime() + (COOKIE_EXPIRY_DAYS * 24 * 60 * 60 * 1000));
+        document.cookie = `${COOKIE_NAME}=${value}; expires=${expiryDate.toUTCString()}; path=/; SameSite=Lax`;
+    }
+
+    function getCookieConsent() {
+        const name = COOKIE_NAME + '=';
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const cookies = decodedCookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length);
+            }
+        }
+        return null;
+    }
+
+    // Public methods for onclick handlers
+    function accept() {
+        handleAccept();
+    }
+
+    function reject() {
+        handleReject();
+    }
+
+    return { init, accept, reject };
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+    App.init();
+    CookieBanner.init();
+});

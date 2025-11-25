@@ -1,9 +1,18 @@
 <!-- Google Analytics 4 -->
-<!-- SOSTITUISCI GA_MEASUREMENT_ID con il tuo ID di misurazione Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<?php
+$gaId = ap_env('GA_MEASUREMENT_ID', '');
+$cookieConsent = isset($_COOKIE['ap_cookie_consent']) ? $_COOKIE['ap_cookie_consent'] : null;
+
+if (!empty($gaId) && $cookieConsent === 'accepted'):
+?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo htmlspecialchars($gaId, ENT_QUOTES); ?>"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'GA_MEASUREMENT_ID');
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied'
+  });
+  gtag('config', '<?php echo htmlspecialchars($gaId, ENT_QUOTES); ?>');
 </script>
+<?php endif; ?>

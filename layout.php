@@ -129,5 +129,7 @@ if (!empty($chatbotFaqs)) {
     <?php endif; ?>
     <script src="assets/js/main.js" type="module"></script>
     <?php include __DIR__ . '/includes/ga.php'; ?>
+
+    <?php include __DIR__ . '/components/cookie-banner.php'; ?>
 </body>
 </html>
