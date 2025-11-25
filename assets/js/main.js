@@ -161,6 +161,12 @@ const App = (() => {
             }
         };
 
+        // Check URL parameter to keep sidebar open after reload
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('cart_open') === '1') {
+            setOpen(true);
+        }
+
         toggles.forEach?.(btn => {
             btn.addEventListener('click', () => {
                 const open = !sidebar.classList.contains('is-open');

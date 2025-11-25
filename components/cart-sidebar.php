@@ -13,6 +13,11 @@ if ($storedHours !== '' && $storedHours !== $legacyHours) {
     $contactHours = $storedHours; // allow future overrides while blocking the legacy string
 }
 $sidebarRedirect = $_SERVER['REQUEST_URI'] ?? '?page=shop';
+if (strpos($sidebarRedirect, '?') !== false) {
+    $sidebarRedirect .= '&cart_open=1';
+} else {
+    $sidebarRedirect .= '?cart_open=1';
+}
 ?>
 <div id="cart-sidebar" class="cart-sidebar" aria-hidden="true">
     <div class="cart-sidebar__overlay" data-cart-sidebar-close></div>
