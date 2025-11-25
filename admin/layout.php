@@ -26,6 +26,11 @@ $userName = $currentUser['name'] ?? ($currentUser['email'] ?? 'Admin');
         </div>
         <div class="admin-header__actions">
             <a class="btn btn-outline-light btn-sm" href="/" target="_blank" rel="noopener">Apri sito</a>
+            <form method="post" class="d-inline">
+                <input type="hidden" name="ap_action" value="logout">
+                <input type="hidden" name="redirect_to" value="?page=home">
+                <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+            </form>
             <div class="admin-user-chip">
                 <span class="admin-user-chip__avatar"><?php echo strtoupper(substr($userName, 0, 1)); ?></span>
                 <div>
