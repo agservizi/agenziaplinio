@@ -403,8 +403,26 @@ body.theme-shell.has-news-ticker {
 
 @media (max-width: 768px) {
     .ap-chatbot {
-        bottom: 1rem;
+        bottom: calc(1rem + 54px + 1rem);
         right: 1rem;
+    }
+
+    .ap-chatbot__toggle {
+        border-radius: 50%;
+        padding: 0.65rem;
+        width: 54px;
+        height: 54px;
+        gap: 0;
+    }
+
+    .ap-chatbot__toggle-copy {
+        display: none;
+    }
+
+    .ap-chatbot__toggle-icon {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
     }
 
     .ap-chatbot__panel {
