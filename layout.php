@@ -83,6 +83,20 @@ if (!empty($chatbotFaqs)) {
     </div>
     <?php include __DIR__ . '/components/cart-sidebar.php'; ?>
     <?php include __DIR__ . '/components/chatbot.php'; ?>
+    <?php if (!empty($flashMessages)): ?>
+        <div class="toast-stack position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+            <?php foreach ($flashMessages as $toast): ?>
+                <div class="toast align-items-center text-white bg-<?php echo htmlspecialchars($toast['type'] === 'success' ? 'success' : ($toast['type'] === 'error' ? 'danger' : 'info'), ENT_QUOTES); ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <?php echo htmlspecialchars($toast['message'] ?? '', ENT_QUOTES); ?>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Chiudi"></button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
     <script>
         window.__AP_PAGE_META__ = <?php echo json_encode([
             'page' => $pageKey,
@@ -92,6 +106,16 @@ if (!empty($chatbotFaqs)) {
         window.__AP_CHATBOT__ = <?php echo json_encode([
             'faqs' => $chatbotFaqs,
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-show toasts
+            const toasts = document.querySelectorAll('.toast');
+            toasts.forEach(function(toast) {
+                const bsToast = new bootstrap.Toast(toast);
+                bsToast.show();
+            });
+        });
     </script>
     <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
