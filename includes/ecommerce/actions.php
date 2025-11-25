@@ -256,6 +256,13 @@ function ap_action_add_to_cart(): void
         return;
     }
     ap_cart_add($productId, $quantity);
+
+    // Save custom fields for digital products
+    $customFieldsData = $_POST['custom_fields'] ?? [];
+    if (!empty($customFieldsData[$productId])) {
+        $_SESSION['ap_cart_custom_fields'][$productId] = $customFieldsData[$productId];
+    }
+
     ap_flash('Prodotto aggiunto al carrello.', 'success');
 }
 

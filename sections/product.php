@@ -41,6 +41,8 @@ $isUnavailable = !$product || (int) $product['is_active'] !== 1;
                 return ap_product_category_key($candidate) === $categoryKey;
             }));
             $related = array_slice($related, 0, 3);
+            $isDigital = strtolower((string) $product['fulfillment_type']) === 'digital';
+            $customFields = $isDigital ? ap_fetch_product_custom_fields((int) $product['id']) : [];
             ?>
             <div class="row g-5">
                 <div class="col-xl-7">
@@ -59,6 +61,19 @@ $isUnavailable = !$product || (int) $product['is_active'] !== 1;
                         </div>
                         <div class="product-hero ratio ratio-16x9" style="background-image: url('<?php echo htmlspecialchars($heroImage, ENT_QUOTES); ?>'); background-size: cover; background-position: center;"></div>
                     </div>
+                    <?php if (!empty($highlights)): ?>
+                        <div class="product-highlights mb-4">
+                            <h3 class="h5 mb-3">Caratteristiche principali</h3>
+                            <ul class="list-group list-group-flush">
+                                <?php foreach ($highlights as $highlight): ?>
+                                    <li class="list-group-item border-0 ps-0">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        <?php echo htmlspecialchars($highlight, ENT_QUOTES); ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                     <?php if ($related): ?>
                         <div class="related-products mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -116,6 +131,31 @@ $isUnavailable = !$product || (int) $product['is_active'] !== 1;
                                         <label class="form-label small" for="product-qty">Quantità</label>
                                         <input class="form-control" type="number" id="product-qty" name="quantity" min="1" max="<?php echo max(1, (int) $product['stock']); ?>" value="1" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>
                                     </div>
+                                    <?php if ($isDigital && !empty($customFields)): ?>
+                                        <div class="custom-fields-section">
+                                            <h4 class="h6 mb-3">Dettagli personalizzazione</h4>
+                                            <?php foreach ($customFields as $field): ?>
+                                                <div class="mb-3">
+                                                    <label class="form-label small" for="custom_<?php echo (int) $field['id']; ?>">
+                                                        <?php echo htmlspecialchars($field['field_label'], ENT_QUOTES); ?>
+                                                        <?php if ((int) $field['is_required'] === 1): ?><span class="text-danger">*</span><?php endif; ?>
+                                                    </label>
+                                                    <?php if ($field['field_type'] === 'textarea'): ?>
+                                                        <textarea class="form-control" id="custom_<?php echo (int) $field['id']; ?>" name="custom_fields[<?php echo (int) $product['id']; ?>][<?php echo (int) $field['id']; ?>]" rows="3" <?php echo (int) $field['is_required'] === 1 ? 'required' : ''; ?>><?php echo htmlspecialchars($_POST['custom_fields'][$product['id']][$field['id']] ?? '', ENT_QUOTES); ?></textarea>
+                                                    <?php elseif ($field['field_type'] === 'select' && !empty($field['field_options'])): ?>
+                                                        <select class="form-select" id="custom_<?php echo (int) $field['id']; ?>" name="custom_fields[<?php echo (int) $product['id']; ?>][<?php echo (int) $field['id']; ?>]" <?php echo (int) $field['is_required'] === 1 ? 'required' : ''; ?>>
+                                                            <option value="">Seleziona...</option>
+                                                            <?php foreach (explode(',', $field['field_options']) as $option): ?>
+                                                                <option value="<?php echo htmlspecialchars(trim($option), ENT_QUOTES); ?>" <?php echo (trim($option) === ($_POST['custom_fields'][$product['id']][$field['id']] ?? '')) ? 'selected' : ''; ?>><?php echo htmlspecialchars(trim($option), ENT_QUOTES); ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php else: ?>
+                                                        <input class="form-control" type="<?php echo $field['field_type'] === 'email' ? 'email' : ($field['field_type'] === 'number' ? 'number' : 'text'); ?>" id="custom_<?php echo (int) $field['id']; ?>" name="custom_fields[<?php echo (int) $product['id']; ?>][<?php echo (int) $field['id']; ?>]" value="<?php echo htmlspecialchars($_POST['custom_fields'][$product['id']][$field['id']] ?? '', ENT_QUOTES); ?>" <?php echo (int) $field['is_required'] === 1 ? 'required' : ''; ?>>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <button class="ap-btn ap-btn--primary w-100" type="submit" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>Aggiungi al carrello</button>
                                     <a class="ap-btn ap-btn--ghost w-100" href="?page=shop">Confronta altri servizi</a>
                                 </form>
