@@ -399,9 +399,9 @@
                         <div class="directions-item">
                             <h5><i class="fas fa-bus me-2 text-primary"></i>Mezzi pubblici</h5>
                             <ul class="list-unstyled">
-                                <li><strong>Bus urbano:</strong> Linee EAV da Napoli (Porta Nolana)</li>
+                                <li><strong>Bus urbano:</strong> Linee EAV dal porto commerciale, fermata Piazza Matteotti. Da lì, raggiungere Via Plinio Il Vecchio, 72 a piedi (circa 500 m).</li>
                                 <li><strong>Treno:</strong> Stazione Castellammare di Stabia (linea Circumvesuviana)</li>
-                                <li><strong>Aliscafi/Traghetti:</strong> Dal porto commerciale di Castellammare di Stabia per collegamenti diretti alle isole (Capri, Ischia, Procida) o a Napoli/Salerno. Non ci sono traghetti diretti da Sorrento o Massa Lubrense.</li>
+                                <li><strong>Aliscafi/Traghetti:</strong> Arrivo al porto commerciale di Castellammare di Stabia da isole (Capri, Ischia, Procida) o da Napoli/Salerno. Da lì, raggiungere Via Plinio Il Vecchio, 72 a piedi o con bus locali (circa 1 km).</li>
                             </ul>
                         </div>
 
