@@ -3375,3 +3375,8 @@ main#page-content[data-page="cart"] .cart-section .container-xxl {
     justify-content: center;
     flex-wrap: wrap;
 }
+
+/* Privacy Policy */
+.privacy-policy {
+    padding-top: 120px;
+}
