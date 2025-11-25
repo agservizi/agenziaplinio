@@ -957,7 +957,12 @@ const App = (() => {
             wrapper.appendChild(small);
         }
         messages.appendChild(wrapper);
-        scrollChatbotToBottom();
+        if (role === 'bot') {
+            // Scroll to the top of the new bot message
+            messages.scrollTop = wrapper.offsetTop;
+        } else {
+            scrollChatbotToBottom();
+        }
     }
 
     function showChatbotTyping() {
