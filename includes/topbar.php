@@ -111,7 +111,7 @@ if (is_file($servicesDataPath)) {
                 <span class="cart-pill__count"><?php echo (int) ($cartCount ?? 0); ?></span>
             </button>
             <?php if (!empty($currentUser)): ?>
-                <a class="account-link" href="?page=<?php echo ap_auth_is_admin() ? 'admin' : 'account'; ?>">
+                <a class="ap-btn ap-btn--ghost account-link" href="?page=<?php echo ap_auth_is_admin() ? 'admin' : 'account'; ?>">
                     <?php echo htmlspecialchars($currentUser['name'], ENT_QUOTES); ?>
                 </a>
             <?php else: ?>
