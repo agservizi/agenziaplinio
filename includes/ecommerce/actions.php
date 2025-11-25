@@ -98,6 +98,9 @@ function ap_handle_action(string $action): void
         case 'update_cart':
             ap_action_update_cart();
             break;
+        case 'clear_cart':
+            ap_action_clear_cart();
+            break;
         case 'apply_coupon':
             ap_action_apply_coupon();
             break;
@@ -273,6 +276,12 @@ function ap_action_update_cart(): void
     }
     ap_cart_ensure_coupon_valid();
     ap_flash('Carrello aggiornato.', 'success');
+}
+
+function ap_action_clear_cart(): void
+{
+    ap_cart_clear();
+    ap_flash('Carrello svuotato.', 'success');
 }
 
 function ap_action_apply_coupon(): void
