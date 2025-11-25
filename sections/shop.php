@@ -93,7 +93,7 @@ $activeFilters = array_filter([
             </button>
 
             <!-- Sidebar -->
-            <aside id="shop-sidebar" class="shop-sidebar" style="width: 280px; background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 1.5rem; position: sticky; top: 100px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; flex-shrink: 0;" aria-labelledby="sidebar-heading">
+            <aside id="shop-sidebar" class="shop-sidebar" style="width: 280px; background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 1.5rem; position: sticky; top: 100px; height: fit-content; flex-shrink: 0;" aria-labelledby="sidebar-heading">
                 <h2 id="sidebar-heading" class="h5 mb-4">Filtri</h2>
 
                 <!-- Filters Form -->
