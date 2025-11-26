@@ -2336,9 +2336,9 @@ $conversionFunnel = ap_get_conversion_funnel();
                     const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
                     const hasSelection = checkedBoxes.length > 0;
                     
-                    bulkActivateBtn.disabled = !hasSelection;
-                    bulkDeactivateBtn.disabled = !hasSelection;
-                    bulkDeleteBtn.disabled = !hasSelection;
+                    if (bulkActivateBtn) bulkActivateBtn.disabled = !hasSelection;
+                    if (bulkDeactivateBtn) bulkDeactivateBtn.disabled = !hasSelection;
+                    if (bulkDeleteBtn) bulkDeleteBtn.disabled = !hasSelection;
                     
                     // Update master checkbox state
                     if (masterCheckbox) {
