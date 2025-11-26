@@ -699,7 +699,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">Tipo</label>
-                                                <select class="form-select" name="custom_fields[<?php echo (int) $field['id']; ?>][type]">
+                                                <select class="form-select field-type-select" name="custom_fields[<?php echo (int) $field['id']; ?>][type]">
                                                     <option value="text" <?php echo $field['field_type'] === 'text' ? 'selected' : ''; ?>>Testo</option>
                                                     <option value="textarea" <?php echo $field['field_type'] === 'textarea' ? 'selected' : ''; ?>>Area testo</option>
                                                     <option value="select" <?php echo $field['field_type'] === 'select' ? 'selected' : ''; ?>>Selezione</option>
@@ -987,7 +987,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">Tipo</label>
-                                                <select class="form-select" name="custom_fields[<?php echo (int) $field['id']; ?>][type]">
+                                                <select class="form-select field-type-select" name="custom_fields[<?php echo (int) $field['id']; ?>][type]">
                                                     <option value="text" <?php echo $field['field_type'] === 'text' ? 'selected' : ''; ?>>Testo</option>
                                                     <option value="textarea" <?php echo $field['field_type'] === 'textarea' ? 'selected' : ''; ?>>Area testo</option>
                                                     <option value="select" <?php echo $field['field_type'] === 'select' ? 'selected' : ''; ?>>Selezione</option>
