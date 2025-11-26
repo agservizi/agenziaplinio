@@ -697,7 +697,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                                 <label class="form-label">Etichetta</label>
                                                 <input class="form-control" type="text" name="custom_fields[<?php echo (int) $field['id']; ?>][label]" value="<?php echo htmlspecialchars($field['field_label'], ENT_QUOTES); ?>" required>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 field-options-container">
                                                 <label class="form-label">Tipo</label>
                                                 <select class="form-select field-type-select" name="custom_fields[<?php echo (int) $field['id']; ?>][type]">
                                                     <option value="text" <?php echo $field['field_type'] === 'text' ? 'selected' : ''; ?>>Testo</option>
@@ -710,7 +710,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                                     <option value="citta" <?php echo $field['field_type'] === 'citta' ? 'selected' : ''; ?>>Città</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 field-options-container">
                                                 <label class="form-label">Opzioni (per select)</label>
                                                 <input class="form-control" type="text" name="custom_fields[<?php echo (int) $field['id']; ?>][options]" value="<?php echo htmlspecialchars($field['field_options'] ?? '', ENT_QUOTES); ?>" placeholder="Opzione1,Opzione2">
                                             </div>
@@ -985,7 +985,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                                 <label class="form-label">Etichetta</label>
                                                 <input class="form-control" type="text" name="custom_fields[<?php echo (int) $field['id']; ?>][label]" value="<?php echo htmlspecialchars($field['field_label'], ENT_QUOTES); ?>" required>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 field-options-container">
                                                 <label class="form-label">Tipo</label>
                                                 <select class="form-select field-type-select" name="custom_fields[<?php echo (int) $field['id']; ?>][type]">
                                                     <option value="text" <?php echo $field['field_type'] === 'text' ? 'selected' : ''; ?>>Testo</option>
@@ -998,7 +998,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                                     <option value="citta" <?php echo $field['field_type'] === 'citta' ? 'selected' : ''; ?>>Città</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 field-options-container">
                                                 <label class="form-label">Opzioni (per select)</label>
                                                 <input class="form-control" type="text" name="custom_fields[<?php echo (int) $field['id']; ?>][options]" value="<?php echo htmlspecialchars($field['field_options'] ?? '', ENT_QUOTES); ?>" placeholder="Opzione1,Opzione2">
                                             </div>
@@ -2229,7 +2229,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                 <label class="form-label">Etichetta</label>
                                 <input class="form-control" type="text" name="custom_fields[${id}][label]" required>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 field-options-container">
                                 <label class="form-label">Tipo</label>
                                 <select class="form-select field-type-select" name="custom_fields[${id}][type]">
                                     <option value="text">Testo</option>
