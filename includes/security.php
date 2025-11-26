@@ -18,17 +18,18 @@ function ap_security_headers() {
     // Permissions Policy
     header("Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()");
 
-    // Cross-Origin policies
-    header('Cross-Origin-Embedder-Policy: require-corp');
-    header('Cross-Origin-Opener-Policy: same-origin');
-    header('Cross-Origin-Resource-Policy: same-origin');
+    // Cross-Origin policies - adjusted for compatibility
+    // Note: COEP require-corp is too restrictive for third-party services like Klarna
+    // Using safer but compatible settings
+    header('Cross-Origin-Opener-Policy: same-origin-allow-popups');
+    header('Cross-Origin-Resource-Policy: cross-origin');
 
     // HSTS (HTTP Strict Transport Security) - only if HTTPS
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
     }
 
-    // CSP (Content Security Policy) - enhanced with granular controls
+    // CSP (Content Security Policy) - enhanced with granular controls v2.1
     $csp = "default-src 'self'; " .
            "script-src 'self' 'unsafe-inline' https://unpkg.com https://js.klarna.com https://www.google.com https://www.gstatic.com; " .
            "script-src-elem 'self' https://unpkg.com https://js.klarna.com https://www.google.com https://www.gstatic.com; " .
