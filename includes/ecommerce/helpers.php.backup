@@ -747,8 +747,6 @@ function ap_create_order(int $userId, array $items, array $payload): int
         $pdo->rollBack();
         throw $exception;
     }
-}
-
 function ap_process_payment(array $payload): void
 {
     $pdo = ap_db();
@@ -2604,7 +2602,7 @@ function ap_get_analytics_summary(array $filters = []): array
     $stmt->execute($params);
     $wishlistAdds = (int) $stmt->fetchColumn();
 
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM product_reviews WHERE created_at >= :thirty_days_ago");
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM reviews WHERE created_at >= :thirty_days_ago");
     $stmt->execute([':thirty_days_ago' => date('Y-m-d H:i:s', strtotime('-30 days'))]);
     $reviewsSubmitted = (int) $stmt->fetchColumn();
 
@@ -2680,42 +2678,4 @@ function ap_get_conversion_funnel(): array
         'orders_completed' => $ordersCompleted,
     ];
 }
-
-function ap_record_payment(int $orderId, array $paymentData): bool
-{
-    $pdo = ap_db();
-
-    try {
-        // Insert payment record
-        $stmt = $pdo->prepare('
-            INSERT INTO payments (
-                order_id, provider, status, amount_cents, transaction_ref, meta, created_at
-            ) VALUES (
-                :order_id, :provider, :status, :amount_cents, :transaction_ref, :meta, NOW()
-            )
-        ');
-
-        $stmt->execute([
-            ':order_id' => $orderId,
-            ':provider' => $paymentData['provider'] ?? 'unknown',
-            ':status' => $paymentData['payment_status'] ?? $paymentData['status'] ?? 'pending',
-            ':amount_cents' => $paymentData['amount_cents'] ?? 0,
-            ':transaction_ref' => $paymentData['transaction_ref'] ?? null,
-            ':meta' => json_encode($paymentData['meta'] ?? []),
-        ]);
-
-        // Update order status if provided
-        if (isset($paymentData['order_status'])) {
-            $stmt = $pdo->prepare('UPDATE orders SET status = :status, updated_at = NOW() WHERE id = :order_id');
-            $stmt->execute([
-                ':status' => $paymentData['order_status'],
-                ':order_id' => $orderId,
-            ]);
-        }
-
-        return true;
-    } catch (Exception $e) {
-        error_log('Payment recording failed: ' . $e->getMessage());
-        return false;
-    }
 }

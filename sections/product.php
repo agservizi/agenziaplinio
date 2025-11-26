@@ -11,6 +11,17 @@ if (!$product && isset($_GET['id'])) {
     }
 }
 $isUnavailable = !$product || (int) $product['is_active'] !== 1;
+
+// Track product view analytics
+if ($product && !$isUnavailable) {
+    $user = ap_auth_current_user();
+    ap_track_event('product_view', [
+        'product_id' => (int) $product['id'],
+        'product_name' => $product['name'],
+        'product_category' => ap_product_category_label($product),
+        'product_price' => (int) $product['price_cents']
+    ], $user ? (int) $user['id'] : null);
+}
 ?>
 <section class="product-section section-padding">
     <div class="container">
@@ -156,7 +167,22 @@ $isUnavailable = !$product || (int) $product['is_active'] !== 1;
                                             <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>
-                                    <button class="ap-btn ap-btn--primary w-100" type="submit" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>Aggiungi al carrello</button>
+                                    <div class="d-flex gap-2">
+                                        <button class="ap-btn ap-btn--primary flex-fill" type="submit" <?php echo (int) $product['stock'] === 0 ? 'disabled' : ''; ?>>Aggiungi al carrello</button>
+                                        <?php if (ap_auth_current_user() !== null): ?>
+                                            <?php $isInWishlist = ap_is_in_wishlist((int) ap_auth_current_user()['id'], (int) $product['id']); ?>
+                                            <form method="post" class="wishlist-form">
+                                                <input type="hidden" name="ap_action" value="toggle_wishlist">
+                                                <input type="hidden" name="product_id" value="<?php echo (int) $product['id']; ?>">
+                                                <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'] ?? '?page=product&slug=' . urlencode($slug), ENT_QUOTES); ?>">
+                                                <button type="submit" class="ap-btn ap-btn--ghost p-2" title="<?php echo $isInWishlist ? 'Rimuovi dalla wishlist' : 'Aggiungi alla wishlist'; ?>" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                                                    <svg width="20" height="20" fill="<?php echo $isInWishlist ? 'currentColor' : 'none'; ?>" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
+                                                        <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
+                                    </div>
                                     <a class="ap-btn ap-btn--ghost w-100" href="?page=shop">Confronta altri servizi</a>
                                 </form>
                                 <?php if ((int) $product['stock'] === 0): ?>
@@ -176,6 +202,153 @@ $isUnavailable = !$product || (int) $product['is_active'] !== 1;
                                 </ul>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Product Reviews Section -->
+        <?php if (!$isUnavailable): ?>
+            <?php
+            $reviews = ap_get_product_reviews((int) $product['id']);
+            $ratingData = ap_get_product_rating((int) $product['id']);
+            $userCanReview = ap_auth_current_user() !== null && ap_can_user_review_product((int) ap_auth_current_user()['id'], (int) $product['id']);
+            $userHasReviewed = false;
+            if (ap_auth_current_user() !== null) {
+                foreach ($reviews as $review) {
+                    if ((int) $review['user_id'] === (int) ap_auth_current_user()['id']) {
+                        $userHasReviewed = true;
+                        break;
+                    }
+                }
+            }
+            ?>
+            <div class="product-reviews-section mt-5" id="reviews">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3 class="h4 mb-4">Recensioni clienti</h3>
+
+                        <!-- Rating Summary -->
+                        <?php if ($ratingData['total_reviews'] > 0): ?>
+                            <div class="rating-summary card mb-4">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3 text-center">
+                                            <div class="rating-average mb-2">
+                                                <span class="display-4 fw-bold text-primary"><?php echo number_format($ratingData['average_rating'], 1); ?></span>
+                                                <div class="rating-stars mb-1">
+                                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                        <svg width="20" height="20" fill="<?php echo $i <= round($ratingData['average_rating']) ? 'currentColor' : 'none'; ?>" viewBox="0 0 16 16" class="text-warning">
+                                                            <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                                        </svg>
+                                                    <?php endfor; ?>
+                                                </div>
+                                                <small class="text-muted"><?php echo $ratingData['total_reviews']; ?> recensioni</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="rating-breakdown">
+                                                <?php for ($i = 5; $i >= 1; $i--): ?>
+                                                    <div class="d-flex align-items-center mb-1">
+                                                        <span class="me-2"><?php echo $i; ?> stelle</span>
+                                                        <div class="progress flex-fill" style="height: 8px;">
+                                                            <div class="progress-bar bg-warning" style="width: <?php echo $ratingData['total_reviews'] > 0 ? ($ratingData['rating_distribution'][$i] / $ratingData['total_reviews'] * 100) : 0; ?>%"></div>
+                                                        </div>
+                                                        <span class="ms-2 small"><?php echo $ratingData['rating_distribution'][$i]; ?></span>
+                                                    </div>
+                                                <?php endfor; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Reviews List -->
+                        <?php if (!empty($reviews)): ?>
+                            <div class="reviews-list">
+                                <?php foreach ($reviews as $review): ?>
+                                    <div class="review-item card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div>
+                                                    <strong><?php echo htmlspecialchars($review['user_name'], ENT_QUOTES); ?></strong>
+                                                    <div class="rating-stars">
+                                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                            <svg width="16" height="16" fill="<?php echo $i <= (int) $review['rating'] ? 'currentColor' : 'none'; ?>" viewBox="0 0 16 16" class="text-warning">
+                                                                <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                                            </svg>
+                                                        <?php endfor; ?>
+                                                    </div>
+                                                </div>
+                                                <small class="text-muted"><?php echo date('d/m/Y', strtotime($review['created_at'])); ?></small>
+                                            </div>
+                                            <?php if (!empty($review['title'])): ?>
+                                                <h5 class="review-title"><?php echo htmlspecialchars($review['title'], ENT_QUOTES); ?></h5>
+                                            <?php endif; ?>
+                                            <p class="review-text mb-0"><?php echo nl2br(htmlspecialchars($review['review'], ENT_QUOTES)); ?></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="no-reviews text-center py-4">
+                                <p class="text-muted">Ancora nessuna recensione. Sii il primo a lasciare un feedback!</p>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Add Review Form -->
+                        <?php if (ap_auth_current_user() !== null && $userCanReview && !$userHasReviewed): ?>
+                            <div class="add-review-section mt-4">
+                                <h4 class="h5 mb-3">Lascia una recensione</h4>
+                                <form method="post" class="card">
+                                    <div class="card-body">
+                                        <input type="hidden" name="ap_action" value="add_product_review">
+                                        <input type="hidden" name="product_id" value="<?php echo (int) $product['id']; ?>">
+                                        <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'] ?? '?page=product&slug=' . urlencode($slug), ENT_QUOTES); ?>#reviews">
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Valutazione <span class="text-danger">*</span></label>
+                                            <div class="rating-input">
+                                                <?php for ($i = 5; $i >= 1; $i--): ?>
+                                                    <input type="radio" id="rating-<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
+                                                    <label for="rating-<?php echo $i; ?>" title="<?php echo $i; ?> stelle">
+                                                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-warning">
+                                                            <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                                        </svg>
+                                                    </label>
+                                                <?php endfor; ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="review-title">Titolo</label>
+                                            <input type="text" class="form-control" id="review-title" name="title" maxlength="100" placeholder="Riassumi la tua esperienza">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="review-text">Recensione <span class="text-danger">*</span></label>
+                                            <textarea class="form-control" id="review-text" name="review" rows="4" required placeholder="Condividi la tua esperienza con questo prodotto..."></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Pubblica recensione</button>
+                                    </div>
+                                </form>
+                            </div>
+                        <?php elseif (ap_auth_current_user() === null): ?>
+                            <div class="review-login-prompt text-center py-3">
+                                <p class="text-muted mb-2">Accedi per lasciare una recensione</p>
+                                <a href="?page=account&login=required" class="btn btn-outline-primary btn-sm">Accedi</a>
+                            </div>
+                        <?php elseif (!$userCanReview): ?>
+                            <div class="review-purchase-prompt text-center py-3">
+                                <p class="text-muted">Acquista questo prodotto per poter lasciare una recensione</p>
+                            </div>
+                        <?php elseif ($userHasReviewed): ?>
+                            <div class="review-already text-center py-3">
+                                <p class="text-muted">Hai già lasciato una recensione per questo prodotto</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

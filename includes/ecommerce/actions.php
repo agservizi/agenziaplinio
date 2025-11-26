@@ -161,6 +161,24 @@ function ap_handle_action(string $action): void
         case 'save_order_custom_data':
             ap_action_save_order_custom_data();
             break;
+        case 'toggle_wishlist':
+            ap_action_toggle_wishlist();
+            break;
+        case 'remove_from_wishlist':
+            ap_action_remove_from_wishlist();
+            break;
+        case 'add_product_review':
+            ap_action_add_product_review();
+            break;
+        case 'mark_notification_read':
+            ap_action_mark_notification_read();
+            break;
+        case 'mark_all_notifications_read':
+            ap_action_mark_all_notifications_read();
+            break;
+        case 'track_event':
+            ap_action_track_event();
+            break;
         default:
             ap_flash('Azione non riconosciuta: ' . $action, 'error');
     }
@@ -264,6 +282,15 @@ function ap_action_add_to_cart(): void
     }
 
     ap_flash('Prodotto aggiunto al carrello.', 'success');
+
+    // Track analytics event
+    $user = ap_auth_current_user();
+    ap_track_event('add_to_cart', [
+        'product_id' => $productId,
+        'quantity' => $quantity,
+        'product_name' => $product['name'],
+        'product_price' => (int) $product['price_cents']
+    ], $user ? (int) $user['id'] : null);
 }
 
 function ap_action_update_cart(): void
@@ -585,6 +612,17 @@ function ap_action_checkout(): void
     }
     ap_notify_order_received($orderId);
     ap_cart_clear();
+
+    // Track order completion analytics
+    $totalItems = array_sum(array_column($items, 'quantity'));
+    ap_track_event('order_completed', [
+        'order_id' => $orderId,
+        'total_amount' => $total,
+        'payment_method' => $paymentMethod,
+        'items_count' => count($items),
+        'total_quantity' => $totalItems
+    ], (int) $user['id']);
+
     if ($paymentMethod === 'wire') {
         ap_flash("Ordine #{$orderId} creato. Completa il bonifico per avviare la spedizione.", 'info');
     } elseif ($paymentMethod === 'klarna') {
@@ -1479,4 +1517,185 @@ function ap_action_admin_duplicate_product(): void
     } catch (Exception $e) {
         ap_flash('Errore durante la duplicazione del prodotto.', 'error');
     }
+}
+
+function ap_action_toggle_wishlist(): void
+{
+    $user = ap_auth_current_user();
+    if (!$user) {
+        ap_flash('Accedi per gestire la wishlist.', 'error');
+        return;
+    }
+
+    $productId = (int) ($_POST['product_id'] ?? 0);
+    if ($productId <= 0) {
+        ap_flash('Prodotto non valido.', 'error');
+        return;
+    }
+
+    if (ap_is_in_wishlist((int) $user['id'], $productId)) {
+        // Remove from wishlist
+        if (ap_remove_from_wishlist((int) $user['id'], $productId)) {
+            ap_flash('Prodotto rimosso dalla wishlist.', 'success');
+            ap_track_event('wishlist_remove', ['product_id' => $productId], (int) $user['id']);
+        } else {
+            ap_flash('Errore nella rimozione dalla wishlist.', 'error');
+        }
+    } else {
+        // Add to wishlist
+        if (ap_add_to_wishlist((int) $user['id'], $productId)) {
+            ap_flash('Prodotto aggiunto alla wishlist.', 'success');
+            ap_track_event('wishlist_add', ['product_id' => $productId], (int) $user['id']);
+        } else {
+            ap_flash('Errore nell\'aggiunta alla wishlist.', 'error');
+        }
+    }
+}
+{
+    $user = ap_auth_current_user();
+    if (!$user) {
+        ap_flash('Accedi per aggiungere prodotti alla wishlist.', 'error');
+        return;
+    }
+
+    $productId = (int) ($_POST['product_id'] ?? 0);
+    if ($productId <= 0) {
+        ap_flash('Prodotto non valido.', 'error');
+        return;
+    }
+
+    if (ap_add_to_wishlist((int) $user['id'], $productId)) {
+        ap_flash('Prodotto aggiunto alla wishlist.', 'success');
+        // Track analytics event
+        ap_track_event('wishlist_add', ['product_id' => $productId], (int) $user['id']);
+    } else {
+        ap_flash('Impossibile aggiungere il prodotto alla wishlist.', 'error');
+    }
+}
+
+function ap_action_remove_from_wishlist(): void
+{
+    $user = ap_auth_current_user();
+    if (!$user) {
+        ap_flash('Accedi per gestire la wishlist.', 'error');
+        return;
+    }
+
+    $productId = (int) ($_POST['product_id'] ?? 0);
+    if ($productId <= 0) {
+        ap_flash('Prodotto non valido.', 'error');
+        return;
+    }
+
+    if (ap_remove_from_wishlist((int) $user['id'], $productId)) {
+        ap_flash('Prodotto rimosso dalla wishlist.', 'success');
+        // Track analytics event
+        ap_track_event('wishlist_remove', ['product_id' => $productId], (int) $user['id']);
+    } else {
+        ap_flash('Prodotto non trovato nella wishlist.', 'error');
+    }
+}
+
+// === PRODUCT REVIEWS ACTIONS ===
+
+function ap_action_add_product_review(): void
+{
+    $user = ap_auth_current_user();
+    if (!$user) {
+        ap_flash('Accedi per lasciare una recensione.', 'error');
+        return;
+    }
+
+    $productId = (int) ($_POST['product_id'] ?? 0);
+    $rating = (int) ($_POST['rating'] ?? 0);
+    $title = trim($_POST['title'] ?? '');
+    $review = trim($_POST['review'] ?? '');
+
+    if ($productId <= 0) {
+        ap_flash('Prodotto non valido.', 'error');
+        return;
+    }
+
+    if ($rating < 1 || $rating > 5) {
+        ap_flash('Valutazione non valida.', 'error');
+        return;
+    }
+
+    if ($title === '' || $review === '') {
+        ap_flash('Titolo e recensione sono obbligatori.', 'error');
+        return;
+    }
+
+    if (!ap_can_user_review_product((int) $user['id'], $productId)) {
+        ap_flash('Puoi recensire solo prodotti che hai acquistato.', 'error');
+        return;
+    }
+
+    if (ap_add_product_review((int) $user['id'], $productId, $rating, $title, $review)) {
+        ap_flash('Recensione pubblicata con successo.', 'success');
+        // Track analytics event
+        ap_track_event('review_added', [
+            'product_id' => $productId,
+            'rating' => $rating
+        ], (int) $user['id']);
+    } else {
+        ap_flash('Errore nella pubblicazione della recensione.', 'error');
+    }
+}
+
+// === NOTIFICATIONS ACTIONS ===
+
+function ap_action_mark_notification_read(): void
+{
+    $user = ap_auth_current_user();
+    if (!$user) {
+        ap_flash('Accedi per gestire le notifiche.', 'error');
+        return;
+    }
+
+    $notificationId = (int) ($_POST['notification_id'] ?? 0);
+    if ($notificationId <= 0) {
+        ap_flash('Notifica non valida.', 'error');
+        return;
+    }
+
+    if (ap_mark_notification_read($notificationId, (int) $user['id'])) {
+        // No flash message needed for this action
+    } else {
+        ap_flash('Notifica non trovata.', 'error');
+    }
+}
+
+function ap_action_mark_all_notifications_read(): void
+{
+    $user = ap_auth_current_user();
+    if (!$user) {
+        ap_flash('Accedi per gestire le notifiche.', 'error');
+        return;
+    }
+
+    if (ap_mark_all_notifications_read((int) $user['id'])) {
+        ap_flash('Tutte le notifiche sono state contrassegnate come lette.', 'success');
+    } else {
+        ap_flash('Errore nell\'aggiornamento delle notifiche.', 'error');
+    }
+}
+
+// === ANALYTICS ACTIONS ===
+
+function ap_action_track_event(): void
+{
+    $user = ap_auth_current_user();
+    $eventType = trim($_POST['event_type'] ?? '');
+    $eventData = $_POST['event_data'] ?? [];
+
+    if ($eventType === '') {
+        return; // Silent fail for invalid requests
+    }
+
+    if (!is_array($eventData)) {
+        $eventData = [];
+    }
+
+    ap_track_event($eventType, $eventData, $user ? (int) $user['id'] : null);
 }

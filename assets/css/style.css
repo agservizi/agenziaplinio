@@ -956,6 +956,45 @@ main {
     font-weight: 600;
 }
 
+.wishlist-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(220, 53, 69, 0.25);
+    color: #dc3545;
+    font-size: 0.85rem;
+    background: rgba(220, 53, 69, 0.08);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+}
+
+.wishlist-pill:focus-visible {
+    outline: 2px solid #dc3545;
+    outline-offset: 2px;
+}
+
+.wishlist-pill:hover {
+    background: rgba(220, 53, 69, 0.15);
+    border-color: rgba(220, 53, 69, 0.45);
+}
+
+.wishlist-pill__count {
+    min-width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    background: #dc3545;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
 .account-link {
     text-decoration: none;
     font-weight: 600;
@@ -2228,6 +2267,14 @@ body.has-chatbot #back-to-top {
     }
 
     .cart-pill .cart-icon {
+        display: inline-block;
+    }
+
+    .wishlist-pill .wishlist-text {
+        display: none;
+    }
+
+    .wishlist-pill .wishlist-icon {
         display: inline-block;
     }
 
@@ -3507,4 +3554,158 @@ main#page-content[data-page="cart"] .cart-section .container-xxl {
     .profile-icon {
         display: inline;
     }
+}
+
+/* Product Reviews Styles */
+.product-reviews-section {
+    margin-top: 3rem;
+}
+
+.rating-summary .rating-average {
+    font-size: 2.5rem;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 2px;
+}
+
+.rating-stars svg {
+    width: 16px;
+    height: 16px;
+}
+
+.rating-breakdown .progress {
+    height: 8px;
+    background-color: #e9ecef;
+}
+
+.rating-breakdown .progress-bar {
+    background-color: #ffc107;
+}
+
+.review-item {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+}
+
+.review-item .card-body {
+    padding: 1.5rem;
+}
+
+.review-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.review-text {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+.rating-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.rating-input label {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.rating-input label:hover {
+    transform: scale(1.1);
+}
+
+.rating-input input[type="radio"]:checked + label svg {
+    fill: currentColor;
+}
+
+.rating-input label svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #dee2e6;
+    stroke-width: 1.5;
+    transition: all 0.2s ease;
+}
+
+.rating-input input[type="radio"]:checked + label svg {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+.add-review-section .card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+}
+
+.add-review-section .card-body {
+    padding: 2rem;
+}
+
+.no-reviews {
+    padding: 3rem 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.review-login-prompt,
+.review-purchase-prompt,
+.review-already {
+    padding: 2rem 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+/* Product Rating in Shop */
+.product-rating {
+    margin-bottom: 1rem;
+}
+
+.product-rating .rating-stars {
+    display: flex;
+    gap: 1px;
+}
+
+.product-rating .rating-stars svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Notifications Styles */
+.notifications-card {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    border-left: 4px solid transparent;
+}
+
+.notification-item.border-primary {
+    border-left-color: #0d6efd;
+}
+
+.notification-title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.notification-message {
+    line-height: 1.4;
+}
+
+.notifications-list {
+    max-height: 500px;
+    overflow-y: auto;
 }

@@ -33,6 +33,15 @@ $pageDescription = $currentPage['description'] ?? $site['default_description'];
 $pageSections = $currentPage['sections'] ?? [];
 $productDetail = null;
 
+// Track page view analytics
+$user = ap_auth_current_user();
+ap_track_event('page_view', [
+    'page' => $pageKey,
+    'title' => $pageTitle,
+    'url' => $_SERVER['REQUEST_URI'] ?? '/',
+    'referrer' => $_SERVER['HTTP_REFERER'] ?? null
+], $user ? (int) $user['id'] : null);
+
 if ($pageKey === 'download') {
     $orderId = (int) ($_GET['order_id'] ?? 0);
     $productId = (int) ($_GET['product_id'] ?? 0);

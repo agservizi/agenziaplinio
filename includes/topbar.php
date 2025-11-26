@@ -100,6 +100,19 @@ if (is_file($servicesDataPath)) {
             </form>
         </div>
         <div class="topbar-actions d-flex align-items-center gap-3">
+            <?php if (!empty($currentUser)): ?>
+                <a
+                    class="wishlist-pill"
+                    href="?page=wishlist"
+                    title="La mia wishlist"
+                >
+                    <span class="wishlist-text">Wishlist</span>
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="wishlist-icon" aria-hidden="true">
+                        <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg>
+                    <span class="wishlist-pill__count"><?php echo ap_get_wishlist_count((int) $currentUser['id']); ?></span>
+                </a>
+            <?php endif; ?>
             <button
                 class="cart-pill"
                 type="button"

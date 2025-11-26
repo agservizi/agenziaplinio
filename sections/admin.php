@@ -263,6 +263,10 @@ $auditEventTypes = [
     'user_action' => ['label' => 'Azione utente', 'color' => 'secondary'],
     'system' => ['label' => 'Sistema', 'color' => 'dark'],
 ];
+
+// Analytics data for admin dashboard
+$analyticsSummary = ap_get_analytics_summary();
+$conversionFunnel = ap_get_conversion_funnel();
 ?>
 <section class="admin-section section-padding">
     <div class="container-xxl">
@@ -1712,6 +1716,159 @@ $auditEventTypes = [
             </div>
         </div>
         <?php endif; ?>
+        <?php if ($section === 'analytics'): ?>
+        <div class="admin-card mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="mb-0">Analytics Dashboard</h4>
+                    <small class="text-muted">Analisi dettagliata del comportamento degli utenti e performance ecommerce</small>
+                </div>
+                <div class="text-end">
+                    <small class="text-muted d-block">Ultimo aggiornamento: <?php echo date('d/m/Y H:i'); ?></small>
+                    <small class="text-muted">Periodo: ultimi 30 giorni</small>
+                </div>
+            </div>
+
+            <!-- Metriche principali -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Sessioni totali</p>
+                        <h3><?php echo number_format($analyticsSummary['total_sessions'] ?? 0); ?></h3>
+                        <small class="text-muted">Ultimi 30 giorni</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Visualizzazioni prodotti</p>
+                        <h3><?php echo number_format($analyticsSummary['product_views'] ?? 0); ?></h3>
+                        <small class="text-muted">Interazioni con catalogo</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Aggiunte al carrello</p>
+                        <h3><?php echo number_format($analyticsSummary['add_to_cart'] ?? 0); ?></h3>
+                        <small class="text-muted">Conversioni dal catalogo</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p class="stat-label">Ordini completati</p>
+                        <h3><?php echo number_format($analyticsSummary['orders_completed'] ?? 0); ?></h3>
+                        <small class="text-muted">Transazioni riuscite</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversion Funnel -->
+            <div class="row g-4 mb-5">
+                <div class="col-12">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Conversion Funnel (ultimi 30 giorni)</h5>
+                        <div class="conversion-funnel">
+                            <?php
+                            $funnelSteps = [
+                                ['label' => 'Sessioni', 'value' => $conversionFunnel['sessions'] ?? 0, 'color' => 'primary'],
+                                ['label' => 'Visualizzazioni prodotti', 'value' => $conversionFunnel['product_views'] ?? 0, 'color' => 'info'],
+                                ['label' => 'Aggiunte al carrello', 'value' => $conversionFunnel['add_to_cart'] ?? 0, 'color' => 'warning'],
+                                ['label' => 'Ordini completati', 'value' => $conversionFunnel['orders_completed'] ?? 0, 'color' => 'success']
+                            ];
+                            $maxValue = max(array_column($funnelSteps, 'value'));
+                            ?>
+                            <?php foreach ($funnelSteps as $step): ?>
+                                <div class="funnel-step">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-semibold"><?php echo htmlspecialchars($step['label'], ENT_QUOTES); ?></span>
+                                        <span class="badge bg-<?php echo $step['color']; ?>"><?php echo number_format($step['value']); ?></span>
+                                    </div>
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-<?php echo $step['color']; ?>" role="progressbar"
+                                             style="width: <?php echo $maxValue > 0 ? ($step['value'] / $maxValue * 100) : 0; ?>%"
+                                             aria-valuenow="<?php echo $step['value']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $maxValue; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Products & User Actions -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Prodotti più visualizzati</h5>
+                        <?php if (empty($analyticsSummary['top_products'])): ?>
+                            <p class="text-muted">Nessun dato disponibile</p>
+                        <?php else: ?>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Prodotto</th>
+                                            <th>Visualizzazioni</th>
+                                            <th>Conversion Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach (array_slice($analyticsSummary['top_products'], 0, 10) as $product): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($product['name'], ENT_QUOTES); ?></td>
+                                                <td><?php echo number_format($product['views']); ?></td>
+                                                <td><?php echo $product['views'] > 0 ? number_format(($product['orders'] / $product['views']) * 100, 1) : 0; ?>%</td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Attività utenti (ultimi 30 giorni)</h5>
+                        <div class="user-activity-list">
+                            <?php
+                            $activities = [
+                                ['label' => 'Aggiunte alla wishlist', 'value' => $analyticsSummary['wishlist_adds'] ?? 0, 'icon' => '❤️'],
+                                ['label' => 'Recensioni lasciate', 'value' => $analyticsSummary['reviews_submitted'] ?? 0, 'icon' => '⭐'],
+                                ['label' => 'Carrelli abbandonati', 'value' => $analyticsSummary['abandoned_carts'] ?? 0, 'icon' => '🛒'],
+                                ['label' => 'Notifiche lette', 'value' => $analyticsSummary['notifications_read'] ?? 0, 'icon' => '📧']
+                            ];
+                            ?>
+                            <?php foreach ($activities as $activity): ?>
+                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <span class="me-3"><?php echo $activity['icon']; ?></span>
+                                        <span><?php echo htmlspecialchars($activity['label'], ENT_QUOTES); ?></span>
+                                    </div>
+                                    <span class="badge bg-light text-dark"><?php echo number_format($activity['value']); ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traffic Sources & Device Types -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Sorgenti di traffico</h5>
+                        <canvas id="trafficSourcesChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="admin-card">
+                        <h5 class="mb-3">Dispositivi utilizzati</h5>
+                        <canvas id="deviceTypesChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
         <?php if ($section === 'sicurezza'): ?>
         <?php 
             $securityLogs = ap_get_security_logs(100, 0);
@@ -2490,6 +2647,91 @@ $auditEventTypes = [
                                 callbacks: {
                                     label: function(context) {
                                         return 'Ticket medio: €' + context.parsed.y.toFixed(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        </script>
+        <?php endif; ?>
+        <?php if ($section === 'analytics'): ?>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Traffic Sources Chart
+            const trafficSourcesCtx = document.getElementById('trafficSourcesChart');
+            if (trafficSourcesCtx) {
+                const trafficData = <?php echo json_encode($analyticsSummary['traffic_sources'] ?? ['Diretto' => 40, 'Google' => 30, 'Social' => 20, 'Altro' => 10]); ?>;
+                
+                new Chart(trafficSourcesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(trafficData),
+                        datasets: [{
+                            data: Object.values(trafficData),
+                            backgroundColor: [
+                                '#007bff', // Direct
+                                '#28a745', // Google
+                                '#dc3545', // Social
+                                '#ffc107', // Other
+                                '#6c757d', // Additional colors if needed
+                                '#17a2b8'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                        return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Device Types Chart
+            const deviceTypesCtx = document.getElementById('deviceTypesChart');
+            if (deviceTypesCtx) {
+                const deviceData = <?php echo json_encode($analyticsSummary['device_types'] ?? ['Desktop' => 60, 'Mobile' => 35, 'Tablet' => 5]); ?>;
+                
+                new Chart(deviceTypesCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(deviceData),
+                        datasets: [{
+                            data: Object.values(deviceData),
+                            backgroundColor: [
+                                '#007bff', // Desktop
+                                '#28a745', // Mobile
+                                '#ffc107'  // Tablet
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                        return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
                                     }
                                 }
                             }

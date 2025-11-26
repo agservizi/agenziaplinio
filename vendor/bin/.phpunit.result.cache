@@ -1,1 +1,1 @@
-{"version":2,"defects":[],"times":{"BasicTest::testConfigLoads":0.002,"BasicTest::testDatabaseConnection":1.785}}
+{"version":2,"defects":[],"times":{"BasicTest::testConfigLoads":0.004,"BasicTest::testDatabaseConnection":2.734}}

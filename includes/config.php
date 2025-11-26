@@ -64,6 +64,11 @@ return [
             'description' => 'Accedi allo storico ordini, aggiorna i tuoi dati e gestisci i servizi attivati.',
             'sections' => ['account']
         ],
+        'wishlist' => [
+            'title' => 'Wishlist | Agenzia Plinio',
+            'description' => 'I tuoi prodotti preferiti salvati per acquisti futuri.',
+            'sections' => ['wishlist']
+        ],
         'pagamenti-certificati' => [
             'title' => 'Pagamenti Certificati | Agenzia Plinio',
             'description' => 'Servizi di pagamento sicuri e certificati per bollettini, pagoPA, F24 e molto altro.',

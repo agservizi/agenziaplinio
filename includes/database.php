@@ -233,28 +233,85 @@ function ap_bootstrap_schema(PDO $pdo): void
         INDEX idx_user_id (user_id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
-    $pdo->exec('CREATE TABLE IF NOT EXISTS audit_logs (
+    $pdo->exec('CREATE TABLE IF NOT EXISTS wishlist (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        user_id INT UNSIGNED NOT NULL,
+        product_id INT UNSIGNED NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+        UNIQUE KEY unique_user_product (user_id, product_id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS product_reviews (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        user_id INT UNSIGNED NOT NULL,
+        product_id INT UNSIGNED NOT NULL,
+        rating TINYINT UNSIGNED NOT NULL CHECK (rating >= 1 AND rating <= 5),
+        title VARCHAR(200) NOT NULL,
+        review TEXT NOT NULL,
+        is_verified_purchase TINYINT(1) NOT NULL DEFAULT 0,
+        is_approved TINYINT(1) NOT NULL DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+        INDEX idx_product_rating (product_id, rating),
+        INDEX idx_created_at (created_at)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS notifications (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        user_id INT UNSIGNED NULL,
+        type VARCHAR(50) NOT NULL,
+        title VARCHAR(200) NOT NULL,
+        message TEXT NOT NULL,
+        is_read TINYINT(1) NOT NULL DEFAULT 0,
+        data JSON NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        INDEX idx_user_read (user_id, is_read),
+        INDEX idx_type (type)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS analytics_events (
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         event_type VARCHAR(50) NOT NULL,
-        description TEXT NOT NULL,
+        event_data JSON NOT NULL,
         user_id INT UNSIGNED NULL,
         session_id VARCHAR(120) NULL,
         ip_address VARCHAR(45) NOT NULL,
         user_agent TEXT NULL,
-        request_uri VARCHAR(500) NULL,
-        request_method VARCHAR(10) NULL,
-        metadata JSON NULL,
-        severity ENUM("info","warning","error","critical") NOT NULL DEFAULT "info",
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
         INDEX idx_event_type (event_type),
-        INDEX idx_severity (severity),
         INDEX idx_created_at (created_at),
-        INDEX idx_user_id (user_id),
-        INDEX idx_session_id (session_id)
+        INDEX idx_user_id (user_id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_method VARCHAR(60) DEFAULT "standard"');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_status ENUM("preparing", "in_transit", "delivered", "issue") NOT NULL DEFAULT "preparing"');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_cost_cents INT UNSIGNED NOT NULL DEFAULT 0');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_notes TEXT NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_code VARCHAR(120) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(40) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS po_number VARCHAR(120) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS cost_center VARCHAR(120) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS delivery_window VARCHAR(50) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS sla_plan VARCHAR(50) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS addons JSON NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS ops_channels JSON NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS contract_ref VARCHAR(190) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS procurement_files JSON NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS coupon_code VARCHAR(60) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS coupon_id INT UNSIGNED NULL');
+    ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS discount_cents INT UNSIGNED NOT NULL DEFAULT 0');
+    ap_try_exec($pdo, 'ALTER TABLE order_items ADD COLUMN IF NOT EXISTS digital_file_path VARCHAR(255) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE abandoned_carts ADD COLUMN IF NOT EXISTS coupon_code VARCHAR(60) NULL');
+    ap_try_exec($pdo, 'ALTER TABLE abandoned_carts ADD COLUMN IF NOT EXISTS discount_cents INT UNSIGNED NOT NULL DEFAULT 0');
+    ap_try_exec($pdo, 'ALTER TABLE users ADD COLUMN IF NOT EXISTS is_active TINYINT(1) NOT NULL DEFAULT 1');
+    ap_try_exec($pdo, 'ALTER TABLE products ADD COLUMN category_key VARCHAR(80) NULL AFTER sku');
+    ap_try_exec($pdo, 'ALTER TABLE products ADD COLUMN IF NOT EXISTS fulfillment_type ENUM("digital","physical") NOT NULL DEFAULT "digital" AFTER category_key');
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_status ENUM("preparing", "in_transit", "delivered", "issue") NOT NULL DEFAULT "preparing"');
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_cost_cents INT UNSIGNED NOT NULL DEFAULT 0');
     ap_try_exec($pdo, 'ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_notes TEXT NULL');

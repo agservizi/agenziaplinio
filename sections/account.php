@@ -462,6 +462,80 @@ $currentUrl = '?page=account';
                             </div>
                         <?php endif; ?>
                     </div>
+
+                    <!-- Notifications Section -->
+                    <div class="notifications-card mt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">Notifiche</h4>
+                            <?php
+                            $unreadCount = ap_get_unread_notification_count((int) $user['id']);
+                            if ($unreadCount > 0):
+                            ?>
+                                <span class="badge bg-danger"><?php echo $unreadCount; ?> non lette</span>
+                            <?php endif; ?>
+                        </div>
+                        <?php
+                        $notifications = ap_get_user_notifications((int) $user['id'], ['limit' => 20]);
+                        if (empty($notifications)):
+                        ?>
+                            <p class="text-muted mb-0">Non hai notifiche.</p>
+                        <?php else: ?>
+                            <div class="notifications-list">
+                                <?php foreach ($notifications as $notification): ?>
+                                    <div class="notification-item card mb-3 <?php echo (int) $notification['is_read'] === 0 ? 'border-primary' : ''; ?>">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div class="flex-grow-1">
+                                                    <h6 class="notification-title mb-1 <?php echo (int) $notification['is_read'] === 0 ? 'fw-bold' : ''; ?>">
+                                                        <?php echo htmlspecialchars($notification['title'], ENT_QUOTES); ?>
+                                                    </h6>
+                                                    <p class="notification-message mb-2 small <?php echo (int) $notification['is_read'] === 0 ? 'fw-semibold' : 'text-muted'; ?>">
+                                                        <?php echo htmlspecialchars($notification['message'], ENT_QUOTES); ?>
+                                                    </p>
+                                                    <small class="text-muted">
+                                                        <?php echo date('d/m/Y H:i', strtotime($notification['created_at'])); ?>
+                                                        <?php if (!empty($notification['type'])): ?>
+                                                            <span class="badge bg-light text-dark ms-2"><?php echo htmlspecialchars(ucfirst($notification['type']), ENT_QUOTES); ?></span>
+                                                        <?php endif; ?>
+                                                    </small>
+                                                </div>
+                                                <div class="d-flex gap-1">
+                                                    <?php if ((int) $notification['is_read'] === 0): ?>
+                                                        <form method="post" class="d-inline">
+                                                            <input type="hidden" name="ap_action" value="mark_notification_read">
+                                                            <input type="hidden" name="notification_id" value="<?php echo (int) $notification['id']; ?>">
+                                                            <input type="hidden" name="redirect_to" value="<?php echo $currentUrl; ?>">
+                                                            <button type="submit" class="btn btn-sm btn-outline-primary" title="Segna come letta">
+                                                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </form>
+                                                    <?php endif; ?>
+                                                    <form method="post" class="d-inline" onsubmit="return confirm('Eliminare questa notifica?');">
+                                                        <input type="hidden" name="ap_action" value="delete_notification">
+                                                        <input type="hidden" name="notification_id" value="<?php echo (int) $notification['id']; ?>">
+                                                        <input type="hidden" name="redirect_to" value="<?php echo $currentUrl; ?>">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Elimina">
+                                                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5a.5.5 0 0 1-.5-.5V6a.5.5 0 0 0-1 0v6.5A1.5 1.5 0 0 0 9.5 14h1a1.5 1.5 0 0 0 1.5-1.5V6a.5.5 0 0 0-1 0z"/>
+                                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php if (count($notifications) >= 20): ?>
+                                <div class="text-center mt-3">
+                                    <small class="text-muted">Mostrando le ultime 20 notifiche</small>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         <?php endif; ?>
