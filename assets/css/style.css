@@ -3712,12 +3712,12 @@ main#page-content[data-page="cart"] .cart-section .container-xxl {
 
 /* Shop Section Responsive */
 .shop-section {
-    padding: 4rem 0;
+    padding: 8rem 0 4rem;
 }
 
 @media (max-width: 991.98px) {
     .shop-section {
-        padding: 2rem 0;
+        padding: 6rem 0 2rem;
     }
 }
 
