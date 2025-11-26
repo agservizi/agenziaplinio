@@ -87,7 +87,7 @@ $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']))
         </header>
 
         <!-- Shop Layout -->
-        <div class="shop-layout" style="display: flex; min-height: 100vh; gap: 2rem;">
+        <div class="shop-layout">
             <!-- Sidebar Toggle for Mobile -->
             <button class="shop-sidebar-toggle d-lg-none btn btn-outline-primary mb-3" type="button" aria-expanded="false" aria-controls="shop-sidebar">
                 <span class="visually-hidden">Apri filtri</span>
@@ -98,7 +98,7 @@ $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']))
             </button>
 
             <!-- Sidebar -->
-            <aside id="shop-sidebar" class="shop-sidebar" style="width: 280px; background: #fff; border: 1px solid #e4e7ec; border-radius: 12px; padding: 1.5rem; position: sticky; top: 100px; height: fit-content; flex-shrink: 0;" aria-labelledby="sidebar-heading">
+            <aside id="shop-sidebar" class="shop-sidebar d-lg-block d-none" aria-labelledby="sidebar-heading">
                 <h2 id="sidebar-heading" class="h5 mb-4">Filtri</h2>
 
                 <!-- Filters Form -->
@@ -203,7 +203,7 @@ $baseUrl = '?' . http_build_query(array_merge($queryParams, ['page' => 'shop']))
             </aside>
 
             <!-- Main Content -->
-            <main class="shop-main" style="flex: 1; min-width: 0;">
+            <main class="shop-main">
                 <?php if (empty($products)): ?>
                     <div class="empty-state text-center py-5" data-reveal>
                         <div class="empty-state-icon mb-3">
@@ -381,8 +381,15 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.addEventListener('click', function() {
             const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
             toggle.setAttribute('aria-expanded', !isExpanded);
-            sidebar.classList.toggle('d-none', isExpanded);
-            sidebar.classList.toggle('d-block', !isExpanded);
+
+            // Toggle visibility classes
+            if (isExpanded) {
+                sidebar.classList.remove('d-block');
+                sidebar.classList.add('d-none');
+            } else {
+                sidebar.classList.remove('d-none');
+                sidebar.classList.add('d-block');
+            }
         });
     }
 });
