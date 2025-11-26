@@ -609,7 +609,7 @@ $conversionFunnel = ap_get_conversion_funnel();
         <?php endif; ?>
         <?php if ($section === 'catalogo'): ?>
         <div class="row g-4 align-items-stretch">
-            <div class="col-md-6 col-xl-5">
+            <div class="col-12 col-lg-5">
                 <div class="admin-card h-100 d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="mb-0"><?php echo $editingProduct ? 'Modifica prodotto' : 'Nuovo prodotto'; ?></h4>
@@ -737,14 +737,14 @@ $conversionFunnel = ap_get_conversion_funnel();
                     </form>
                 </div>
             </div>
-            <div class="col-md-6 col-xl-7">
+            <div class="col-12 col-lg-7">
                 <div class="admin-card h-100 d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                         <div>
                             <h4 class="mb-0">Catalogo prodotti</h4>
                             <span class="badge bg-light text-dark"><?php echo $productsTotal; ?> prodotti</span>
                         </div>
-                        <div class="d-flex gap-2">
+                        <div class="d-flex gap-2 flex-wrap">
                             <a class="btn btn-primary btn-sm" href="<?php echo htmlspecialchars($adminUrl(['section' => 'edit_product']), ENT_QUOTES); ?>">Nuovo prodotto</a>
                         </div>
                     </div>
@@ -753,11 +753,11 @@ $conversionFunnel = ap_get_conversion_funnel();
                     <form class="row g-2 align-items-end mb-3" method="get" action="<?php echo htmlspecialchars($adminBasePath, ENT_QUOTES); ?>">
                         <input type="hidden" name="section" value="catalogo">
                         <input type="hidden" name="products_page" value="1">
-                        <div class="col-lg-3">
+                        <div class="col-12 col-lg-3">
                             <label class="form-label" for="product_q">Cerca prodotti</label>
                             <input class="form-control" type="search" id="product_q" name="product_q" value="<?php echo htmlspecialchars($productSearchTerm, ENT_QUOTES); ?>" placeholder="Nome, SKU...">
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-12 col-lg-2">
                             <label class="form-label" for="product_status">Stato</label>
                             <select class="form-select" id="product_status" name="product_status">
                                 <option value="all">Tutti</option>
@@ -765,7 +765,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                 <option value="inactive" <?php echo $productStatusFilter === 'inactive' ? 'selected' : ''; ?>>Nascosti</option>
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-12 col-lg-2">
                             <label class="form-label" for="product_category">Categoria</label>
                             <select class="form-select" id="product_category" name="product_category">
                                 <option value="all">Tutte</option>
@@ -774,7 +774,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-12 col-lg-2">
                             <label class="form-label" for="product_fulfillment">Tipo</label>
                             <select class="form-select" id="product_fulfillment" name="product_fulfillment">
                                 <option value="all">Tutti</option>
@@ -782,7 +782,7 @@ $conversionFunnel = ap_get_conversion_funnel();
                                 <option value="physical" <?php echo $productFulfillmentFilter === 'physical' ? 'selected' : ''; ?>>Fisici</option>
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-12 col-lg-2">
                             <label class="form-label" for="sort">Ordina per</label>
                             <select class="form-select" id="sort" name="sort">
                                 <option value="created_at" <?php echo $productSortBy === 'created_at' ? 'selected' : ''; ?>>Data creazione</option>
@@ -792,14 +792,14 @@ $conversionFunnel = ap_get_conversion_funnel();
                                 <option value="is_active" <?php echo $productSortBy === 'is_active' ? 'selected' : ''; ?>>Stato</option>
                             </select>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-12 col-lg-1">
                             <label class="form-label" for="order">Ordine</label>
                             <select class="form-select" id="order" name="order">
                                 <option value="desc" <?php echo $productSortOrder === 'desc' ? 'selected' : ''; ?>>↓</option>
                                 <option value="asc" <?php echo $productSortOrder === 'asc' ? 'selected' : ''; ?>>↑</option>
                             </select>
                         </div>
-                        <div class="col-lg-2 d-flex gap-2">
+                        <div class="col-12 col-lg-2 d-flex gap-2 align-items-end">
                             <button class="btn btn-outline-secondary flex-grow-1" type="submit">Filtra</button>
                             <a class="btn btn-link text-nowrap p-0" href="<?php echo htmlspecialchars($adminUrl(['section' => 'catalogo']), ENT_QUOTES); ?>">Reset</a>
                         </div>
@@ -809,12 +809,12 @@ $conversionFunnel = ap_get_conversion_funnel();
                         <p class="text-muted mb-0">Ancora nessun prodotto nel catalogo.</p>
                     <?php else: ?>
                         <!-- Controlli bulk -->
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="d-flex gap-2">
+                        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center mb-3 gap-2">
+                            <div class="d-flex gap-2 flex-wrap">
                                 <button class="btn btn-sm btn-outline-secondary" type="button" id="selectAllProducts">Seleziona tutti</button>
                                 <button class="btn btn-sm btn-outline-secondary" type="button" id="deselectAllProducts">Deseleziona</button>
                             </div>
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 flex-wrap">
                                 <button class="btn btn-sm btn-success" type="button" id="bulkActivateProducts" disabled>Attiva selezionati</button>
                                 <button class="btn btn-sm btn-warning" type="button" id="bulkDeactivateProducts" disabled>Disattiva selezionati</button>
                                 <button class="btn btn-sm btn-danger" type="button" id="bulkDeleteProducts" disabled data-bs-toggle="modal" data-bs-target="#bulkDeleteProductsModal">Elimina selezionati</button>
