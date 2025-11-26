@@ -2263,26 +2263,32 @@ $conversionFunnel = ap_get_conversion_funnel();
                     const typeSelect = container.querySelector('.field-type-select');
                     const optionsContainer = container.querySelector('.field-options-container');
                     const update = () => {
-                        const type = typeSelect.value;
-                        let label = 'Valore predefinito';
-                        let input = '';
-                        if (type === 'select') {
-                            label = 'Opzioni (per select)';
-                            input = `<input class="form-control" type="text" name="custom_fields[${container.dataset.fieldId}][options]" placeholder="Opzione1,Opzione2" value="${optionsContainer.querySelector('input') ? optionsContainer.querySelector('input').value : ''}">`;
-                        } else if (type === 'provincia') {
-                            label = 'Provincia selezionata';
-                            const currentValue = optionsContainer.querySelector('input')?.value || '';
-                            const provinces = <?php echo json_encode($italianProvinces); ?>;
-                            let optionsHtml = '<option value="">Seleziona provincia</option>';
-                            provinces.forEach(prov => {
-                                const selected = prov === currentValue ? ' selected' : '';
-                                optionsHtml += `<option value="${prov}"${selected}>${prov}</option>`;
-                            });
-                            input = `<select class="form-select" name="custom_fields[${container.dataset.fieldId}][options]">${optionsHtml}</select>`;
-                        } else {
-                            input = `<input class="form-control" type="text" name="custom_fields[${container.dataset.fieldId}][options]" placeholder="Valore" value="${optionsContainer.querySelector('input') ? optionsContainer.querySelector('input').value : ''}">`;
+                        try {
+                            const type = typeSelect.value;
+                            let label = 'Valore predefinito';
+                            let input = '';
+                            if (type === 'select') {
+                                label = 'Opzioni (per select)';
+                                input = `<input class="form-control" type="text" name="custom_fields[${container.dataset.fieldId}][options]" placeholder="Opzione1,Opzione2" value="${optionsContainer.querySelector('input') ? optionsContainer.querySelector('input').value : ''}">`;
+                            } else if (type === 'provincia') {
+                                label = 'Provincia selezionata';
+                                const currentValue = optionsContainer.querySelector('input')?.value || '';
+                                const provinces = <?php echo json_encode($italianProvinces); ?>;
+                                let optionsHtml = '<option value="">Seleziona provincia</option>';
+                                if (provinces) {
+                                    provinces.forEach(prov => {
+                                        const selected = prov === currentValue ? ' selected' : '';
+                                        optionsHtml += `<option value="${prov}"${selected}>${prov}</option>`;
+                                    });
+                                }
+                                input = `<select class="form-select" name="custom_fields[${container.dataset.fieldId}][options]">${optionsHtml}</select>`;
+                            } else {
+                                input = `<input class="form-control" type="text" name="custom_fields[${container.dataset.fieldId}][options]" placeholder="Valore" value="${optionsContainer.querySelector('input') ? optionsContainer.querySelector('input').value : ''}">`;
+                            }
+                            optionsContainer.innerHTML = `<label class="form-label">${label}</label>${input}`;
+                        } catch (e) {
+                            console.error('Error in updateFieldOptions', e);
                         }
-                        optionsContainer.innerHTML = `<label class="form-label">${label}</label>${input}`;
                     };
                     typeSelect.addEventListener('change', update);
                     update(); // initial

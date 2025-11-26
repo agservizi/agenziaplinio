@@ -557,7 +557,19 @@ function ap_fetch_product_custom_fields(int $productId): array
     $pdo = ap_db();
     $stmt = $pdo->prepare('SELECT * FROM product_custom_fields WHERE product_id = :product_id ORDER BY sort_order ASC');
     $stmt->execute([':product_id' => $productId]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($result)) {
+        // Return default custom fields
+        $result = [
+            ['id' => 1, 'field_name' => 'Nome', 'field_label' => 'Nome', 'field_type' => 'text', 'field_options' => '', 'is_required' => 1, 'sort_order' => 0],
+            ['id' => 2, 'field_name' => 'Cognome', 'field_label' => 'Cognome', 'field_type' => 'text', 'field_options' => '', 'is_required' => 1, 'sort_order' => 0],
+            ['id' => 3, 'field_name' => 'Provincia', 'field_label' => 'Provincia', 'field_type' => 'provincia', 'field_options' => '', 'is_required' => 1, 'sort_order' => 0],
+            ['id' => 4, 'field_name' => 'Comune', 'field_label' => 'Comune', 'field_type' => 'comune', 'field_options' => '', 'is_required' => 1, 'sort_order' => 0],
+            ['id' => 5, 'field_name' => 'CAP', 'field_label' => 'CAP', 'field_type' => 'cap', 'field_options' => '', 'is_required' => 1, 'sort_order' => 0],
+            ['id' => 6, 'field_name' => 'Città', 'field_label' => 'Città', 'field_type' => 'citta', 'field_options' => '', 'is_required' => 1, 'sort_order' => 0],
+        ];
+    }
+    return $result;
 }
 
 function ap_save_product_custom_field(int $productId, array $field): void
