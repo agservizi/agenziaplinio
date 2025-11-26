@@ -69,7 +69,7 @@ function ap_action_save_order_custom_data(): void
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['ap_action'] ?? null;
-    if ($action) {
+    if ($action && trim($action) !== '') {
         try {
             ap_handle_action($action);
         } catch (Throwable $exception) {
@@ -1549,27 +1549,6 @@ function ap_action_toggle_wishlist(): void
         } else {
             ap_flash('Errore nell\'aggiunta alla wishlist.', 'error');
         }
-    }
-}
-{
-    $user = ap_auth_current_user();
-    if (!$user) {
-        ap_flash('Accedi per aggiungere prodotti alla wishlist.', 'error');
-        return;
-    }
-
-    $productId = (int) ($_POST['product_id'] ?? 0);
-    if ($productId <= 0) {
-        ap_flash('Prodotto non valido.', 'error');
-        return;
-    }
-
-    if (ap_add_to_wishlist((int) $user['id'], $productId)) {
-        ap_flash('Prodotto aggiunto alla wishlist.', 'success');
-        // Track analytics event
-        ap_track_event('wishlist_add', ['product_id' => $productId], (int) $user['id']);
-    } else {
-        ap_flash('Impossibile aggiungere il prodotto alla wishlist.', 'error');
     }
 }
 
