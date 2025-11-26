@@ -26,7 +26,7 @@ function ap_security_headers() {
     // CSP (Content Security Policy) - enhanced
     $csp = "default-src 'self'; " .
            "script-src 'self' 'unsafe-inline' https://unpkg.com https://js.klarna.com https://www.google.com https://www.gstatic.com; " .
-           "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " .
+           "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; " .
            "font-src 'self' https://fonts.gstatic.com; " .
            "img-src 'self' data: https:; " .
            "connect-src 'self' https://*; " .
