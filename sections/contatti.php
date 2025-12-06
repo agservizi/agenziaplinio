@@ -3,17 +3,18 @@
  * Pagina Contatti
  */
 ?>
-<section id="contatti" class="ap-section ap-section--contact ap-section--grid-bg">
-    <div class="container">
-        <header class="ap-contact__hero" data-reveal="fade-up">
+<section id="contatti" class="ap-section ap-section--contact ap-section--widescreen" data-theme="night">
+    <div class="ap-contact__immersive" data-parallax-container>
+        <div class="ap-contact__hero-bg" aria-hidden="true"></div>
+        <div class="ap-contact__hero container" data-reveal="fade-up">
             <div>
                 <span class="ap-eyebrow">Control room</span>
-                <h1>Operatività 7/7 con cabina di regia condivisa</h1>
+                <h1 data-reveal-text>Operatività 7/7 con cabina di regia condivisa</h1>
                 <p>Attiviamo pod dedicati per onboarding multiservizio, escalation telco e logistica smart. Coordiniamo tutto via telefono, WhatsApp, email certificata e sessioni live.</p>
                 <div class="ap-contact__actions">
                     <a class="ap-btn ap-btn--primary" href="tel:+390810584542">Chiama ora</a>
                     <a class="ap-btn ap-btn--secondary" href="https://wa.me/393773798570" target="_blank" rel="noopener">Apri WhatsApp</a>
-                    <a class="ap-btn ap-btn--text" href="mailto:info@agenziaplinio.it">Scrivi una mail</a>
+                    <a class="ap-btn ap-btn--ghost" href="mailto:info@agenziaplinio.it">Scrivi una mail</a>
                 </div>
             </div>
             <div class="ap-contact__stats">
@@ -34,9 +35,11 @@
                     <small>monitoraggio ticket</small>
                 </article>
             </div>
-        </header>
+        </div>
+    </div>
 
-        <div class="ap-contact__grid" data-reveal="fade-up">
+    <div class="container">
+        <div class="ap-contact__channels" data-reveal="fade-up">
             <article class="ap-contact__card">
                 <h2>Linea diretta</h2>
                 <a href="tel:+390810584542">+39 081 058 45 42</a>
