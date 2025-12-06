@@ -3557,7 +3557,8 @@ body.nav-open {
 
 .ap-section--stories .ap-stories__hero {
     position: relative;
-    min-height: 100vh;
+    min-height: min(100vh, 920px);
+    padding-bottom: clamp(2rem, 6vw, 4rem);
     display: flex;
     align-items: center;
 }
@@ -3631,6 +3632,7 @@ body.nav-open {
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex-wrap: nowrap;
 }
 
 .ap-carousel__nav {
@@ -4132,6 +4134,51 @@ body.nav-open {
 
     .ap-contact__channels {
         margin-top: -2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .ap-immersive-media {
+        background:
+            radial-gradient(circle at 20% 25%, rgba(71, 244, 255, 0.22), transparent 55%),
+            linear-gradient(160deg, #050b18 0%, #0a1836 60%, #040914 100%);
+    }
+
+    .ap-immersive-media__video {
+        display: none;
+    }
+
+    .ap-stories__hero-content {
+        padding-bottom: 2rem;
+    }
+
+    .ap-stories__carousel {
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+
+    .ap-stories__track {
+        order: 1;
+        grid-auto-columns: minmax(72vw, 1fr);
+        padding: 0.25rem 0;
+    }
+
+    .ap-section--stories .ap-stories__hero {
+        min-height: auto;
+    }
+
+    .ap-stories__carousel .ap-carousel__nav {
+        order: 2;
+        flex: 1 1 calc(50% - 0.5rem);
+        border-radius: 18px;
+    }
+
+    .ap-stories__carousel > button[data-carousel-prev] {
+        margin-right: 0.5rem;
+    }
+
+    .ap-stories__carousel > button[data-carousel-next] {
+        margin-left: 0.5rem;
     }
 }
 

@@ -51,6 +51,7 @@ const App = (() => {
         initCardTilt();
         initModals();
         initReviewsSlider();
+        initStoriesCarousel();
         initMap();
         initContactForm();
         initToasts();
@@ -646,6 +647,59 @@ const App = (() => {
             next?.addEventListener('click', () => { nextSlide(); restartAuto(); });
             slider.addEventListener('pointerenter', () => clearInterval(interval));
             slider.addEventListener('pointerleave', restartAuto);
+        });
+    }
+
+    /* Testimonials carousel */
+    function initStoriesCarousel() {
+        const carousels = document.querySelectorAll('[data-carousel]');
+        if (!carousels.length) return;
+
+        carousels.forEach(carousel => {
+            const track = carousel.querySelector('[data-carousel-track]');
+            const prev = carousel.querySelector('[data-carousel-prev]');
+            const next = carousel.querySelector('[data-carousel-next]');
+            if (!track || !prev || !next) {
+                return;
+            }
+
+            const getStep = () => {
+                const firstCard = track.querySelector('article');
+                const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0');
+                return firstCard ? firstCard.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+            };
+
+            const scrollByStep = direction => {
+                track.scrollBy({ left: getStep() * direction, behavior: 'smooth' });
+                requestAnimationFrame(updateNav);
+            };
+
+            const updateNav = () => {
+                const maxScroll = track.scrollWidth - track.clientWidth;
+                const tolerance = 8;
+                const hasOverflow = maxScroll > tolerance;
+                carousel.classList.toggle('is-scrollable', hasOverflow);
+                prev.disabled = !hasOverflow || track.scrollLeft <= tolerance;
+                next.disabled = !hasOverflow || track.scrollLeft >= maxScroll - tolerance;
+            };
+
+            prev.addEventListener('click', () => {
+                scrollByStep(-1);
+            });
+
+            next.addEventListener('click', () => {
+                scrollByStep(1);
+            });
+
+            track.addEventListener('scroll', () => {
+                requestAnimationFrame(updateNav);
+            }, { passive: true });
+
+            window.addEventListener('resize', () => {
+                requestAnimationFrame(updateNav);
+            });
+
+            updateNav();
         });
     }
 
