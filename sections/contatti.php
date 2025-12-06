@@ -3,87 +3,100 @@
  * Pagina Contatti
  */
 ?>
-<section id="contatti" class="ap-section ap-section--contact">
+<section id="contatti" class="ap-section ap-section--contact ap-section--grid-bg">
     <div class="container">
-        <div class="ap-hero ap-hero--contact" data-reveal="fade-up">
+        <header class="ap-contact__hero" data-reveal="fade-up">
             <div>
-                <span class="ap-eyebrow">Supporto operativo</span>
-                <h1>Parliamo di operations in tempo reale</h1>
-                <p>Team operations attivo 7/7 per onboarding multiservizio, attivazioni digitali e assistenza post vendita. Tempi medi di presa in carico: 60 minuti.</p>
+                <span class="ap-eyebrow">Control room</span>
+                <h1>Operatività 7/7 con cabina di regia condivisa</h1>
+                <p>Attiviamo pod dedicati per onboarding multiservizio, escalation telco e logistica smart. Coordiniamo tutto via telefono, WhatsApp, email certificata e sessioni live.</p>
+                <div class="ap-contact__actions">
+                    <a class="ap-btn ap-btn--primary" href="tel:+390810584542">Chiama ora</a>
+                    <a class="ap-btn ap-btn--secondary" href="https://wa.me/393773798570" target="_blank" rel="noopener">Apri WhatsApp</a>
+                    <a class="ap-btn ap-btn--text" href="mailto:info@agenziaplinio.it">Scrivi una mail</a>
+                </div>
             </div>
-            <div class="ap-hero__actions">
-                <a class="ap-btn ap-btn--primary" href="tel:+390810584542">
-                    <i class="fas fa-phone"></i>
-                    <span>Chiama ora</span>
-                </a>
-                <a class="ap-btn ap-btn--secondary" href="https://wa.me/393773798570" target="_blank" rel="noopener">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>Apri WhatsApp</span>
-                </a>
+            <div class="ap-contact__stats">
+                <article>
+                    <strong>60'</strong>
+                    <small>presa in carico media</small>
+                </article>
+                <article>
+                    <strong>3</strong>
+                    <small>canali prioritari</small>
+                </article>
+                <article>
+                    <strong>2</strong>
+                    <small>specialist assegnati</small>
+                </article>
+                <article>
+                    <strong>24/7</strong>
+                    <small>monitoraggio ticket</small>
+                </article>
             </div>
+        </header>
+
+        <div class="ap-contact__grid" data-reveal="fade-up">
+            <article class="ap-contact__card">
+                <h2>Linea diretta</h2>
+                <a href="tel:+390810584542">+39 081 058 45 42</a>
+                <p>Lun-Ven 08:30-19:15 · Sab 09:15-13:00 · presa in carico entro 1h.</p>
+            </article>
+            <article class="ap-contact__card">
+                <h2>WhatsApp Business</h2>
+                <a href="https://wa.me/393773798570" target="_blank" rel="noopener">+39 377 379 85 70</a>
+                <p>Ticket istantanei, invio documenti e vocali con notifiche push automatiche.</p>
+            </article>
+            <article class="ap-contact__card">
+                <h2>Email operativa</h2>
+                <a href="mailto:info@agenziaplinio.it">info@agenziaplinio.it</a>
+                <p>Monitoraggio continuo con SLA pubblici e report condivisi.</p>
+            </article>
+            <article class="ap-contact__card">
+                <h2>PEC & Compliance</h2>
+                <a href="mailto:agserviziviaplinio@sicurezzapostale.it">agserviziviaplinio@sicurezzapostale.it</a>
+                <p>Documenti ufficiali, procure e pratiche ad alto impatto.</p>
+            </article>
         </div>
 
-        <div class="ap-panels ap-panels--contact" data-reveal="fade-up">
-            <article class="ap-panel ap-panel--contact">
-                <h2>Linea diretta e canali prioritari</h2>
-                <p>Scegli il canale operativo che preferisci: sincronizziamo ticket, allegati e follow-up su un'unica dashboard condivisa.</p>
-
-                <div class="ap-grid ap-grid--contact">
-                    <article class="ap-contact-card">
-                        <span class="ap-contact-card__label">Linea diretta</span>
-                        <a class="ap-contact-card__value" href="tel:+390810584542">+39 081 058 45 42</a>
-                        <p>Presa in carico garantita entro 1h · Lun-Ven 08:30-19:15 · Sab 09:15-13:00</p>
-                    </article>
-                    <article class="ap-contact-card">
-                        <span class="ap-contact-card__label">WhatsApp Business</span>
-                        <a class="ap-contact-card__value" href="https://wa.me/393773798570" target="_blank" rel="noopener">+39 377 379 85 70</a>
-                        <p>Ticket istantanei, invio documenti e vocali · Notifiche push automatiche</p>
-                    </article>
-                    <article class="ap-contact-card">
-                        <span class="ap-contact-card__label">Email operativa</span>
-                        <a class="ap-contact-card__value" href="mailto:info@agenziaplinio.it">info@agenziaplinio.it</a>
-                        <p>Monitoraggio continuo con SLA pubblici e report settimanali</p>
-                    </article>
-                    <article class="ap-contact-card">
-                        <span class="ap-contact-card__label">PEC & Compliance</span>
-                        <a class="ap-contact-card__value" href="mailto:agserviziviaplinio@sicurezzapostale.it">agserviziviaplinio@sicurezzapostale.it</a>
-                        <p>Documenti ufficiali, procure e pratiche ad alto impatto</p>
-                    </article>
-                </div>
-
-                <div class="ap-metrics" aria-label="Indicatori di servizio">
-                    <div class="ap-metric">
-                        <span class="ap-metric__value">24h</span>
-                        <span class="ap-metric__label">presa in carico media</span>
-                    </div>
-                    <div class="ap-metric">
-                        <span class="ap-metric__value">2</span>
-                        <span class="ap-metric__label">specialist dedicati</span>
-                    </div>
-                    <div class="ap-metric">
-                        <span class="ap-metric__value">3</span>
-                        <span class="ap-metric__label">canali prioritari</span>
-                    </div>
-                </div>
-
+        <div class="ap-contact__ops" data-reveal="fade-up">
+            <div class="ap-contact__ops-meta">
+                <h3>Operational layer</h3>
                 <ul class="ap-list ap-list--meta">
                     <li>
                         <strong>Sede operativa</strong>
-                        <span>Via Plinio Il Vecchio, 72 · 80053 Castellammare di Stabia (NA)</span>
+                        <span>Via Plinio Il Vecchio, 72 · Castellammare di Stabia</span>
                     </li>
                     <li>
                         <strong>Sportello clienti</strong>
                         <span>Lun-Ven 09:00-18:30 · Sab 09:00-13:00</span>
                     </li>
                 </ul>
-            </article>
-
-            <aside class="ap-panel ap-panel--map">
+            </div>
+            <div class="ap-contact__ops-sla">
+                <div>
+                    <span>24h</span>
+                    <small>presa in carico</small>
+                </div>
+                <div>
+                    <span>8h</span>
+                    <small>fast-track B2B</small>
+                </div>
+                <div>
+                    <span>4h</span>
+                    <small>escalation critica</small>
+                </div>
+                <div>
+                    <span>H24</span>
+                    <small>monitoraggio documenti</small>
+                </div>
+            </div>
+            <div class="ap-contact__ops-map">
                 <div class="ap-map">
                     <iframe
                         src="https://www.openstreetmap.org/export/embed.html?bbox=14.4849641,40.6983611,14.4853168,40.7006381&layer=mapnik&marker=40.6994991,14.4851434"
                         width="100%"
-                        height="320"
+                        height="280"
                         loading="lazy"
                         allowfullscreen
                         referrerpolicy="no-referrer-when-downgrade">
@@ -96,49 +109,32 @@
                         <a href="https://maps.google.com/?q=Via+Plinio+Il+Vecchio+72,+80053+Castellammare+di+Stabia+NA" target="_blank" rel="noopener">Apri Maps</a>
                     </div>
                 </div>
-            </aside>
+            </div>
         </div>
 
-        <div class="ap-panels ap-panels--directions" data-reveal="fade-up">
-            <article class="ap-panel ap-panel--directions">
-                <h2>Come raggiungerci</h2>
-                <p>Siamo facilmente raggiungibili da Napoli, penisola sorrentina e area vesuviana. Scegli la modalità più comoda per te.</p>
-                <div class="ap-grid ap-grid--directions">
-                    <section class="ap-direction">
-                        <h5><i class="fas fa-car"></i> In auto</h5>
-                        <ul>
-                            <li><strong>A3:</strong> uscita Castellammare di Stabia, direzione centro</li>
-                            <li><strong>Da Napoli:</strong> SS145 Sorrentina, uscita Castellammare centro</li>
-                            <li><strong>Parcheggio:</strong> gratuito in zona con segnaletica dedicata</li>
-                        </ul>
-                    </section>
-                    <section class="ap-direction">
-                        <h5><i class="fas fa-bus"></i> Mezzi pubblici</h5>
-                        <ul>
-                            <li><strong>Bus EAV:</strong> fermata Piazza Matteotti (500 m)</li>
-                            <li><strong>Treno:</strong> Circumvesuviana, stazione Castellammare</li>
-                            <li><strong>Porto:</strong> aliscafi da Capri/Ischia/Napoli a 1 km</li>
-                        </ul>
-                    </section>
-                    <section class="ap-direction">
-                        <h5><i class="fas fa-clock"></i> Orari estesi</h5>
-                        <ul>
-                            <li>Lunedì-Venerdì · 08:30-19:15 (break 13:15-16:00)</li>
-                            <li>Sabato · 09:15-13:00</li>
-                            <li>Domenica · su appuntamento</li>
-                        </ul>
-                    </section>
-                    <section class="ap-direction">
-                        <h5><i class="fas fa-info-circle"></i> Info utili</h5>
-                        <ul>
-                            <li>Ingresso a piano terra accessibile</li>
-                            <li>Videosorveglianza 24/7</li>
-                            <li>Wi-Fi gratuito per i clienti</li>
-                        </ul>
-                    </section>
+        <div class="ap-contact__directions" data-reveal="fade-up">
+            <div>
+                <h3>Come raggiungerci</h3>
+                <div class="ap-contact__pill-grid">
+                    <article>
+                        <h5>In auto</h5>
+                        <p>A3 uscita Castellammare · SS145 direzione centro · parcheggio gratuito in zona.</p>
+                    </article>
+                    <article>
+                        <h5>Mezzi pubblici</h5>
+                        <p>Bus EAV fermata Piazza Matteotti (500 m) · Circumvesuviana · porto commerciale a 1 km.</p>
+                    </article>
+                    <article>
+                        <h5>Orari estesi</h5>
+                        <p>Lun-Ven 08:30-19:15 (break 13:15-16:00) · Sabato 09:15-13:00 · domenica su appuntamento.</p>
+                    </article>
+                    <article>
+                        <h5>Info utili</h5>
+                        <p>Ingresso piano terra, videosorveglianza 24/7, Wi-Fi gratuito e bar adiacente.</p>
+                    </article>
                 </div>
-            </article>
-            <aside class="ap-panel ap-panel--distances">
+            </div>
+            <aside>
                 <h5>Distanze indicative</h5>
                 <ul>
                     <li><span>Napoli Centro</span><strong>25 km</strong></li>
@@ -150,11 +146,11 @@
             </aside>
         </div>
 
-        <div class="ap-form-card" data-reveal="fade-up">
-            <div class="ap-form-card__intro">
+        <div class="ap-contact__form" data-reveal="fade-up">
+            <div>
                 <span class="ap-eyebrow">Richiesta guidata</span>
                 <h3>Pianifica una consulenza dedicata</h3>
-                <p>Descrivi il perimetro del progetto: ti rispondiamo con piano operativo, checklist e tempi di go-live.</p>
+                <p>Raccontaci lo scenario: rispondiamo con piano operativo, checklist degli oneri e tempi di go-live.</p>
             </div>
             <form method="post" data-contact-form novalidate>
                 <input type="hidden" name="form_scope" value="contact">
@@ -208,7 +204,7 @@
                         </select>
                     </label>
                 </div>
-                <div class="appointment-dates" data-appointment-dates hidden>
+                <div class="ap-contact__appointment" data-appointment-dates hidden>
                     <label>
                         <span>Data preferita</span>
                         <input type="date" id="preferred_date" name="preferred_date" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">
@@ -232,7 +228,7 @@
                     <textarea id="message" name="message" rows="4" placeholder="Raccontaci cosa ti serve" required></textarea>
                 </label>
                 <div class="form-feedback" data-form-feedback aria-live="polite"></div>
-                <div class="ap-form-card__footer">
+                <div class="ap-contact__form-footer">
                     <p class="privacy-note">Inviando la richiesta accetti il trattamento dei dati ai sensi del Reg. UE 2016/679. Riceverai copia del ticket via email.</p>
                     <button class="ap-btn ap-btn--primary" type="submit" data-ripple="true">Invia richiesta</button>
                 </div>

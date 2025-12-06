@@ -7,75 +7,103 @@ $currentDate = new DateTime('now');
 $yearsInBusiness = max(1, (int) $foundationDate->diff($currentDate)->y);
 ?>
 
-<section id="chi-siamo" class="ap-section ap-section--about">
+<section id="chi-siamo" class="ap-section ap-section--about ap-section--grid-bg">
     <div class="container">
-        <div class="ap-section__heading" data-reveal="fade-up">
+        <div class="ap-about__intro" data-reveal="fade-up">
             <span class="ap-eyebrow">Chi siamo</span>
-            <h1>Processi omnicanale, persone reali, tecnologia proprietaria</h1>
-            <p>Dal 2016 orchestriamo servizi digitali, spedizioni e pagamenti certificati per cittadini, professionisti e aziende della penisola sorrentina.</p>
+            <div>
+                <h1>Hub operativo nato nel 2016 per rendere quotidiani i servizi complessi</h1>
+                <p>Abbiamo trasformato un’agenzia tradizionale in una control room ibrida dove persone, AI e processi certificati gestiscono identità digitali, spedizioni e pagamenti per tutta la penisola sorrentina.</p>
+            </div>
+            <div class="ap-about__chips">
+                <span>Workflow proprietari</span>
+                <span>Lab compliance interna</span>
+                <span>Task force telco & logistica</span>
+            </div>
         </div>
 
-        <div class="ap-panels" data-reveal="fade-up">
-            <article class="ap-panel ap-panel--highlight">
-                <h2>La nostra missione</h2>
-                <p class="lead">Garantiamo operatività continua con workflow validati, KPI pubblici e team certificati per identità digitali, spedizioni e telco.</p>
+        <div class="ap-about__grid" data-reveal="fade-up">
+            <article class="ap-about__card">
+                <h2>Missione e metrica</h2>
+                <p class="lead">Costruiamo percorsi di onboarding e fulfillment misurabili, mantenendo voce umana e controllo locale.</p>
                 <ul class="ap-list ap-list--checks">
-                    <li>Front office multicanale h24 con presa in carico entro 24h</li>
-                    <li>Onboarding SPID, CNS e firma digitale assistiti</li>
-                    <li>Partnership nazionali per telco, pagamenti e logistica</li>
-                    <li>Tracking spedizioni e assicurazione integrata</li>
-                    <li>Supporto dedicato lun-sab con escalation dirette</li>
+                    <li>Pod dedicati con escalation diretta CTO/COO</li>
+                    <li>Layer digitale per firme, SPID, procure e compliance</li>
+                    <li>Distribuzione ticket su 3 canali sincroni</li>
+                    <li>Delivery logistica con monitoraggio live e assicurazione integrata</li>
                 </ul>
             </article>
 
-            <aside class="ap-panel ap-panel--metrics">
-                <div class="ap-metrics ap-metrics--stacked">
-                    <div class="ap-metric">
-                        <span class="ap-metric__value"><?php echo $yearsInBusiness; ?>+</span>
-                        <span class="ap-metric__label">anni di operations</span>
-                    </div>
-                    <div class="ap-metric">
-                        <span class="ap-metric__value">12k+</span>
-                        <span class="ap-metric__label">clienti accompagnati</span>
-                    </div>
-                    <div class="ap-metric">
-                        <span class="ap-metric__value">4.9/5</span>
-                        <span class="ap-metric__label">soddisfazione media</span>
-                    </div>
-                    <div class="ap-metric">
-                        <span class="ap-metric__value">10+</span>
-                        <span class="ap-metric__label">partner certificati</span>
-                    </div>
+            <article class="ap-about__card ap-about__card--metrics">
+                <div>
+                    <small>Years active</small>
+                    <strong><?php echo $yearsInBusiness; ?>+</strong>
                 </div>
+                <div>
+                    <small>Clienti onboarded</small>
+                    <strong>12k+</strong>
+                </div>
+                <div>
+                    <small>Soddisfazione media</small>
+                    <strong>4.9/5</strong>
+                </div>
+                <div>
+                    <small>Partner certificati</small>
+                    <strong>10+</strong>
+                </div>
+            </article>
+
+            <article class="ap-about__card ap-about__card--timeline">
+                <h3>Roadmap sintetica</h3>
+                <ol>
+                    <li>
+                        <strong>2016 · Launch</strong>
+                        <span>Apertura hub fisico e primi servizi retail</span>
+                    </li>
+                    <li>
+                        <strong>2019 · Digital lab</strong>
+                        <span>Proprietary workflow per identità digitale e compliance</span>
+                    </li>
+                    <li>
+                        <strong>2021 · Telco & logistics</strong>
+                        <span>Partner nazionali e tracking integrato</span>
+                    </li>
+                    <li>
+                        <strong>Today · Control room</strong>
+                        <span>Pod ibridi con KPI pubblici e dashboard condivisa</span>
+                    </li>
+                </ol>
+            </article>
+
+            <article class="ap-about__card ap-about__card--map">
                 <div class="ap-map">
                     <iframe
                         src="https://www.openstreetmap.org/export/embed.html?bbox=14.4849641,40.6983611,14.4853168,40.7006381&layer=mapnik&marker=40.6994991,14.4851434"
                         width="100%"
-                        height="280"
+                        height="260"
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                         allowfullscreen>
                     </iframe>
                     <div class="ap-map__meta">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Via Plinio il Vecchio, 72 · Castellammare di Stabia</span>
+                        <div>
+                            <strong>Control room</strong>
+                            <span>Via Plinio il Vecchio, 72 · Castellammare di Stabia</span>
+                        </div>
                         <a href="https://maps.google.com/?q=Via+Plinio+Il+Vecchio+72,+80053+Castellammare+di+Stabia+NA" target="_blank" rel="noopener">Apri Maps</a>
                     </div>
                 </div>
-            </aside>
+            </article>
         </div>
 
-        <div class="ap-panel ap-panel--cta" data-reveal="fade-up">
+        <div class="ap-about__cta" data-reveal="fade-up">
             <div>
-                <h3>Hai bisogno di un laboratorio operativo?</h3>
-                <p>Programmiamo onboarding, procurement documentale e attivazioni telco in pochi passaggi. Ti affianchiamo con uno specialist e KPI condivisi.</p>
+                <h3>Vuoi aprire un canale operativo condiviso?</h3>
+                <p>Allineiamo team e stakeholder con war room digitali, ritual settimanali e insight vocali.</p>
             </div>
-            <div class="ap-panel__actions">
-                <a class="ap-btn ap-btn--primary" href="?page=contatti">
-                    <i class="fas fa-envelope"></i>
-                    <span>Parla con noi</span>
-                </a>
-                <a class="ap-btn ap-btn--ghost" href="?page=servizi">Sfoglia servizi</a>
+            <div class="ap-about__cta-actions">
+                <a class="ap-btn ap-btn--primary" href="?page=contatti">Attiva una cabina di regia</a>
+                <a class="ap-btn ap-btn--ghost" href="?page=servizi">Esplora capability</a>
             </div>
         </div>
     </div>

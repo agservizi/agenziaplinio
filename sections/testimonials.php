@@ -26,55 +26,81 @@ $testimonials = [
     ]
 ];
 ?>
-<section id="testimonials" class="ap-section ap-section--tints">
+<section id="testimonials" class="ap-section ap-section--stories">
     <div class="container">
-        <div class="ap-section__heading" data-reveal="fade-up">
-            <span class="ap-eyebrow">Customer stories</span>
-            <h2>Miglioriamo processi e daily operations in tempi rapidi</h2>
-            <p>Ogni giorno supportiamo PMI, professionisti e PA con onboarding assistito, task force dedicate e metriche trasparenti.</p>
+        <?php $heroStory = $testimonials[0]; ?>
+        <div class="ap-stories__hero" data-reveal="fade-up">
+            <div class="ap-stories__copy">
+                <span class="ap-eyebrow">Customer stories</span>
+                <h2>Delivery sprint, KPI pubblici e team umano che risponde in meno di 1h</h2>
+                <p>Ogni attivazione viene seguita da un pod dedicato che tiene allineati clienti e partner con dashboard condivise, video brief e recap vocali.</p>
+                <ul class="ap-stories__highlights">
+                    <li><strong>Playbook personalizzati</strong> con checklist operative e template pronti</li>
+                    <li><strong>Accountability end-to-end</strong> su ticket, SLA e metriche di qualità</li>
+                    <li><strong>Storytelling trasparente</strong> grazie a report vocali e note contestuali</li>
+                </ul>
+                <div class="ap-stories__cta">
+                    <a class="ap-btn ap-btn--primary" href="?page=contatti">Prenota uno sprint</a>
+                    <button class="ap-btn ap-btn--text" type="button" data-modal-open="service-modal">Guarda referenze</button>
+                </div>
+            </div>
+            <aside class="ap-stories__media">
+                <div class="ap-story-card">
+                    <div class="ap-story-card__badge">Case study espresso</div>
+                    <p class="ap-story-card__quote">“<?php echo htmlspecialchars($heroStory['content'], ENT_QUOTES); ?>”</p>
+                    <div class="ap-story-card__author">
+                        <div>
+                            <strong><?php echo htmlspecialchars($heroStory['name'], ENT_QUOTES); ?></strong>
+                            <small><?php echo htmlspecialchars($heroStory['role'], ENT_QUOTES); ?> · <?php echo htmlspecialchars($heroStory['company'], ENT_QUOTES); ?></small>
+                        </div>
+                        <span>Valutazione 5/5</span>
+                    </div>
+                    <div class="ap-story-card__timeline">
+                        <span>Kick-off</span>
+                        <span>Revisione contratti</span>
+                        <span>Go-live 48h</span>
+                    </div>
+                </div>
+            </aside>
         </div>
 
-        <div class="ap-grid ap-grid--cards mt-5">
-            <?php foreach ($testimonials as $testimonial): ?>
-                <article class="ap-tile ap-tile--quote" data-reveal="fade-up">
-                    <div class="ap-tile__rating">
-                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <i class="fas fa-star <?php echo $i <= $testimonial['rating'] ? 'is-active' : ''; ?>" aria-hidden="true"></i>
-                        <?php endfor; ?>
-                        <span class="visually-hidden">Valutazione <?php echo (int) $testimonial['rating']; ?> su 5</span>
-                    </div>
-                    <blockquote>
-                        <p><?php echo htmlspecialchars($testimonial['content'], ENT_QUOTES); ?></p>
-                    </blockquote>
-                    <footer>
+        <div class="ap-testimonials-grid" data-reveal="fade-up">
+            <?php foreach ($testimonials as $index => $testimonial): ?>
+                <article class="ap-testimonial <?php echo $index === 0 ? 'is-active' : ''; ?>">
+                    <header>
                         <div class="ap-avatar">
                             <span><?php echo strtoupper(substr($testimonial['name'], 0, 1)); ?></span>
                         </div>
                         <div>
-                            <strong><?php echo htmlspecialchars($testimonial['name'], ENT_QUOTES); ?></strong>
-                            <small><?php echo htmlspecialchars($testimonial['role'], ENT_QUOTES); ?> · <?php echo htmlspecialchars($testimonial['company'], ENT_QUOTES); ?></small>
+                            <h3><?php echo htmlspecialchars($testimonial['name'], ENT_QUOTES); ?></h3>
+                            <p><?php echo htmlspecialchars($testimonial['role'], ENT_QUOTES); ?> · <?php echo htmlspecialchars($testimonial['company'], ENT_QUOTES); ?></p>
                         </div>
-                    </footer>
+                        <span class="ap-rating-pill">
+                            <i class="fas fa-star"></i>
+                            <?php echo number_format((float) $testimonial['rating'], 1); ?>
+                        </span>
+                    </header>
+                    <p class="ap-testimonial__body"><?php echo htmlspecialchars($testimonial['content'], ENT_QUOTES); ?></p>
                 </article>
             <?php endforeach; ?>
         </div>
 
-        <div class="ap-metrics mt-5" data-reveal="fade-up">
-            <div class="ap-metric">
-                <span class="ap-metric__value">12k+</span>
-                <span class="ap-metric__label">clienti gestiti</span>
+        <div class="ap-stats" data-reveal="fade-up">
+            <div>
+                <span>12k+</span>
+                <p>clienti gestiti con contratti attivi</p>
             </div>
-            <div class="ap-metric">
-                <span class="ap-metric__value">4.9/5</span>
-                <span class="ap-metric__label">customer score</span>
+            <div>
+                <span>4.9/5</span>
+                <p>valutazione media customer care</p>
             </div>
-            <div class="ap-metric">
-                <span class="ap-metric__value">99.5%</span>
-                <span class="ap-metric__label">ticket risolti</span>
+            <div>
+                <span>99.5%</span>
+                <p>ticket risolti al primo contatto</p>
             </div>
-            <div class="ap-metric">
-                <span class="ap-metric__value">24h</span>
-                <span class="ap-metric__label">presa in carico</span>
+            <div>
+                <span>24h</span>
+                <p>presa in carico garantita</p>
             </div>
         </div>
     </div>
