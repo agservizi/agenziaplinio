@@ -26,56 +26,55 @@ $testimonials = [
     ]
 ];
 ?>
-<section id="testimonials" class="testimonials-section section-padding bg-light">
+<section id="testimonials" class="ap-section ap-section--tints">
     <div class="container">
-        <div class="section-heading text-center" data-reveal="fade-up">
-            <p class="eyebrow">Cosa dicono i nostri clienti</p>
-            <h2>Esperienze reali, fiducia dimostrata</h2>
-            <p class="text-muted">Migliaia di clienti soddisfatti scelgono Agenzia Plinio per i loro servizi quotidiani.</p>
+        <div class="ap-section__heading" data-reveal="fade-up">
+            <span class="ap-eyebrow">Customer stories</span>
+            <h2>Miglioriamo processi e daily operations in tempi rapidi</h2>
+            <p>Ogni giorno supportiamo PMI, professionisti e PA con onboarding assistito, task force dedicate e metriche trasparenti.</p>
         </div>
-        <div class="row g-4 mt-4">
+
+        <div class="ap-grid ap-grid--cards mt-5">
             <?php foreach ($testimonials as $testimonial): ?>
-                <div class="col-md-6 col-lg-4">
-                    <div class="testimonial-card h-100" data-reveal="fade-up">
-                        <div class="testimonial-card__rating mb-3">
-                            <?php for ($i = 1; $i <= 5; $i++): ?>
-                                <i class="fas fa-star <?php echo $i <= $testimonial['rating'] ? 'text-warning' : 'text-muted'; ?>"></i>
-                            <?php endfor; ?>
-                        </div>
-                        <blockquote class="testimonial-card__quote mb-4">
-                            "<?php echo htmlspecialchars($testimonial['content'], ENT_QUOTES); ?>"
-                        </blockquote>
-                        <div class="testimonial-card__author d-flex align-items-center">
-                            <div class="testimonial-card__avatar me-3">
-                                <?php echo strtoupper(substr($testimonial['name'], 0, 1)); ?>
-                            </div>
-                            <div>
-                                <h6 class="mb-0"><?php echo htmlspecialchars($testimonial['name'], ENT_QUOTES); ?></h6>
-                                <small class="text-muted"><?php echo htmlspecialchars($testimonial['role'], ENT_QUOTES); ?> - <?php echo htmlspecialchars($testimonial['company'], ENT_QUOTES); ?></small>
-                            </div>
-                        </div>
+                <article class="ap-tile ap-tile--quote" data-reveal="fade-up">
+                    <div class="ap-tile__rating">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <i class="fas fa-star <?php echo $i <= $testimonial['rating'] ? 'is-active' : ''; ?>" aria-hidden="true"></i>
+                        <?php endfor; ?>
+                        <span class="visually-hidden">Valutazione <?php echo (int) $testimonial['rating']; ?> su 5</span>
                     </div>
-                </div>
+                    <blockquote>
+                        <p><?php echo htmlspecialchars($testimonial['content'], ENT_QUOTES); ?></p>
+                    </blockquote>
+                    <footer>
+                        <div class="ap-avatar">
+                            <span><?php echo strtoupper(substr($testimonial['name'], 0, 1)); ?></span>
+                        </div>
+                        <div>
+                            <strong><?php echo htmlspecialchars($testimonial['name'], ENT_QUOTES); ?></strong>
+                            <small><?php echo htmlspecialchars($testimonial['role'], ENT_QUOTES); ?> · <?php echo htmlspecialchars($testimonial['company'], ENT_QUOTES); ?></small>
+                        </div>
+                    </footer>
+                </article>
             <?php endforeach; ?>
         </div>
-        <div class="text-center mt-5" data-reveal="fade-up">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">12k+</div>
-                    <div class="stat-label">Clienti soddisfatti</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">4.9/5</div>
-                    <div class="stat-label">Valutazione media</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">99.5%</div>
-                    <div class="stat-label">Tasso di risoluzione</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">24h</div>
-                    <div class="stat-label">Risposta garantita</div>
-                </div>
+
+        <div class="ap-metrics mt-5" data-reveal="fade-up">
+            <div class="ap-metric">
+                <span class="ap-metric__value">12k+</span>
+                <span class="ap-metric__label">clienti gestiti</span>
+            </div>
+            <div class="ap-metric">
+                <span class="ap-metric__value">4.9/5</span>
+                <span class="ap-metric__label">customer score</span>
+            </div>
+            <div class="ap-metric">
+                <span class="ap-metric__value">99.5%</span>
+                <span class="ap-metric__label">ticket risolti</span>
+            </div>
+            <div class="ap-metric">
+                <span class="ap-metric__value">24h</span>
+                <span class="ap-metric__label">presa in carico</span>
             </div>
         </div>
     </div>

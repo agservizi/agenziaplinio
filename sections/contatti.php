@@ -3,464 +3,159 @@
  * Pagina Contatti
  */
 ?>
-<style>
-.contact-hero {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 15px;
-    padding: 3rem;
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.contact-hero h1 {
-    color: #007bff;
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.contact-hero p {
-    font-size: 1.2rem;
-    color: #6c757d;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.contact-details-full {
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-}
-
-.contact-channel-grid-full {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.contact-channel-full {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 1.5rem;
-    border-left: 4px solid #007bff;
-}
-
-.contact-channel-full__label {
-    font-weight: 600;
-    color: #495057;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.contact-channel-full__value {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.contact-channel-full__value:hover {
-    text-decoration: underline;
-}
-
-.contact-channel-full__meta {
-    font-size: 0.875rem;
-    color: #6c757d;
-    margin: 0;
-}
-
-.contact-sla-full {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.contact-sla-full li {
-    text-align: center;
-    padding: 1rem;
-    background: #e9ecef;
-    border-radius: 8px;
-}
-
-.contact-sla-full__value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #007bff;
-    display: block;
-}
-
-.contact-sla-full__label {
-    font-size: 0.875rem;
-    color: #495057;
-}
-
-.contact-meta-list-full {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 2rem;
-}
-
-.contact-meta-list-full li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.contact-meta-list-full__label {
-    font-weight: 600;
-    color: #495057;
-    display: block;
-}
-
-.contact-meta-list-full__value {
-    color: #6c757d;
-    margin-top: 0.25rem;
-}
-
-.map-container-full {
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    margin-bottom: 3rem;
-}
-
-.map-container-full iframe {
-    border-radius: 8px;
-}
-
-.contact-form-full {
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    padding: 2.5rem;
-}
-
-.contact-form-full .eyebrow {
-    color: #6c757d;
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.5rem;
-}
-
-.contact-form-full h3 {
-    color: #495057;
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.contact-form-full p {
-    color: #6c757d;
-    margin-bottom: 2rem;
-}
-
-.form-feedback {
-    margin-top: 1rem;
-}
-
-.privacy-note {
-    font-size: 0.875rem;
-    color: #6c757d;
-    margin-bottom: 1.5rem;
-}
-
-.ap-btn {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 0.75rem 2rem;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.ap-btn:hover {
-    background: #0056b3;
-    transform: translateY(-1px);
-}
-
-.directions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.directions-item {
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #007bff;
-}
-
-.directions-item h5 {
-    color: #495057;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-}
-
-.directions-item ul {
-    margin: 0;
-    padding-left: 1rem;
-}
-
-.directions-item li {
-    margin-bottom: 0.5rem;
-    line-height: 1.4;
-}
-
-.testimonial-card {
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    text-align: center;
-    height: 100%;
-}
-
-.testimonial-stars {
-    font-size: 1.2rem;
-}
-
-.testimonial-text {
-    font-style: italic;
-    color: #6c757d;
-    line-height: 1.5;
-}
-
-.testimonial-author {
-    margin-top: 1rem;
-}
-
-.testimonial-author strong {
-    color: #495057;
-}
-
-.feature-icon {
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    background: #f8f9fa;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-}
-
-.quick-actions .btn {
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.quick-actions .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-</style>
-
-<section class="section-padding bg-light">
+<section id="contatti" class="ap-section ap-section--contact">
     <div class="container">
-        <!-- Hero Section -->
-        <div class="contact-hero">
-            <h1><i class="fas fa-envelope me-3"></i>Contatti</h1>
-            <p>Team operations attivo 7/7 per supporto, consulenze e attivazioni. Rispondiamo entro 1 ora.</p>
-        </div>
-
-        <!-- Contact Details -->
-        <div class="contact-details-full">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h2>Parliamo in modo operativo</h2>
-                    <p class="mb-4">Team operations attivo 7/7 per onboarding multiservizio, attivazioni digitali e supporto post vendita. Rispondiamo entro 1 ora.</p>
-
-                    <!-- Quick Action Buttons -->
-                    <div class="quick-actions mb-4">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <a href="tel:+390810584542" class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center gap-2">
-                                    <i class="fas fa-phone"></i>
-                                    <span>Chiama Ora</span>
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="https://wa.me/393773798570" target="_blank" rel="noopener" class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center gap-2">
-                                    <i class="fab fa-whatsapp"></i>
-                                    <span>WhatsApp</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-channel-grid-full">
-                        <article class="contact-channel-full">
-                            <span class="contact-channel-full__label">Linea diretta</span>
-                            <a class="contact-channel-full__value" href="tel:+390810584542">+39 081 058 45 42</a>
-                            <p class="contact-channel-full__meta">Lun-Ven · 08:30 — 19:15 (chiuso 13:15 — 16:00) · Sab 09:15 — 13:00</p>
-                        </article>
-                        <article class="contact-channel-full">
-                            <span class="contact-channel-full__label">WhatsApp Business</span>
-                            <a class="contact-channel-full__value" href="https://wa.me/393773798570" target="_blank" rel="noopener">+39 377 379 85 70</a>
-                            <p class="contact-channel-full__meta">Ticket istantanei, file e vocali</p>
-                        </article>
-                        <article class="contact-channel-full">
-                            <span class="contact-channel-full__label">Email operativa</span>
-                            <a class="contact-channel-full__value" href="mailto:info@agenziaplinio.it">info@agenziaplinio.it</a>
-                            <p class="contact-channel-full__meta">Monitoraggio continuo</p>
-                        </article>
-                        <article class="contact-channel-full">
-                            <span class="contact-channel-full__label">PEC & Compliance</span>
-                            <a class="contact-channel-full__value" href="mailto:agserviziviaplinio@sicurezzapostale.it">agserviziviaplinio@sicurezzapostale.it</a>
-                            <p class="contact-channel-full__meta">Documenti ufficiali e procure</p>
-                        </article>
-                    </div>
-
-                    <ul class="contact-sla-full">
-                        <li>
-                            <span class="contact-sla-full__value">24h</span>
-                            <span class="contact-sla-full__label">presa in carico media</span>
-                        </li>
-                        <li>
-                            <span class="contact-sla-full__value">2</span>
-                            <span class="contact-sla-full__label">specialist dedicati</span>
-                        </li>
-                        <li>
-                            <span class="contact-sla-full__value">3</span>
-                            <span class="contact-sla-full__label">canali prioritari</span>
-                        </li>
-                    </ul>
-
-                    <ul class="contact-meta-list-full">
-                        <li>
-                            <span class="contact-meta-list-full__label">Sede operativa</span>
-                            <span class="contact-meta-list-full__value">Via Plinio Il Vecchio, 72 · 80053 Castellammare di Stabia (NA)</span>
-                        </li>
-                        <li>
-                            <span class="contact-meta-list-full__label">Sportello clienti</span>
-                            <span class="contact-meta-list-full__value">Lun-Ven 09:00 — 18:30 · Sab 09:00 — 13:00</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <!-- Mappa -->
-                    <div class="map-container-full">
-                        <iframe
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=14.4849641,40.6983611,14.4853168,40.7006381&layer=mapnik&marker=40.6994991,14.4851434"
-                            width="100%"
-                            height="300"
-                            style="border-radius: 8px; border: 1px solid #e9ecef;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                        <p class="text-center mt-2 small text-muted">
-                            <i class="fas fa-map-marker-alt me-1"></i>
-                            Via Plinio il Vecchio, 72 - Castellammare di Stabia (NA)
-                        </p>
-                        <div class="d-grid gap-2 mt-3">
-                            <a href="https://maps.google.com/?q=Via+Plinio+Il+Vecchio+72,+80053+Castellammare+di+Stabia+NA" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">
-                                <i class="fab fa-google me-1"></i>Apri in Google Maps
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="ap-hero ap-hero--contact" data-reveal="fade-up">
+            <div>
+                <span class="ap-eyebrow">Supporto operativo</span>
+                <h1>Parliamo di operations in tempo reale</h1>
+                <p>Team operations attivo 7/7 per onboarding multiservizio, attivazioni digitali e assistenza post vendita. Tempi medi di presa in carico: 60 minuti.</p>
+            </div>
+            <div class="ap-hero__actions">
+                <a class="ap-btn ap-btn--primary" href="tel:+390810584542">
+                    <i class="fas fa-phone"></i>
+                    <span>Chiama ora</span>
+                </a>
+                <a class="ap-btn ap-btn--secondary" href="https://wa.me/393773798570" target="_blank" rel="noopener">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Apri WhatsApp</span>
+                </a>
             </div>
         </div>
 
-        <!-- Come Raggiungerci -->
-        <div class="contact-details-full">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h2>Come raggiungerci</h2>
-                    <p class="mb-4">Siamo facilmente raggiungibili da Napoli e dalla penisola sorrentina. Ecco tutte le indicazioni per arrivare in sede.</p>
+        <div class="ap-panels ap-panels--contact" data-reveal="fade-up">
+            <article class="ap-panel ap-panel--contact">
+                <h2>Linea diretta e canali prioritari</h2>
+                <p>Scegli il canale operativo che preferisci: sincronizziamo ticket, allegati e follow-up su un'unica dashboard condivisa.</p>
 
-                    <div class="directions-grid">
-                        <div class="directions-item">
-                            <h5><i class="fas fa-car me-2 text-primary"></i>In auto</h5>
-                            <ul class="list-unstyled">
-                                <li><strong>Dall'autostrada A3:</strong> Uscita Castellammare di Stabia, direzione centro città</li>
-                                <li><strong>Da Napoli:</strong> SS145 Sorrentina, uscita Castellammare centro</li>
-                                <li><strong>Parcheggio:</strong> Gratuito in zona, segnaletica stradale</li>
-                            </ul>
-                        </div>
+                <div class="ap-grid ap-grid--contact">
+                    <article class="ap-contact-card">
+                        <span class="ap-contact-card__label">Linea diretta</span>
+                        <a class="ap-contact-card__value" href="tel:+390810584542">+39 081 058 45 42</a>
+                        <p>Presa in carico garantita entro 1h · Lun-Ven 08:30-19:15 · Sab 09:15-13:00</p>
+                    </article>
+                    <article class="ap-contact-card">
+                        <span class="ap-contact-card__label">WhatsApp Business</span>
+                        <a class="ap-contact-card__value" href="https://wa.me/393773798570" target="_blank" rel="noopener">+39 377 379 85 70</a>
+                        <p>Ticket istantanei, invio documenti e vocali · Notifiche push automatiche</p>
+                    </article>
+                    <article class="ap-contact-card">
+                        <span class="ap-contact-card__label">Email operativa</span>
+                        <a class="ap-contact-card__value" href="mailto:info@agenziaplinio.it">info@agenziaplinio.it</a>
+                        <p>Monitoraggio continuo con SLA pubblici e report settimanali</p>
+                    </article>
+                    <article class="ap-contact-card">
+                        <span class="ap-contact-card__label">PEC & Compliance</span>
+                        <a class="ap-contact-card__value" href="mailto:agserviziviaplinio@sicurezzapostale.it">agserviziviaplinio@sicurezzapostale.it</a>
+                        <p>Documenti ufficiali, procure e pratiche ad alto impatto</p>
+                    </article>
+                </div>
 
-                        <div class="directions-item">
-                            <h5><i class="fas fa-bus me-2 text-primary"></i>Mezzi pubblici</h5>
-                            <ul class="list-unstyled">
-                                <li><strong>Bus urbano:</strong> Linee EAV dal porto commerciale, fermata Piazza Matteotti. Da lì, raggiungere Via Plinio Il Vecchio, 72 a piedi (circa 500 m).</li>
-                                <li><strong>Treno:</strong> Stazione Castellammare di Stabia (linea Circumvesuviana)</li>
-                                <li><strong>Aliscafi/Traghetti:</strong> Arrivo al porto commerciale di Castellammare di Stabia da isole (Capri, Ischia, Procida) o da Napoli/Salerno. Da lì, raggiungere Via Plinio Il Vecchio, 72 a piedi o con bus locali (circa 1 km).</li>
-                            </ul>
-                        </div>
-
-                        <div class="directions-item">
-                            <h5><i class="fas fa-clock me-2 text-primary"></i>Orari estesi</h5>
-                            <ul class="list-unstyled">
-                                <li><strong>Lunedì-Venerdì:</strong> 08:30-19:15 (pausa 13:15-16:00)</li>
-                                <li><strong>Sabato:</strong> 09:15-13:00</li>
-                                <li><strong>Domenica:</strong> Chiuso</li>
-                                <li><strong>Festivi:</strong> Su appuntamento</li>
-                            </ul>
-                        </div>
-
-                        <div class="directions-item">
-                            <h5><i class="fas fa-info-circle me-2 text-primary"></i>Info utili</h5>
-                            <ul class="list-unstyled">
-                                <li><strong>Accessibilità:</strong> Ingresso a piano terra</li>
-                                <li><strong>Sicurezza:</strong> Videosorveglianza 24/7</li>
-                                <li><strong>Caffè:</strong> Bar nelle vicinanze</li>
-                                <li><strong>WiFi:</strong> Gratuito per i clienti</li>
-                            </ul>
-                        </div>
+                <div class="ap-metrics" aria-label="Indicatori di servizio">
+                    <div class="ap-metric">
+                        <span class="ap-metric__value">24h</span>
+                        <span class="ap-metric__label">presa in carico media</span>
+                    </div>
+                    <div class="ap-metric">
+                        <span class="ap-metric__value">2</span>
+                        <span class="ap-metric__label">specialist dedicati</span>
+                    </div>
+                    <div class="ap-metric">
+                        <span class="ap-metric__value">3</span>
+                        <span class="ap-metric__label">canali prioritari</span>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="bg-light p-4 rounded">
-                        <h5 class="mb-3">Distanze</h5>
-                        <ul class="list-unstyled">
-                            <li class="d-flex justify-content-between py-2 border-bottom">
-                                <span>Napoli Centro</span>
-                                <strong>25 km</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-2 border-bottom">
-                                <span>Sorrento</span>
-                                <strong>15 km</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-2 border-bottom">
-                                <span>Pompei</span>
-                                <strong>12 km</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-2 border-bottom">
-                                <span>Salerno</span>
-                                <strong>45 km</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-2">
-                                <span>Capri</span>
-                                <strong>35 km</strong>
-                            </li>
+
+                <ul class="ap-list ap-list--meta">
+                    <li>
+                        <strong>Sede operativa</strong>
+                        <span>Via Plinio Il Vecchio, 72 · 80053 Castellammare di Stabia (NA)</span>
+                    </li>
+                    <li>
+                        <strong>Sportello clienti</strong>
+                        <span>Lun-Ven 09:00-18:30 · Sab 09:00-13:00</span>
+                    </li>
+                </ul>
+            </article>
+
+            <aside class="ap-panel ap-panel--map">
+                <div class="ap-map">
+                    <iframe
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=14.4849641,40.6983611,14.4853168,40.7006381&layer=mapnik&marker=40.6994991,14.4851434"
+                        width="100%"
+                        height="320"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="ap-map__meta">
+                        <div>
+                            <strong>Hub Castellammare</strong>
+                            <span>Via Plinio il Vecchio, 72</span>
+                        </div>
+                        <a href="https://maps.google.com/?q=Via+Plinio+Il+Vecchio+72,+80053+Castellammare+di+Stabia+NA" target="_blank" rel="noopener">Apri Maps</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="ap-panels ap-panels--directions" data-reveal="fade-up">
+            <article class="ap-panel ap-panel--directions">
+                <h2>Come raggiungerci</h2>
+                <p>Siamo facilmente raggiungibili da Napoli, penisola sorrentina e area vesuviana. Scegli la modalità più comoda per te.</p>
+                <div class="ap-grid ap-grid--directions">
+                    <section class="ap-direction">
+                        <h5><i class="fas fa-car"></i> In auto</h5>
+                        <ul>
+                            <li><strong>A3:</strong> uscita Castellammare di Stabia, direzione centro</li>
+                            <li><strong>Da Napoli:</strong> SS145 Sorrentina, uscita Castellammare centro</li>
+                            <li><strong>Parcheggio:</strong> gratuito in zona con segnaletica dedicata</li>
                         </ul>
-                    </div>
+                    </section>
+                    <section class="ap-direction">
+                        <h5><i class="fas fa-bus"></i> Mezzi pubblici</h5>
+                        <ul>
+                            <li><strong>Bus EAV:</strong> fermata Piazza Matteotti (500 m)</li>
+                            <li><strong>Treno:</strong> Circumvesuviana, stazione Castellammare</li>
+                            <li><strong>Porto:</strong> aliscafi da Capri/Ischia/Napoli a 1 km</li>
+                        </ul>
+                    </section>
+                    <section class="ap-direction">
+                        <h5><i class="fas fa-clock"></i> Orari estesi</h5>
+                        <ul>
+                            <li>Lunedì-Venerdì · 08:30-19:15 (break 13:15-16:00)</li>
+                            <li>Sabato · 09:15-13:00</li>
+                            <li>Domenica · su appuntamento</li>
+                        </ul>
+                    </section>
+                    <section class="ap-direction">
+                        <h5><i class="fas fa-info-circle"></i> Info utili</h5>
+                        <ul>
+                            <li>Ingresso a piano terra accessibile</li>
+                            <li>Videosorveglianza 24/7</li>
+                            <li>Wi-Fi gratuito per i clienti</li>
+                        </ul>
+                    </section>
                 </div>
-            </div>
+            </article>
+            <aside class="ap-panel ap-panel--distances">
+                <h5>Distanze indicative</h5>
+                <ul>
+                    <li><span>Napoli Centro</span><strong>25 km</strong></li>
+                    <li><span>Sorrento</span><strong>15 km</strong></li>
+                    <li><span>Pompei</span><strong>12 km</strong></li>
+                    <li><span>Salerno</span><strong>45 km</strong></li>
+                    <li><span>Capri</span><strong>35 km</strong></li>
+                </ul>
+            </aside>
         </div>
 
-        <!-- Contact Form -->
-        <div class="contact-form-full">
-            <span class="eyebrow">Richiesta guidata</span>
-            <h3>Pianifica una consulenza dedicata</h3>
-            <p>Inviaci il perimetro del progetto: ti ricontattiamo con un piano operativo, checklist degli oneri e tempi di go-live.</p>
+        <div class="ap-form-card" data-reveal="fade-up">
+            <div class="ap-form-card__intro">
+                <span class="ap-eyebrow">Richiesta guidata</span>
+                <h3>Pianifica una consulenza dedicata</h3>
+                <p>Descrivi il perimetro del progetto: ti rispondiamo con piano operativo, checklist e tempi di go-live.</p>
+            </div>
             <form method="post" data-contact-form novalidate>
                 <input type="hidden" name="form_scope" value="contact">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($formToken ?? '', ENT_QUOTES); ?>">
@@ -468,80 +163,77 @@
                     <label for="company_website">Lascia vuoto</label>
                     <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
                 </div>
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <label class="form-label" for="name">Nome e cognome</label>
-                        <input class="form-control" type="text" id="name" name="name" placeholder="Mario Rossi" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="email">Email</label>
-                        <input class="form-control" type="email" id="email" name="email" placeholder="nome@email.it" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="phone">Telefono</label>
-                        <input class="form-control" type="tel" id="phone" name="phone" placeholder="+39">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="service">Servizio</label>
-                        <select class="form-select" id="service" name="service">
+                <div class="ap-form-grid">
+                    <label>
+                        <span>Nome e cognome</span>
+                        <input type="text" id="name" name="name" placeholder="Mario Rossi" required>
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input type="email" id="email" name="email" placeholder="nome@email.it" required>
+                    </label>
+                    <label>
+                        <span>Telefono</span>
+                        <input type="tel" id="phone" name="phone" placeholder="+39">
+                    </label>
+                    <label>
+                        <span>Servizio</span>
+                        <select id="service" name="service">
                             <option value="pagamenti">Pagamenti</option>
                             <option value="ricariche">Ricariche</option>
                             <option value="digitali">Servizi digitali</option>
                             <option value="telefonia">Telefonia</option>
                             <option value="spedizioni">Spedizioni</option>
                         </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="company">Azienda / Ente</label>
-                        <input class="form-control" type="text" id="company" name="company" placeholder="Ag Servizi S.r.l.">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="priority">Priorit&agrave;</label>
-                        <select class="form-select" id="priority" name="priority">
+                    </label>
+                    <label>
+                        <span>Azienda / Ente</span>
+                        <input type="text" id="company" name="company" placeholder="Ag Servizi S.r.l.">
+                    </label>
+                    <label>
+                        <span>Priorità</span>
+                        <select id="priority" name="priority">
                             <option value="standard">Standard (entro 24h)</option>
                             <option value="fast-track">Fast track (entro 8h)</option>
                             <option value="emergenza">Emergenza operativa</option>
                         </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="appointment_request">Tipo richiesta</label>
-                        <select class="form-select" id="appointment_request" name="appointment_request">
+                    </label>
+                    <label>
+                        <span>Tipo richiesta</span>
+                        <select id="appointment_request" name="appointment_request">
                             <option value="contact">Contatto informativo</option>
                             <option value="consultation">Consulenza guidata</option>
                             <option value="appointment">Appuntamento in sede</option>
                             <option value="emergency">Emergenza operativa</option>
                         </select>
-                    </div>
-                    <div class="col-12 appointment-dates" style="display: none;">
-                        <label class="form-label">Date disponibili per appuntamento</label>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <input class="form-control" type="date" id="preferred_date" name="preferred_date" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">
-                                <small class="text-muted">Data preferita</small>
-                            </div>
-                            <div class="col-md-6">
-                                <select class="form-select" id="preferred_time" name="preferred_time">
-                                    <option value="">Seleziona orario</option>
-                                    <option value="09:00">09:00 - 10:00</option>
-                                    <option value="10:00">10:00 - 11:00</option>
-                                    <option value="11:00">11:00 - 12:00</option>
-                                    <option value="14:00">14:00 - 15:00</option>
-                                    <option value="15:00">15:00 - 16:00</option>
-                                    <option value="16:00">16:00 - 17:00</option>
-                                    <option value="17:00">17:00 - 18:00</option>
-                                </select>
-                                <small class="text-muted">Orario preferita (solo lunedì-venerdì)</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label" for="message">Messaggio</label>
-                        <textarea class="form-control" id="message" name="message" rows="4" placeholder="Raccontaci cosa ti serve" required></textarea>
-                    </div>
+                    </label>
                 </div>
+                <div class="appointment-dates" data-appointment-dates hidden>
+                    <label>
+                        <span>Data preferita</span>
+                        <input type="date" id="preferred_date" name="preferred_date" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">
+                    </label>
+                    <label>
+                        <span>Fascia oraria</span>
+                        <select id="preferred_time" name="preferred_time">
+                            <option value="">Seleziona orario</option>
+                            <option value="09:00">09:00 - 10:00</option>
+                            <option value="10:00">10:00 - 11:00</option>
+                            <option value="11:00">11:00 - 12:00</option>
+                            <option value="14:00">14:00 - 15:00</option>
+                            <option value="15:00">15:00 - 16:00</option>
+                            <option value="16:00">16:00 - 17:00</option>
+                            <option value="17:00">17:00 - 18:00</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="ap-form-card__message">
+                    <span>Messaggio</span>
+                    <textarea id="message" name="message" rows="4" placeholder="Raccontaci cosa ti serve" required></textarea>
+                </label>
                 <div class="form-feedback" data-form-feedback aria-live="polite"></div>
-                <div class="mt-4">
-                    <p class="privacy-note">Inoltrando la richiesta accetti il trattamento dei dati ai sensi del Reg. UE 2016/679. Riceverai copia del ticket via email.</p>
+                <div class="ap-form-card__footer">
+                    <p class="privacy-note">Inviando la richiesta accetti il trattamento dei dati ai sensi del Reg. UE 2016/679. Riceverai copia del ticket via email.</p>
                     <button class="ap-btn ap-btn--primary" type="submit" data-ripple="true">Invia richiesta</button>
                 </div>
             </form>
@@ -550,30 +242,32 @@
 </section>
 
 <script>
-// Appointment form toggle
-document.getElementById('appointment_request').addEventListener('change', function() {
-    const appointmentDates = document.querySelector('.appointment-dates');
-    if (this.value === 'appointment') {
-        appointmentDates.style.display = 'block';
-        document.getElementById('preferred_date').required = true;
-        document.getElementById('preferred_time').required = true;
-    } else {
-        appointmentDates.style.display = 'none';
-        document.getElementById('preferred_date').required = false;
-        document.getElementById('preferred_time').required = false;
-    }
-});
+const appointmentField = document.getElementById('appointment_request');
+const appointmentDates = document.querySelector('[data-appointment-dates]');
+const preferredDate = document.getElementById('preferred_date');
+const preferredTime = document.getElementById('preferred_time');
 
-// Set minimum date to tomorrow
-document.getElementById('preferred_date').min = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+if (appointmentField && appointmentDates) {
+    const toggleAppointmentFields = () => {
+        const isAppointment = appointmentField.value === 'appointment';
+        appointmentDates.hidden = !isAppointment;
+        preferredDate.required = isAppointment;
+        preferredTime.required = isAppointment;
+    };
 
-// Disable weekends in date picker
-document.getElementById('preferred_date').addEventListener('input', function() {
-    const selectedDate = new Date(this.value);
-    const dayOfWeek = selectedDate.getDay();
-    if (dayOfWeek === 0 || dayOfWeek === 6) { // Sunday = 0, Saturday = 6
-        alert('Gli appuntamenti sono disponibili solo dal lunedì al venerdì.');
-        this.value = '';
-    }
-});
+    appointmentField.addEventListener('change', toggleAppointmentFields);
+    toggleAppointmentFields();
+}
+
+if (preferredDate) {
+    preferredDate.min = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    preferredDate.addEventListener('input', () => {
+        const selectedDate = new Date(preferredDate.value);
+        const dayOfWeek = selectedDate.getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+            alert('Gli appuntamenti sono disponibili solo dal lunedì al venerdì.');
+            preferredDate.value = '';
+        }
+    });
+}
 </script>
